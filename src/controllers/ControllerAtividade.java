@@ -80,15 +80,15 @@ public class ControllerAtividade {
         return this.atividades.get(codigo).toString();
     }
 
-    public String contaItensPendentes(String codigo) {
+    public int contaItensPendentes(String codigo) {
         verificaVazioNulo(codigo,"codigo");
         verificaExistenciaAtividade(codigo);
-        return String.valueOf(this.atividades.get(codigo).contaItensPendentes());
+        return (this.atividades.get(codigo).contaItensPendentes());
     }
 
-    public String contaItensRealizados(String codigo) {
+    public int contaItensRealizados(String codigo) {
         verificaVazioNulo(codigo,"codigo");
         verificaExistenciaAtividade(codigo);
-        return String.valueOf(this.atividades.get(codigo).contaItensRealizados());
+        return (this.atividades.get(codigo).contaItensRealizados());
     }
 }

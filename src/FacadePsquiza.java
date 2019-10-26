@@ -49,11 +49,11 @@ public class FacadePsquiza {
         return controllerAtividade.exibeAtividade(codigo);
     }
 
-    public String contaItensPendentes(String codigo){
+    public int contaItensPendentes(String codigo){
         return controllerAtividade.contaItensPendentes(codigo);
     }
 
-    public String contaItensRealizados(String codigo){
+    public int contaItensRealizados(String codigo){
         return controllerAtividade.contaItensRealizados(codigo);
     }
 }
