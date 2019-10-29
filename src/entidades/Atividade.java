@@ -1,6 +1,5 @@
 package com.psquiza.entidades;
 
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,7 +8,6 @@ import java.util.StringJoiner;
 public class Atividade {
     private String codigo;
     private String descricao;
-    private Period duracao;
     private List<Item> resultados;
     private String risco;
     private String descricaoRisco;
@@ -48,17 +46,11 @@ public class Atividade {
     }
 
     public int contaItensPendentes() {
-        int pendentes = 0;
-        for (Item item : this.resultados) {
-            if (!item.isRealizado()){
-                pendentes++;
-            }
-        }
-        return pendentes;
+        return this.resultados.size() - contaItensRealizados();
     }
 
 
     public int contaItensRealizados() {
-        return this.resultados.size() - contaItensPendentes();
+        return (int) this.resultados.stream().filter(Item::isRealizado).count();
     }
 }
