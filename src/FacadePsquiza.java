@@ -25,6 +25,7 @@ public class FacadePsquiza {
     //Caso de uso 1(-)
 
 
+
     //Caso de uso 2(-)
 
 
