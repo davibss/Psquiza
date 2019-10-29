@@ -1,47 +1,53 @@
 package com.psquiza;
 
 import com.psquiza.controllers.ControllerAtividade;
+import com.psquiza.controllers.ControllerObjetivo;
+import com.psquiza.controllers.ControllerProblema;
 import easyaccept.EasyAccept;
 
 public class FacadePsquiza {
 
     private ControllerAtividade controllerAtividade;
+    private ControllerProblema controllerProblema;
+    private ControllerObjetivo controllerObjetivo;
 
     public static void main(String[] args) {
-        args = new String[]{"com.psquiza.FacadePsquiza", "tests/accept-tests/use_case_4.txt"};
-//        args = new String[]{"com.psquiza.FacadePsquiza", "tests/accept-tests/use_case_1.txt",
-//                                                         "tests/accept-tests/use_case_2.txt",
-//                                                         "tests/accept-tests/use_case_3.txt",
-//                                                         "tests/accept-tests/use_case_4.txt"};
+        args = new String[]{"com.psquiza.FacadePsquiza", "tests/accept-tests/use_case_1.txt",
+                                                         "tests/accept-tests/use_case_2.txt",
+                                                         "tests/accept-tests/use_case_3.txt",
+                                                         "tests/accept-tests/use_case_4.txt"};
         EasyAccept.main(args);
     }
 
-    public FacadePsquiza(){
+    public FacadePsquiza() {
         controllerAtividade = new ControllerAtividade();
+        controllerProblema = new ControllerProblema();
+        controllerObjetivo = new ControllerObjetivo();
+
     }
 
     // MÉTODOS AQUI
 
-    //Caso de uso 1(-)
+    //Caso de uso 1(José Nestor)
 
 
 
-    //Caso de uso 2(-)
+    //Caso de uso 2(Anderson)
 
 
     //Caso de uso 3 (Henrique)
 
-    public void cadastraProblema(String descricao, int viabilidade) { controllerAtividade.cadastrarProblema(descricao, viabilidade); }
+    public void cadastraProblema(String descricao, int viabilidade) { controllerProblema.cadastrarProblema(descricao, viabilidade); }
 
-    public void apagarProblema(String codigo) { controllerAtividade.apagarProblema(codigo); }
+    public void apagarProblema(String codigo) { controllerProblema.apagarProblema(codigo); }
 
-    public String exibeProblema(String codigo) { return controllerAtividade.exibeProblema(codigo); }
+    public String exibeProblema(String codigo) { return controllerProblema.exibeProblema(codigo); }
 
-    public void cadastraObjetivo(String tipo, String descricao, int aderencia, int viabilidade)  { controllerAtividade.cadastrarObjetivo(tipo, descricao, aderencia, viabilidade); }
+    public void cadastraObjetivo(String tipo, String descricao, int aderencia, int viabilidade)  { controllerObjetivo.cadastrarObjetivo(tipo, descricao, aderencia, viabilidade); }
 
-    public void apagarObjetivo(String codigo) { controllerAtividade.apagarObjetivo(codigo); }
+    public void apagarObjetivo(String codigo) { controllerObjetivo.apagarObjetivo(codigo); }
 
-    public String exibeObjetivo(String codigo) { return  controllerAtividade.exibeObjetivo(codigo); }
+    public String exibeObjetivo(String codigo) { return  controllerObjetivo.exibeObjetivo(codigo); }
 
     //Caso de uso 4 (Davi)
 
