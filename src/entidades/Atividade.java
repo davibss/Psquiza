@@ -4,6 +4,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 public class Atividade {
     private String codigo;
@@ -27,7 +28,10 @@ public class Atividade {
 
     @Override
     public String toString() {
-        return String.format("%s (%s - %s)",this.descricao, this.risco, this.descricaoRisco);
+        StringJoiner joiner = new StringJoiner(" | ");
+        joiner.add(String.format("%s (%s - %s)",this.descricao, this.risco, this.descricaoRisco));
+        this.resultados.forEach((r) -> joiner.add(r.toString()));
+        return joiner.toString();
     }
 
     @Override

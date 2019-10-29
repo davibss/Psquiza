@@ -1,7 +1,6 @@
 package com.psquiza.controllers;
 
 import com.psquiza.entidades.Atividade;
-import javafx.util.Pair;
 
 import java.util.*;
 
