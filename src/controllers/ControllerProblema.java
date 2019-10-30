@@ -23,7 +23,7 @@ public class ControllerProblema {
     }
 
     private void verificaValidadeProblema(String descricao, int viabilidade) {
-        verificaVazioNulo(descricao, "Descricao");
+        verificaVazioNulo(descricao, "descricao");
         if(viabilidade < 1 || viabilidade > 5) {
             throw new IllegalArgumentException("Valor invalido de viabilidade.");
         }
@@ -54,7 +54,7 @@ public class ControllerProblema {
         }
 
         joiner.add("nao pode ser nulo ou vazio.");
-        if (atributo == null || atributo.equals("")){
+        if (atributo == null || atributo.equals("")) {
             throw new IllegalArgumentException(joiner.toString());
         }
     }

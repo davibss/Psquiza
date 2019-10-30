@@ -23,13 +23,13 @@ public class ControllerObjetivo {
     }
 
     private void verificaValidadeObjetivo(String tipo, String descricao, int aderencia, int viabilidade) {
-        verificaVazioNulo(descricao, "Descricao");
-        verificaVazioNulo(tipo, "Tipo");
-        if(!tipo.equals("GERAL") || tipo.equals("ESPECIFICO")) {
+        verificaVazioNulo(descricao, "descricao");
+        verificaVazioNulo(tipo, "tipo");
+        if(!(tipo.equals("GERAL") || tipo.equals("ESPECIFICO"))) {
             throw new IllegalArgumentException("Valor invalido de tipo.");
         }
         if(aderencia < 1 || aderencia > 5) {
-            throw new IllegalArgumentException("Valor invalido de aderencia.");
+            throw new IllegalArgumentException("Valor invalido de aderencia");
         }
         if(viabilidade < 1 || viabilidade > 5) {
             throw new IllegalArgumentException("Valor invalido de viabilidade.");
