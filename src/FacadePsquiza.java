@@ -2,12 +2,14 @@ package com.psquiza;
 
 import com.psquiza.controllers.ControllerAtividade;
 import com.psquiza.controllers.ControllerObjetivo;
+import com.psquiza.controllers.ControllerPesquisa;
 import com.psquiza.controllers.ControllerProblema;
 import easyaccept.EasyAccept;
 
 public class FacadePsquiza {
 
     private ControllerAtividade controllerAtividade;
+    private ControllerPesquisa controllerPesquisa;
     private ControllerProblema controllerProblema;
     private ControllerObjetivo controllerObjetivo;
 
@@ -23,12 +25,21 @@ public class FacadePsquiza {
         controllerAtividade = new ControllerAtividade();
         controllerProblema = new ControllerProblema();
         controllerObjetivo = new ControllerObjetivo();
+        controllerPesquisa = new ControllerPesquisa();
 
     }
 
     // MÉTODOS AQUI
 
     //Caso de uso 1(José Nestor)
+    public String cadastraPesquisa(String descricao, String campoInteresse){
+        return controllerPesquisa.cadastrarPesquisa(descricao, campoInteresse);
+    }
+
+    public void alteraPesquisa(String código, String conteúdoASerAlterado, String novoConteúdo){
+
+    }
+
 
 
 
