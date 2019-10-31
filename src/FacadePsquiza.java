@@ -14,6 +14,7 @@ public class FacadePsquiza {
     private ControllerObjetivo controllerObjetivo;
 
     public static void main(String[] args) {
+
         args = new String[]{"com.psquiza.FacadePsquiza", "tests/accept-tests/use_case_1.txt",
                                                          "tests/accept-tests/use_case_2.txt",
                                                          "tests/accept-tests/use_case_3.txt",
@@ -33,13 +34,26 @@ public class FacadePsquiza {
 
     //Caso de uso 1(José Nestor)
     public String cadastraPesquisa(String descricao, String campoInteresse){
+        System.out.println(controllerPesquisa.cadastrarPesquisa(descricao, campoInteresse));
         return controllerPesquisa.cadastrarPesquisa(descricao, campoInteresse);
     }
 
-    public void alteraPesquisa(String código, String conteúdoASerAlterado, String novoConteúdo){
-
+    public void alteraPesquisa(String codigo, String conteudoASerAlterado, String novoConteudo){
+        controllerPesquisa.alterarPesquisa(codigo, conteudoASerAlterado, novoConteudo);
     }
 
+    public void encerraPesquisa(String codigo, String motivo){
+        controllerPesquisa.encerrarPesquisa(codigo, motivo);
+    }
+    public void ativaPesquisa(String codigo){
+        controllerPesquisa.ativarPesquisa(codigo);
+    }
+    public String exibePesquisa(String codigo){
+        return controllerPesquisa.exibirPesquisa(codigo);
+    }
+    public boolean pesquisaEhAtiva(String codigo){
+        return controllerPesquisa.pesquisAtiva(codigo);
+    }
 
 
 
