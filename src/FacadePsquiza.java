@@ -1,9 +1,6 @@
 package com.psquiza;
 
-import com.psquiza.controllers.ControllerAtividade;
-import com.psquiza.controllers.ControllerObjetivo;
-import com.psquiza.controllers.ControllerPesquisa;
-import com.psquiza.controllers.ControllerProblema;
+import com.psquiza.controllers.*;
 import easyaccept.EasyAccept;
 
 public class FacadePsquiza {
@@ -12,6 +9,7 @@ public class FacadePsquiza {
     private ControllerPesquisa controllerPesquisa;
     private ControllerProblema controllerProblema;
     private ControllerObjetivo controllerObjetivo;
+    private ControllerPesquisador controllerPesquisador;
 
     public static void main(String[] args) {
 
@@ -27,7 +25,7 @@ public class FacadePsquiza {
         controllerProblema = new ControllerProblema();
         controllerObjetivo = new ControllerObjetivo();
         controllerPesquisa = new ControllerPesquisa();
-
+        controllerPesquisador = new ControllerPesquisador();
     }
 
     // MÉTODOS AQUI
@@ -58,7 +56,24 @@ public class FacadePsquiza {
 
 
     //Caso de uso 2(Anderson)
-
+    public void cadastraPesquisador(String nome, String funcao, String biografia, String email, String fotoURL){
+        controllerPesquisador.cadastraPesquisador(nome, funcao, biografia, email, fotoURL);
+    }
+    public void alteraPesquisador(String email, String atributo, String novoValor){
+        controllerPesquisador.alteraPesquisador(email, atributo, novoValor);
+    }
+    public void desativaPesquisador(String email){
+        controllerPesquisador.desativaPesquisador(email);
+    }
+    public void ativaPesquisador(String email){
+        controllerPesquisador.ativaPesquisador(email);
+    }
+    public String exibePesquisador(String email){
+        return controllerPesquisador.exibePesquisador(email);
+    }
+    public boolean pesquisadorEhAtivo(String email){
+        return controllerPesquisador.pesquisadorEhAtivo(email);
+    }
 
     //Caso de uso 3 (Henrique)
 
