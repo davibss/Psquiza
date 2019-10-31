@@ -51,6 +51,14 @@ class ControllerObjetivoTest {
     }
 
     @Test
+    void apagarObjetivoInvalido() {
+        assertEquals("Campo codigo nao pode ser nulo ou vazio.",
+                verificaExcecao(() -> controllerObjetivo.apagarObjetivo("")));
+        assertEquals("Objetivo nao encontrado",
+                verificaExcecao(() -> controllerObjetivo.apagarObjetivo("O1")));
+    }
+
+    @Test
     void apagarObjetivo() {
     }
 
