@@ -1,8 +1,6 @@
 package com.psquiza.controllers;
 
 import com.psquiza.entidades.Atividade;
-import com.psquiza.entidades.Objetivo;
-import com.psquiza.entidades.Problema;
 
 import java.util.*;
 
@@ -39,8 +37,11 @@ public class ControllerAtividade {
 
     private void verificaVazioNulo(String atributo, String nomeAtributo) {
         StringJoiner joiner = new StringJoiner(" ");
-
-        joiner.add("Campo").add(nomeAtributo);
+        if (!nomeAtributo.equals("item")) {
+            joiner.add("Campo").add(nomeAtributo);
+        }else{
+            joiner.add("Item");
+        }
         joiner.add("nao pode ser nulo ou vazio.");
         if (atributo == null || atributo.equals("")){
             throw new IllegalArgumentException(joiner.toString());

@@ -21,6 +21,11 @@ public class Atividade {
     }
 
     public void cadastraItem(String nomeItem){
+        for (Item item : this.resultados) {
+            if (item.getNome().equals(nomeItem)){
+                throw new IllegalArgumentException("Item ja cadastrado nesta atividade.");
+            }
+        }
         this.resultados.add(new Item(nomeItem));
     }
 

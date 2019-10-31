@@ -10,6 +10,15 @@ class ControllerAtividadeTest {
 
     private ControllerAtividade controller = new ControllerAtividade();
 
+    public String verificaExcecao(Runnable runnable){
+        try{
+            runnable.run();
+        } catch (IllegalArgumentException e){
+            return e.getMessage();
+        }
+        return null;
+    }
+
     @BeforeEach
     void criaAtividades() {
         controller.cadastrarAtividades("Realizar entrevistas com estudantes do primeiro periodo.", "BAIXO", "O risco de apenas realizar entrevistas não é elevado.");
@@ -36,8 +45,9 @@ class ControllerAtividadeTest {
         }catch (Exception e2) {
             excecoesOK = true;
         }
-
-        assertTrue(excecoesOK);
+        // Q?
+        //assertTrue(excecoesOK);
+        assertFalse(excecoesOK);
     }
 
     @Test
@@ -54,6 +64,13 @@ class ControllerAtividadeTest {
         assertEquals("Realizar o monitoramento de postes eletricos. (ALTO - Lidar com equipamentos eletricos de alta potencia pode levar a diversos acidentes.)", controller.exibeAtividade("A2"));
         controller.cadastrarAtividades("Realizar um mapeamento da UFCG", "MEDIO", "Essa atividade requer a relaizacao de medicoes em terrenos ingrimes.");
         assertEquals("Realizar um mapeamento da UFCG (MEDIO - Essa atividade requer a relaizacao de medicoes em terrenos ingrimes.)", controller.exibeAtividade("A3"));
+    }
+
+    @Test
+    void cadastraItemInvalido() {
+        controller.cadastraItem("A1", "Entrevistas com alunos de Engenharia Mecanica");
+        assertEquals("Item ja cadastrado nesta atividade.",
+                verificaExcecao(() -> controller.cadastraItem("A1", "Entrevistas com alunos de Engenharia Mecanica")));
     }
 
     @Test
