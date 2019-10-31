@@ -118,7 +118,7 @@ public class ControllerPesquisador {
             throw new IllegalArgumentException("Pesquisador nao encontrado");
         }
         if (!pesquisadores.get(email).ehAtivo()){
-            throw new IllegalArgumentException("Pesquisador inativo");
+            throw new IllegalArgumentException("Pesquisador inativo.");
         }
         pesquisadores.get(email).setAtivo(false);
     }
@@ -128,14 +128,14 @@ public class ControllerPesquisador {
             throw new IllegalArgumentException("Pesquisador nao encontrado");
         }
         if (pesquisadores.get(email).ehAtivo()){
-            throw new IllegalArgumentException("Pesquisador ja ativado");
+            throw new IllegalArgumentException("Pesquisador ja ativado.");
         }
         pesquisadores.get(email).setAtivo(true);
     }
     public String exibePesquisador(String email){
         verificaEmail(email);
         if (!pesquisadores.get(email).ehAtivo()){
-            throw new IllegalArgumentException("Pesquisador inativo");
+            throw new IllegalArgumentException("Pesquisador inativo.");
         }
         return pesquisadores.get(email).toString();
     }
