@@ -94,7 +94,7 @@ public class Pesquisador {
     /**
      *  Define um valor String para o atributo nome do Pesquisador.
      *
-     * @param bio String representando o novo valor do atributo nome a ser definido.
+     * @param nome String representando o novo valor do atributo nome a ser definido.
      */
     public void setNome(String nome) {
         this.nome = nome;
@@ -102,7 +102,7 @@ public class Pesquisador {
     /**
      *  Define um valor String para o atributo endereco URL da foto do Pesquisador.
      *
-     * @param bio String representando o novo valor do atributo foto a ser definido.
+     * @param foto String representando o novo valor do atributo foto a ser definido.
      */
     public void setFoto(String foto) {
         this.foto = foto;
@@ -114,7 +114,7 @@ public class Pesquisador {
      *
      * @return String representando um Pesquisador.
      */
-    @java.lang.Override
+    @Override
     public java.lang.String toString() {
         return (nome + " (" + funcao + ")" +  " - " + bio + " - " + email + " - " + foto );
     }

@@ -1,6 +1,5 @@
 package com.psquiza.controllers;
 
-import com.psquiza.entidades.Pesquisa;
 import com.psquiza.entidades.Pesquisador;
 import java.util.HashMap;
 import java.util.Map;
@@ -176,7 +175,6 @@ public class ControllerPesquisador {
             pesquisadores.put(novoValor, pesquisadores.get(email));
             pesquisadores.remove(email);
             pesquisadores.get(novoValor).setEmail(novoValor);
-
         } else if (atributo.equals("FOTO")){
             verificaFoto(novoValor);
             pesquisadores.get(email).setFoto(novoValor);

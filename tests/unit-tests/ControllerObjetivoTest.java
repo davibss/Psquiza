@@ -11,7 +11,7 @@ class ControllerObjetivoTest {
 
     private ControllerObjetivo controllerObjetivo;
 
-    public String verificaExcecao(Runnable runnable){
+    private String verificaExcecao(Runnable runnable){
         try{
             runnable.run();
         } catch (IllegalArgumentException e){
@@ -60,9 +60,22 @@ class ControllerObjetivoTest {
 
     @Test
     void apagarObjetivo() {
+        cadastraObjetivo();
+        controllerObjetivo.apagarObjetivo("O1");
+    }
+
+    @Test
+    void exibeObjetivoInvalido() {
+        assertEquals("Campo codigo nao pode ser nulo ou vazio.",
+                verificaExcecao(() -> controllerObjetivo.exibeObjetivo("")));
+        assertEquals("Objetivo nao encontrado",
+                verificaExcecao(() -> controllerObjetivo.exibeObjetivo("O1")));
     }
 
     @Test
     void exibeObjetivo() {
+        cadastraObjetivo();
+        assertEquals(String.format("%s - %s - %s - %d","O1","GERAL","Objetivo criado para ser deletado",8),
+                controllerObjetivo.exibeObjetivo("O1"));
     }
 }

@@ -11,11 +11,11 @@ public class Item {
         this.realizado = false;
     }
 
-    public boolean isRealizado() {
+    boolean isRealizado() {
         return realizado;
     }
 
-    public String getNome() {
+    String getNome() {
         return nome;
     }
 

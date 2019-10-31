@@ -45,6 +45,7 @@ public class ControllerObjetivo {
     }
 
     public String exibeObjetivo(String codigo) {
+        verificaVazioNulo(codigo, "codigo");
         if(!this.objetivos.containsKey(codigo)) {
             throw new IllegalArgumentException("Objetivo nao encontrado");
         }
