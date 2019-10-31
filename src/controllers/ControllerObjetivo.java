@@ -15,7 +15,7 @@ public class ControllerObjetivo {
         this.idObjetivo = 1;
     }
 
-    public void cadastrarObjetivo(String tipo, String descricao, int aderencia, int viabilidade) {
+    public void cadastraObjetivo(String tipo, String descricao, int aderencia, int viabilidade) {
         verificaValidadeObjetivo(tipo, descricao, aderencia, viabilidade);
         String chave = "O"+(this.idObjetivo);
         this.objetivos.put(chave, new Objetivo(tipo, descricao, aderencia, viabilidade));
@@ -54,12 +54,7 @@ public class ControllerObjetivo {
     private void verificaVazioNulo(String atributo, String nomeAtributo) {
         StringJoiner joiner = new StringJoiner(" ");
 
-        if (!nomeAtributo.equals("item")) {
-            joiner.add("Campo").add(nomeAtributo);
-        }else{
-            joiner.add("Item");
-        }
-
+        joiner.add("Campo").add(nomeAtributo);
         joiner.add("nao pode ser nulo ou vazio.");
         if (atributo == null || atributo.equals("")){
             throw new IllegalArgumentException(joiner.toString());

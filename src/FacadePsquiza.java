@@ -48,13 +48,13 @@ public class FacadePsquiza {
 
     //Caso de uso 3 (Henrique)
 
-    public void cadastraProblema(String descricao, int viabilidade) { controllerProblema.cadastrarProblema(descricao, viabilidade); }
+    public void cadastraProblema(String descricao, int viabilidade) { controllerProblema.cadastraProblema(descricao, viabilidade); }
 
     public void apagarProblema(String codigo) { controllerProblema.apagarProblema(codigo); }
 
     public String exibeProblema(String codigo) { return controllerProblema.exibeProblema(codigo); }
 
-    public void cadastraObjetivo(String tipo, String descricao, int aderencia, int viabilidade)  { controllerObjetivo.cadastrarObjetivo(tipo, descricao, aderencia, viabilidade); }
+    public void cadastraObjetivo(String tipo, String descricao, int aderencia, int viabilidade)  { controllerObjetivo.cadastraObjetivo(tipo, descricao, aderencia, viabilidade); }
 
     public void apagarObjetivo(String codigo) { controllerObjetivo.apagarObjetivo(codigo); }
 

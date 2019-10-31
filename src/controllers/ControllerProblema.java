@@ -15,7 +15,7 @@ public class ControllerProblema {
         this.idProblema = 1;
     }
 
-    public void cadastrarProblema(String descricao, int viabilidade) {
+    public void cadastraProblema(String descricao, int viabilidade) {
         verificaValidadeProblema(descricao, viabilidade);
         String chave = "P"+(this.idProblema);
         this.problemas.put(chave, new Problema(descricao, viabilidade));
