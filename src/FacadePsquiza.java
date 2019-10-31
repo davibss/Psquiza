@@ -32,7 +32,6 @@ public class FacadePsquiza {
 
     //Caso de uso 1(José Nestor)
     public String cadastraPesquisa(String descricao, String campoInteresse){
-        System.out.println(controllerPesquisa.cadastrarPesquisa(descricao, campoInteresse));
         return controllerPesquisa.cadastrarPesquisa(descricao, campoInteresse);
     }
 
@@ -43,12 +42,15 @@ public class FacadePsquiza {
     public void encerraPesquisa(String codigo, String motivo){
         controllerPesquisa.encerrarPesquisa(codigo, motivo);
     }
+
     public void ativaPesquisa(String codigo){
         controllerPesquisa.ativarPesquisa(codigo);
     }
+
     public String exibePesquisa(String codigo){
         return controllerPesquisa.exibirPesquisa(codigo);
     }
+
     public boolean pesquisaEhAtiva(String codigo){
         return controllerPesquisa.pesquisAtiva(codigo);
     }
