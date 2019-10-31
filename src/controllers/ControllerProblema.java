@@ -38,6 +38,7 @@ public class ControllerProblema {
     }
 
     public String exibeProblema(String codigo) {
+        verificaVazioNulo(codigo,"codigo");
         if(!this.problemas.containsKey(codigo)) {
             throw new IllegalArgumentException("Problema nao encontrado");
         }
