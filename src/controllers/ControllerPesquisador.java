@@ -45,7 +45,7 @@ public class ControllerPesquisador {
      *  Formato Adequado: texto alfanumerico + @ + texto alfanumerico.
      *  Caso o email nao esteja adequada, sao lancadas excecoes com a mensagem adequada.
      *
-     * @param email
+     * @param email String representando o email de um Pesquisador.
      */
     private void verificaEmail(String email){
         boolean valido = false;
@@ -79,7 +79,7 @@ public class ControllerPesquisador {
      *  Formato Adequado: https:// + restante do texto
      *  Formato Adequado: http:// + restante do texto
      *
-     * @param foto
+     * @param foto String representando o endereco URL da foto de um Pesquisador.
      */
     private void verificaFoto(String foto){
         boolean valido = false;
@@ -104,9 +104,10 @@ public class ControllerPesquisador {
     }
 
     /**
-     *  Verifica uma String representando a possivel funcao de um Pesquisador. Avalia se a String eh nula ou vazia.
+     *  Verifica uma String representando a possivel funcao de um Pesquisador. Avalia se a String eh nula ou vazia
+     *  e lanca excecoes de acordo.
      *
-     * @param funcao
+     * @param funcao String representando a funcao de um Pesquisador.
      */
     private void verificaFuncao (String funcao){
         if (funcao == null){
@@ -116,9 +117,10 @@ public class ControllerPesquisador {
         }
     }
     /**
-     *  Verifica uma String representando o possivel nome de um Pesquisador. Avalia se a String eh nula ou vazia.
+     *  Verifica uma String representando o possivel nome de um Pesquisador. Avalia se a String eh nula ou vazia
+     *  e lanca excecoes de acordo.
      *
-     * @param nome
+     * @param nome String representando o nome de um Pesquisador.
      */
     private void verificaNome(String nome){
         if (nome == null){
@@ -128,9 +130,10 @@ public class ControllerPesquisador {
         }
     }
     /**
-     *  Verifica uma String representando a possivel biografia de um Pesquisador. Avalia se a String eh nula ou vazia.
+     *  Verifica uma String representando a possivel biografia de um Pesquisador. Avalia se a String eh nula ou vazia
+     *  e lanca excecoes de acordo.
      *
-     * @param biografia
+     * @param biografia String representando a biografia de um Pesquisador.
      */
     private void verificaBio (String biografia){
         if (biografia == null){
@@ -141,11 +144,12 @@ public class ControllerPesquisador {
     }
 
     /**
-     *  Altera um atributo de um pesquisador, identificado por seu email.
+     *  Altera um atributo de um pesquisador, identificado por seu email. O atributo alterado pode ser
+     *  NOME, FUNCAO, BIOGRAFIA, EMAIL ou FOTO, e esse atributo sera substituido pelo novoValor.
      *
-     * @param email
-     * @param atributo
-     * @param novoValor
+     * @param email String representando o email de um Pesquisador.
+     * @param atributo String representando o atributo a ser alterado.
+     * @param novoValor String representando o novo valor do atributo sendo alterado.
      */
     public void alteraPesquisador(String email, String atributo, String novoValor){
         verificaEmail(email);
@@ -183,6 +187,14 @@ public class ControllerPesquisador {
             throw new IllegalArgumentException("Atributo invalido.");
         }
     }
+
+    /**
+     *  Verifica se um Pesquisador, identificado pelo email, esta ativo ou nao. Retornando verdadeiro caso esteja ativo
+     *  e falso caso esteja inativo.
+     *
+     * @param email String representando o email de um Pesquisador.
+     * @return Valor Boolean representando a situacao de atividade de um Pesquisador.
+     */
     public boolean pesquisadorEhAtivo(String email){
         if(email == null){
             throw new NullPointerException("Email nao pode ser vazio ou nulo.");
@@ -194,6 +206,13 @@ public class ControllerPesquisador {
         }
         return pesquisadores.get(email).ehAtivo();
     }
+
+    /**
+     *  Desativa um pesquisador, alterando seu estado de ativo para inativo. Caso o pesquisador ja esteja inativo
+     *  uma excecao eh lancada.
+     *
+     * @param email String representando o email de um Pesquisador.
+     */
     public void desativaPesquisador(String email){
         verificaEmail(email);
         if (!pesquisadores.containsKey(email)){
@@ -204,6 +223,13 @@ public class ControllerPesquisador {
         }
         pesquisadores.get(email).setAtivo(false);
     }
+
+    /**
+     *  Ativa um Pesquisador, identificado pelo email, alterando seu estado de inativo para ativo. Caso o pesquisador ja
+     *  esteja ativo uma excecao sera lancada.
+     *
+     * @param email String representando o email de um Pesquisador.
+     */
     public  void ativaPesquisador(String email){
         verificaEmail(email);
         if (!pesquisadores.containsKey(email)){
@@ -214,6 +240,14 @@ public class ControllerPesquisador {
         }
         pesquisadores.get(email).setAtivo(true);
     }
+
+    /**
+     *  Gera a representacao em String de um Pesquisador, identificado pelo email, para exibicao.
+     *  A representacao segue o padrao "NOME (FUNCAO) - BIOGRAFIA - EMAIL - FOTO_URL".
+     *
+     * @param email String representando o email de um Pesquisador.
+     * @return String representando um Pesquisador, com suas informacoes de nome, funcao, biografia, email e foto.
+     */
     public String exibePesquisador(String email){
         verificaEmail(email);
         if (!pesquisadores.containsKey(email)){
