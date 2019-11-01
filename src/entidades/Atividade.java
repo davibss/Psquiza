@@ -8,6 +8,7 @@ import java.util.StringJoiner;
 /**
  * Representação de uma atividade no sistema.
  * A atividade possui codigo único, descrição, lista de itens, risco e descrição do risco.
+ * @author davibss - 119111034
  */
 public class Atividade {
     /** Representação em String do código da atividade, no formato: A[número]*/

@@ -6,6 +6,7 @@ import java.util.*;
 
 /**
  * Controller do objeto Atividade
+ * @author davibss - 119111034
  */
 public class ControllerAtividade {
     /** Mapa de atividades, em que a chave é o código e o valor é o objeto Atividade*/

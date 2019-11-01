@@ -5,6 +5,7 @@ import java.util.Objects;
 /**
  * Classe que representa um item contido na atividade.
  * Item possui nome, como atributo único e atributo para representar o status de pendência do item.
+ * @author davibss - 119111034
  */
 public class Item {
     /** Representação em String do nome do item */
