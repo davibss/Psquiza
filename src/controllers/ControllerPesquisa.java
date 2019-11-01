@@ -5,14 +5,27 @@ import com.psquiza.entidades.Pesquisa;
 
 import java.util.*;
 
+/**
+ * Controller de pesquisa, classe responsável por cadastrar, alterar, ativar, encerrar e exibir pesquisa
+ * @author José Nestor
+ */
 public class ControllerPesquisa {
-
+    /** Mapa que armazena pesquisas, pesquisas são identificadas por um código gerado no sistema*/
     private Map<String, Pesquisa> pesquisas;
 
+    /**
+     * Constrói um controller, inicializando um mapa.
+     */
     public ControllerPesquisa(){
         this.pesquisas = new HashMap<>();
     }
 
+    /**
+     * Cadastra uma pesquisa, cria um código que identifica pesquisas no mapa, lança exceções se necessário e retorna o código em forma de String.
+     * @param descricao representação em String da descrição da pesquisa.
+     * @param campoInteresse representação em String do campo de interesse da pesquisa.
+     * @return representação em String do código identificador de pesquisas.
+     */
     public String cadastrarPesquisa(String descricao, String campoInteresse){
        if(descricao == null || descricao.equals("")){
             throw new NullPointerException("Descricao nao pode ser nula ou vazia.");
@@ -38,6 +51,12 @@ public class ControllerPesquisa {
        return codigo;
     }
 
+    /**
+     * Altera o conteudo de pesquisa, podendo ser a descrição ou campo de interesse e lança exceções se necessário.
+     * @param codigo representação em String do código que identifica pesquisas
+     * @param conteudoASerAlterado representação em String do conteúdo que será alterado, podendo ser descrição ou campo de interesse.
+     * @param novoConteudo representação em String do novo conteúdo.
+     */
     public void alterarPesquisa(String codigo, String conteudoASerAlterado, String novoConteudo){
         if(novoConteudo == null || (novoConteudo.equals("")) && conteudoASerAlterado.equals("DESCRICAO")){
             throw new RuntimeException("Descricao nao pode ser nula ou vazia.");
@@ -62,6 +81,11 @@ public class ControllerPesquisa {
         }
     }
 
+    /**
+     * Encerra a pesquisa mudando seu estado para falso.
+     * @param codigo representação em String do código que identifica pesquisas
+     * @param motivo representação em String do motivo de encerrar a pesquisa
+     */
     public void encerrarPesquisa(String codigo, String motivo){
         verificaVazioNulo(codigo,"Codigo");
         verificaVazioNulo(motivo,"Motivo");
@@ -74,6 +98,10 @@ public class ControllerPesquisa {
         pesquisas.get(codigo).setEstadoAtivacao(false);
     }
 
+    /**
+     * Ativa a pesquisa mudando seu estado para verdadeiro.
+     * @param codigo representação em String do código que identifica pesquisas
+     */
     public void ativarPesquisa(String codigo){
         verificaVazioNulo(codigo,"Codigo");
         if (!pesquisas.containsKey(codigo)){
@@ -85,6 +113,13 @@ public class ControllerPesquisa {
         pesquisas.get(codigo).setEstadoAtivacao(true);
     }
 
+    /**
+     * * Retorna uma String que representa uma pesquisa.
+     *      * A representação segue o formato: "Código - descrição - campo de interesse".
+     *
+     * @param codigo representação em String do código que identifica pesquisas
+     * @return A representação em String de uma pesquisa
+     */
     public String exibirPesquisa(String codigo){
         verificaVazioNulo(codigo,"Codigo");
         if (!pesquisas.containsKey(codigo)){
@@ -93,6 +128,11 @@ public class ControllerPesquisa {
         return codigo + pesquisas.get(codigo).toString();
     }
 
+    /**
+     * Retorna um valor boleano que representa o estado de ativação da pesquisa, sendo verdadeiro para ativa e falso para desativa.
+     * @param codigo representação em String do código que identifica pesquisas
+     * @return A representação boleana do estado da pesquisa.
+     */
     public boolean pesquisAtiva(String codigo){
         if(codigo == null || codigo.equals("")){
             throw new RuntimeException("Codigo nao pode ser nulo ou vazio.");
@@ -102,7 +142,7 @@ public class ControllerPesquisa {
         }
         return pesquisas.get(codigo).estadoAtivacao();
     }
-
+    
     private void verificaVazioNulo(String atributo, String nomeAtributo) {
         StringJoiner joiner = new StringJoiner(" ");
         joiner.add(nomeAtributo);
