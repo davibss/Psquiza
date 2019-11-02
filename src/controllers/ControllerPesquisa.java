@@ -142,7 +142,13 @@ public class ControllerPesquisa {
         }
         return pesquisas.get(codigo).estadoAtivacao();
     }
-    
+
+    /**
+     * Verifica se o parâmetro passado é vazio ou nulo, se for, monta String
+     * pra lançar uma exceção.
+     * @param atributo representação em String do atributo a ser verificado.
+     * @param nomeAtributo representação em String do nome do atributo.
+     */
     private void verificaVazioNulo(String atributo, String nomeAtributo) {
         StringJoiner joiner = new StringJoiner(" ");
         joiner.add(nomeAtributo);

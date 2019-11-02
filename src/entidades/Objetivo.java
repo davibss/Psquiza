@@ -4,7 +4,7 @@ public class Objetivo {
 
     private String tipo;
     private String descricao;
-    public int aderencia;
+    private int aderencia;
     private int viabilidade;
 
 
