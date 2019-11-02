@@ -31,22 +31,23 @@ public class ControllerPesquisa {
             throw new NullPointerException("Descricao nao pode ser nula ou vazia.");
        }
 
-       String[] verifica = campoInteresse.split(",");
-       if (verifica.length > 4 || verifica[0].trim().length() < 3 || campoInteresse.length() > 255){
+       String[] campos = campoInteresse.split(",");
+       if (campos.length > 4 || campos[0].trim().length() < 3 || campoInteresse.length() > 255){
            throw new IllegalArgumentException ("Formato do campo de interesse invalido.");
        }
-       for(String topico : verifica){
-           if (topico == null || topico.equals("") || topico.equals(" ")){ throw new IllegalArgumentException ("Formato do campo de interesse invalido.");
+       for(String topico : campos){
+           //if (topico == null || topico.equals("") || topico.equals(" ")){
+           if (topico == null || topico.trim().equals("")){
+               throw new IllegalArgumentException ("Formato do campo de interesse invalido.");
            }
        }
        int valorInt = 1;
        for(String codigo : this.pesquisas.keySet()){
-           if(codigo.substring(0,3).equals(verifica[0].trim().substring(0, 3).toUpperCase())){
-               valorInt = Integer.parseInt(String.valueOf(codigo.charAt(3)));
-               valorInt += 1;
+           if(codigo.substring(0,3).equals(campos[0].trim().substring(0, 3).toUpperCase())){
+               valorInt = Integer.parseInt(String.valueOf(codigo.charAt(3))) + 1;
            }
        }
-       String codigo = verifica[0].trim().substring(0, 3).toUpperCase() + valorInt;
+       String codigo = campos[0].trim().substring(0, 3).toUpperCase() + valorInt;
        this.pesquisas.put(codigo, new Pesquisa(true, descricao, campoInteresse));
        return codigo;
     }
@@ -58,10 +59,10 @@ public class ControllerPesquisa {
      * @param novoConteudo representação em String do novo conteúdo.
      */
     public void alterarPesquisa(String codigo, String conteudoASerAlterado, String novoConteudo){
-        if(novoConteudo == null || (novoConteudo.equals("")) && conteudoASerAlterado.equals("DESCRICAO")){
+        if((novoConteudo == null || (novoConteudo.equals(""))) && conteudoASerAlterado.equals("DESCRICAO")){
             throw new RuntimeException("Descricao nao pode ser nula ou vazia.");
         }
-        else if(novoConteudo == null || (novoConteudo.equals("")) && conteudoASerAlterado.equals("CAMPO")) {
+        else if((novoConteudo == null || (novoConteudo.equals(""))) && conteudoASerAlterado.equals("CAMPO")) {
             throw new RuntimeException("Formato do campo de interesse invalido.");
         }
         else if(!pesquisas.containsKey(codigo)){
