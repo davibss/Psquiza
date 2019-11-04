@@ -31,17 +31,19 @@ public class ControllerProblema {
 
     public void apagarProblema(String codigo) {
         verificaVazioNulo(codigo, "codigo");
-        if(!this.problemas.containsKey(codigo)) {
-            throw new IllegalArgumentException("Problema nao encontrado");
-        }
+        verificaProblema(codigo);
+//        if(!this.problemas.containsKey(codigo)) {
+//            throw new IllegalArgumentException("Problema nao encontrado");
+//        }
         this.problemas.remove(codigo);
     }
 
     public String exibeProblema(String codigo) {
         verificaVazioNulo(codigo,"codigo");
-        if(!this.problemas.containsKey(codigo)) {
-            throw new IllegalArgumentException("Problema nao encontrado");
-        }
+        verificaProblema(codigo);
+//        if(!this.problemas.containsKey(codigo)) {
+//            throw new IllegalArgumentException("Problema nao encontrado");
+//        }
         return codigo + " - " + this.problemas.get(codigo).toString();
     }
 
@@ -58,5 +60,15 @@ public class ControllerProblema {
         if (atributo == null || atributo.equals("")) {
             throw new IllegalArgumentException(joiner.toString());
         }
+    }
+
+    public void verificaProblema(String codigo){
+        if(!this.problemas.containsKey(codigo)) {
+            throw new IllegalArgumentException("Problema nao encontrado");
+        }
+    }
+
+    public Problema getProblema(String problema) {
+        return this.problemas.get(problema);
     }
 }

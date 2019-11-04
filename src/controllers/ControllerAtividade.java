@@ -1,6 +1,7 @@
 package com.psquiza.controllers;
 
 import com.psquiza.entidades.Atividade;
+import com.psquiza.verificadores.Verificador;
 
 import java.util.*;
 

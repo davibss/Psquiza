@@ -1,6 +1,7 @@
 package com.psquiza.controllers;
 
 import com.psquiza.entidades.Objetivo;
+import com.psquiza.entidades.Problema;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,11 +1,14 @@
 package com.psquiza.entidades;
 
+import java.util.Objects;
+
 /**
  * Representação de uma pesquisa no sistema.
  * A pesquisa possui estado que informa se está ativa ou desativa, descrição, campo de interesse.
  * @author José Nestor - 119110608
  */
 public class Pesquisa {
+    private String codigo;
     /** Representação boleana do estado da pesquisa, true para ativada e false para desativada*/
     private boolean estadoAtivacao;
     /** Representação em String da descrição da pesquisa*/
@@ -19,7 +22,8 @@ public class Pesquisa {
      * @param descricao representação em String da descrição da pesquisa
      * @param campoInteresse representação em String do campo de innteresse
      */
-    public Pesquisa(boolean estadoAtivacao, String descricao, String campoInteresse){
+    public Pesquisa(String codigo, boolean estadoAtivacao, String descricao, String campoInteresse){
+        this.codigo = codigo;
         this.estadoAtivacao = estadoAtivacao;
         this.descricao = descricao;
         this.campoInteresse = campoInteresse;
@@ -33,7 +37,25 @@ public class Pesquisa {
      */
     @Override
     public String toString() {
-        return " - " + descricao + " - " +campoInteresse;
+        //return " - " + descricao + " - " +campoInteresse;
+        return String.format("%s - %s - %s",this.codigo,this.descricao,this.campoInteresse);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pesquisa pesquisa = (Pesquisa) o;
+        return Objects.equals(codigo, pesquisa.codigo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(codigo);
+    }
+
+    public String getCodigo() {
+        return this.codigo;
     }
 
     /**

@@ -13,12 +13,19 @@ public class ControllerPesquisa {
     /** Mapa que armazena pesquisas, pesquisas são identificadas por um código gerado no sistema*/
     private Map<String, Pesquisa> pesquisas;
 
-    /**
-     * Constrói um controller, inicializando um mapa.
-     */
+    //private ControllerAssociacaoPesquisa controllerAssociacaoPesquisa;
+
     public ControllerPesquisa(){
         this.pesquisas = new HashMap<>();
     }
+
+    /**
+     * Constrói um controller, inicializando um mapa.
+     */
+//    public ControllerPesquisa(ControllerAssociacaoPesquisa controllerAssociacaoPesquisa){
+//        this.pesquisas = new HashMap<>();
+//        this.controllerAssociacaoPesquisa = controllerAssociacaoPesquisa;
+//    }
 
     /**
      * Cadastra uma pesquisa, cria um código que identifica pesquisas no mapa, lança exceções se necessário e retorna o código em forma de String.
@@ -48,7 +55,7 @@ public class ControllerPesquisa {
            }
        }
        String codigo = campos[0].trim().substring(0, 3).toUpperCase() + valorInt;
-       this.pesquisas.put(codigo, new Pesquisa(true, descricao, campoInteresse));
+       this.pesquisas.put(codigo, new Pesquisa(codigo,true, descricao, campoInteresse));
        return codigo;
     }
 
@@ -65,10 +72,11 @@ public class ControllerPesquisa {
         else if((novoConteudo == null || (novoConteudo.equals(""))) && conteudoASerAlterado.equals("CAMPO")) {
             throw new RuntimeException("Formato do campo de interesse invalido.");
         }
-        else if(!pesquisas.containsKey(codigo)){
-            throw new RuntimeException("Pesquisa nao encontrada.");
-        }
-        else if(!pesquisas.get(codigo).estadoAtivacao()){
+        verificaPesquisa(codigo);
+//        else if(!pesquisas.containsKey(codigo)){
+//            throw new RuntimeException("Pesquisa nao encontrada.");
+//        }
+        if(!pesquisas.get(codigo).estadoAtivacao()){
             throw new RuntimeException("Pesquisa desativada.");
         }
         else if (conteudoASerAlterado.equals("DESCRICAO")) {
@@ -90,9 +98,10 @@ public class ControllerPesquisa {
     public void encerrarPesquisa(String codigo, String motivo){
         verificaVazioNulo(codigo,"Codigo");
         verificaVazioNulo(motivo,"Motivo");
-        if (!pesquisas.containsKey(codigo)){
-            throw new NullPointerException("Pesquisa nao encontrada.");
-        }
+        verificaPesquisa(codigo);
+//        if (!pesquisas.containsKey(codigo)){
+//            throw new NullPointerException("Pesquisa nao encontrada.");
+//        }
         if(!pesquisas.get(codigo).estadoAtivacao()){
               throw new RuntimeException("Pesquisa desativada.");
         }
@@ -105,9 +114,10 @@ public class ControllerPesquisa {
      */
     public void ativarPesquisa(String codigo){
         verificaVazioNulo(codigo,"Codigo");
-        if (!pesquisas.containsKey(codigo)){
-            throw new NullPointerException("Pesquisa nao encontrada.");
-        }
+        verificaPesquisa(codigo);
+//        if (!pesquisas.containsKey(codigo)){
+//            throw new NullPointerException("Pesquisa nao encontrada.");
+//        }
         if(pesquisas.get(codigo).estadoAtivacao()) {
             throw new RuntimeException("Pesquisa ja ativada.");
         }
@@ -126,7 +136,8 @@ public class ControllerPesquisa {
         if (!pesquisas.containsKey(codigo)){
             throw new NullPointerException("Pesquisa nao encontrada.");
         }
-        return codigo + pesquisas.get(codigo).toString();
+        //return codigo + pesquisas.get(codigo).toString();
+        return pesquisas.get(codigo).toString();
     }
 
     /**
@@ -138,9 +149,10 @@ public class ControllerPesquisa {
         if(codigo == null || codigo.equals("")){
             throw new RuntimeException("Codigo nao pode ser nulo ou vazio.");
         }
-        else if (!pesquisas.containsKey(codigo)){
-            throw new NullPointerException("Pesquisa nao encontrada.");
-        }
+        verificaPesquisa(codigo);
+//        else if (!pesquisas.containsKey(codigo)){
+//            throw new NullPointerException("Pesquisa nao encontrada.");
+//        }
         return pesquisas.get(codigo).estadoAtivacao();
     }
 
@@ -157,6 +169,40 @@ public class ControllerPesquisa {
         if (atributo == null || atributo.equals("")){
             throw new IllegalArgumentException(joiner.toString());
         }
+    }
+
+    public void verificaPesquisa(String codigo){
+        if (!pesquisas.containsKey(codigo)){
+            throw new NullPointerException("Pesquisa nao encontrada.");
+        }
+    }
+    
+    public String listaPesquisas(String ordem, ControllerAssociacaoPesquisa controllerAssociacaoPesquisa) {
+        StringJoiner joiner = new StringJoiner(" | ");
+        ArrayList<Pesquisa> lista = new ArrayList<>(this.pesquisas.values());
+        switch (ordem){
+            case "PROBLEMA":
+                controllerAssociacaoPesquisa.ordenaPorIDProblema().forEach(c -> joiner.add(exibirPesquisa(c)));
+                this.pesquisas.keySet().stream().
+                        filter(k -> !controllerAssociacaoPesquisa.ordenaPorIDProblema().contains(k)).
+                        sorted((chave1, chave2) -> chave1.compareTo(chave2) * -1).
+                        forEach(c -> joiner.add(exibirPesquisa(c)));
+                break;
+            case "OBJETIVOS":
+                controllerAssociacaoPesquisa.ordenaPorObjetivos().forEach(c -> joiner.add(exibirPesquisa(c)));
+                this.pesquisas.keySet().stream().
+                        filter(k -> !controllerAssociacaoPesquisa.ordenaPorObjetivos().contains(k)).
+                        sorted((chave1, chave2) -> chave1.compareTo(chave2) * -1).
+                        forEach(c -> joiner.add(exibirPesquisa(c)));
+                break;
+            case "PESQUISA":
+                lista.sort((pesquisa1, pesquisa2) -> pesquisa1.getCodigo().compareTo(pesquisa2.getCodigo()) * -1);
+                lista.forEach(pesquisa -> joiner.add(pesquisa.toString()));
+                break;
+            default:
+                throw new IllegalArgumentException("Valor invalido da ordem");
+        }
+        return joiner.toString();
     }
 }
 

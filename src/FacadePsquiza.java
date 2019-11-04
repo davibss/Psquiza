@@ -10,13 +10,15 @@ public class FacadePsquiza {
     private ControllerProblema controllerProblema;
     private ControllerObjetivo controllerObjetivo;
     private ControllerPesquisador controllerPesquisador;
+    private ControllerAssociacaoPesquisa controllerAssociacaoPesquisa;
 
     public static void main(String[] args) {
 
         args = new String[]{"com.psquiza.FacadePsquiza", "tests/accept-tests/use_case_1.txt",
                                                          "tests/accept-tests/use_case_2.txt",
                                                          "tests/accept-tests/use_case_3.txt",
-                                                         "tests/accept-tests/use_case_4.txt"};
+                                                         "tests/accept-tests/use_case_4.txt",
+                                                         "tests/accept-tests/use_case_5.txt"};
         EasyAccept.main(args);
     }
 
@@ -24,8 +26,9 @@ public class FacadePsquiza {
         controllerAtividade = new ControllerAtividade();
         controllerProblema = new ControllerProblema();
         controllerObjetivo = new ControllerObjetivo();
-        controllerPesquisa = new ControllerPesquisa();
         controllerPesquisador = new ControllerPesquisador();
+        controllerPesquisa = new ControllerPesquisa();
+        controllerAssociacaoPesquisa = new ControllerAssociacaoPesquisa(controllerPesquisa, controllerProblema, controllerObjetivo);
     }
 
     // MÉTODOS AQUI
@@ -115,5 +118,23 @@ public class FacadePsquiza {
 
     public int contaItensRealizados(String codigo){
         return controllerAtividade.contaItensRealizados(codigo);
+    }
+
+    //Caso de uso 5 (Davi)
+    public boolean associaProblema(String idPesquisa, String idProblema){
+        return controllerAssociacaoPesquisa.associaProblema(idPesquisa, idProblema);
+    }
+    public boolean desassociaProblema(String idPesquisa, String idProblema){
+        return controllerAssociacaoPesquisa.desassociaProblema(idPesquisa,idProblema);
+    }
+    public boolean associaObjetivo(String idPesquisa, String idObjetivo){
+        return controllerAssociacaoPesquisa.associaObjetivo(idPesquisa, idObjetivo);
+    }
+    public boolean desassociaObjetivo(String idPesquisa, String idObjetivo){
+        return controllerAssociacaoPesquisa.desassociaObjetivo(idPesquisa, idObjetivo);
+    }
+    public String listaPesquisas(String ordem) {
+        //return controllerAssociacaoPesquisa.listaPesquisa(ordem);
+        return controllerPesquisa.listaPesquisas(ordem, controllerAssociacaoPesquisa);
     }
 }
