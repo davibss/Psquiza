@@ -1,5 +1,8 @@
 package com.psquiza.entidades;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -15,6 +18,9 @@ public class Pesquisa  {
     private String descricao;
     /** Representação em String do campo de innteresse*/
     private String campoInteresse;
+    //Nova implementação - caso de uso 5
+    private Problema problema;
+    private Map<String, Objetivo> objetivos;
 
     /**
      * Constrói uma pesquisa através dos parâmetros
@@ -27,6 +33,63 @@ public class Pesquisa  {
         this.estadoAtivacao = estadoAtivacao;
         this.descricao = descricao;
         this.campoInteresse = campoInteresse;
+        this.problema = new Problema();
+        this.objetivos = new HashMap<>();
+    }
+
+    public boolean associaProblema(Problema problema) {
+        if (this.problema.equals(problema)){
+            return false;
+        }
+        if (!(this.problema.equals(new Problema()))){
+            throw new IllegalArgumentException("Pesquisa ja associada a um problema.");
+        }
+        this.problema = problema;
+        return true;
+    }
+
+    public boolean desassociaProblema(String problema){
+        if (this.problema.getIdProblema() == null){
+            return false;
+        }else if (!this.problema.getIdProblema().equals(problema)){
+            return false;
+        }
+        this.problema = new Problema();
+        return true;
+    }
+
+    public boolean asssociaObjetivo(Objetivo objetivo){
+        if (this.objetivos.containsValue(objetivo)){
+            return false;
+        }
+        this.objetivos.put(objetivo.getId(), objetivo);
+        return true;
+    }
+
+    public boolean desassociaObjetivo(String idObjetivo){
+        if (!this.objetivos.containsKey(idObjetivo)){
+            return false;
+        }
+        this.objetivos.remove(idObjetivo);
+        return true;
+    }
+
+    public int getObjetivos(){
+        return this.objetivos.size();
+    }
+
+    public String maiorObjetivo(){
+        //return Collections.max(this.objetivos, (chave1, chave2) -> chave1.compareTo(chave2) * -1);
+        return Collections.max(this.objetivos.keySet(), (chave1, chave2) -> chave1.compareTo(chave2) * -1);
+    }
+
+    public boolean contemObjetivo(Objetivo objetivo){
+        //return this.objetivos.contains(objetivo);
+        return this.objetivos.containsValue(objetivo);
+    }
+
+    public String getProblema() {
+        return this.problema.getIdProblema();
     }
 
     /**

@@ -12,6 +12,8 @@ public class FacadePsquiza {
     private ControllerPesquisador controllerPesquisador;
     private ControllerAssociacaoPesquisa controllerAssociacaoPesquisa;
 
+    private ControllerGeral controllerGeral;
+
     public static void main(String[] args) {
 
         args = new String[]{"com.psquiza.FacadePsquiza", "tests/accept-tests/use_case_1.txt",
@@ -28,113 +30,115 @@ public class FacadePsquiza {
         controllerObjetivo = new ControllerObjetivo();
         controllerPesquisador = new ControllerPesquisador();
         controllerPesquisa = new ControllerPesquisa();
-        controllerAssociacaoPesquisa = new ControllerAssociacaoPesquisa(controllerPesquisa, controllerProblema, controllerObjetivo);
+        controllerAssociacaoPesquisa = new ControllerAssociacaoPesquisa(controllerPesquisa);
+
+        controllerGeral = new ControllerGeral();
     }
 
     // MÉTODOS AQUI
 
     //Caso de uso 1(José Nestor)
     public String cadastraPesquisa(String descricao, String campoInteresse){
-        return controllerPesquisa.cadastrarPesquisa(descricao, campoInteresse);
+        return controllerGeral.cadastrarPesquisa(descricao, campoInteresse);
     }
 
     public void alteraPesquisa(String codigo, String conteudoASerAlterado, String novoConteudo){
-        controllerPesquisa.alterarPesquisa(codigo, conteudoASerAlterado, novoConteudo);
+        controllerGeral.alterarPesquisa(codigo, conteudoASerAlterado, novoConteudo);
     }
 
     public void encerraPesquisa(String codigo, String motivo){
-        controllerPesquisa.encerrarPesquisa(codigo, motivo);
+        controllerGeral.encerrarPesquisa(codigo, motivo);
     }
 
     public void ativaPesquisa(String codigo){
-        controllerPesquisa.ativarPesquisa(codigo);
+        controllerGeral.ativarPesquisa(codigo);
     }
 
     public String exibePesquisa(String codigo){
-        return controllerPesquisa.exibirPesquisa(codigo);
+        return controllerGeral.exibirPesquisa(codigo);
     }
 
     public boolean pesquisaEhAtiva(String codigo){
-        return controllerPesquisa.pesquisAtiva(codigo);
+        return controllerGeral.pesquisAtiva(codigo);
     }
 
 
 
     //Caso de uso 2(Anderson)
     public void cadastraPesquisador(String nome, String funcao, String biografia, String email, String fotoURL){
-        controllerPesquisador.cadastraPesquisador(nome, funcao, biografia, email, fotoURL);
+        controllerGeral.cadastraPesquisador(nome, funcao, biografia, email, fotoURL);
     }
     public void alteraPesquisador(String email, String atributo, String novoValor){
-        controllerPesquisador.alteraPesquisador(email, atributo, novoValor);
+        controllerGeral.alteraPesquisador(email, atributo, novoValor);
     }
     public void desativaPesquisador(String email){
-        controllerPesquisador.desativaPesquisador(email);
+        controllerGeral.desativaPesquisador(email);
     }
     public void ativaPesquisador(String email){
-        controllerPesquisador.ativaPesquisador(email);
+        controllerGeral.ativaPesquisador(email);
     }
     public String exibePesquisador(String email){
-        return controllerPesquisador.exibePesquisador(email);
+        return controllerGeral.exibePesquisador(email);
     }
     public boolean pesquisadorEhAtivo(String email){
-        return controllerPesquisador.pesquisadorEhAtivo(email);
+        return controllerGeral.pesquisadorEhAtivo(email);
     }
 
     //Caso de uso 3 (Henrique)
 
-    public void cadastraProblema(String descricao, int viabilidade) { controllerProblema.cadastraProblema(descricao, viabilidade); }
+    public void cadastraProblema(String descricao, int viabilidade) { controllerGeral.cadastraProblema(descricao, viabilidade); }
 
-    public void apagarProblema(String codigo) { controllerProblema.apagarProblema(codigo); }
+    public void apagarProblema(String codigo) { controllerGeral.apagarProblema(codigo); }
 
-    public String exibeProblema(String codigo) { return controllerProblema.exibeProblema(codigo); }
+    public String exibeProblema(String codigo) { return controllerGeral.exibeProblema(codigo); }
 
-    public void cadastraObjetivo(String tipo, String descricao, int aderencia, int viabilidade)  { controllerObjetivo.cadastraObjetivo(tipo, descricao, aderencia, viabilidade); }
+    public void cadastraObjetivo(String tipo, String descricao, int aderencia, int viabilidade)  { controllerGeral.cadastraObjetivo(tipo, descricao, aderencia, viabilidade); }
 
-    public void apagarObjetivo(String codigo) { controllerObjetivo.apagarObjetivo(codigo); }
+    public void apagarObjetivo(String codigo) { controllerGeral.apagarObjetivo(codigo); }
 
-    public String exibeObjetivo(String codigo) { return  controllerObjetivo.exibeObjetivo(codigo); }
+    public String exibeObjetivo(String codigo) { return  controllerGeral.exibeObjetivo(codigo); }
 
     //Caso de uso 4 (Davi)
 
     public void cadastraAtividade(String descricao,  String risco, String descricaoRisco){
-        controllerAtividade.cadastrarAtividades(descricao, risco, descricaoRisco);
+        controllerGeral.cadastrarAtividade(descricao, risco, descricaoRisco);
     }
 
     public void apagaAtividade(String codigo){
-        controllerAtividade.apagarAtividade(codigo);
+        controllerGeral.apagarAtividade(codigo);
     }
 
     public void cadastraItem(String codigo, String nomeItem){
-        controllerAtividade.cadastraItem(codigo, nomeItem);
+        controllerGeral.cadastraItem(codigo, nomeItem);
     }
 
     public String exibeAtividade(String codigo){
-        return controllerAtividade.exibeAtividade(codigo);
+        return controllerGeral.exibeAtividade(codigo);
     }
 
     public int contaItensPendentes(String codigo){
-        return controllerAtividade.contaItensPendentes(codigo);
+        return controllerGeral.contaItensPendentes(codigo);
     }
 
     public int contaItensRealizados(String codigo){
-        return controllerAtividade.contaItensRealizados(codigo);
+        return controllerGeral.contaItensRealizados(codigo);
     }
 
     //Caso de uso 5 (Davi)
     public boolean associaProblema(String idPesquisa, String idProblema){
-        return controllerAssociacaoPesquisa.associaProblema(idPesquisa, idProblema);
+        return controllerGeral.associaProblema(idPesquisa, idProblema);
     }
     public boolean desassociaProblema(String idPesquisa, String idProblema){
-        return controllerAssociacaoPesquisa.desassociaProblema(idPesquisa,idProblema);
+        return controllerGeral.desassociaProblema(idPesquisa,idProblema);
     }
     public boolean associaObjetivo(String idPesquisa, String idObjetivo){
-        return controllerAssociacaoPesquisa.associaObjetivo(idPesquisa, idObjetivo);
+        return controllerGeral.associaObjetivo(idPesquisa, idObjetivo);
     }
     public boolean desassociaObjetivo(String idPesquisa, String idObjetivo){
-        return controllerAssociacaoPesquisa.desassociaObjetivo(idPesquisa, idObjetivo);
+        return controllerGeral.desassociaObjetivo(idPesquisa, idObjetivo);
     }
     public String listaPesquisas(String ordem) {
-        //return controllerAssociacaoPesquisa.listaPesquisa(ordem);
-        return controllerPesquisa.listaPesquisas(ordem, controllerAssociacaoPesquisa);
+        //return controllerGeral.listaPesquisa(ordem);
+        return controllerGeral.listaPesquisas(ordem);
     }
 }
