@@ -23,7 +23,6 @@ public class CompPesquisaObjetivo {
         }
         this.idProblema = problema;
         return true;
-//    }
     }
 
     public boolean desassociaProblema(String problema){

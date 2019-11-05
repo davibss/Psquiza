@@ -1,6 +1,7 @@
 package com.psquiza.controllers;
 
 import com.psquiza.associacoes.CompPesquisaObjetivo;
+import com.psquiza.comparators.OrdenaPorIDProblema;
 import com.psquiza.entidades.Pesquisa;
 import com.psquiza.verificadores.Verificador;
 
@@ -8,15 +9,10 @@ import java.util.*;
 
 public class ControllerAssociacaoPesquisa {
     private ControllerPesquisa controllerPesquisa;
-//    private ControllerProblema controllerProblema;
-//    private ControllerObjetivo controllerObjetivo;
     private Map<String, CompPesquisaObjetivo> associacaoPesquisa;
 
-    public ControllerAssociacaoPesquisa(ControllerPesquisa controllerPesquisa,
-            ControllerProblema controllerProblema, ControllerObjetivo controllerObjetivo) {
+    public ControllerAssociacaoPesquisa(ControllerPesquisa controllerPesquisa) {
         this.controllerPesquisa = controllerPesquisa;
-//        this.controllerProblema = controllerProblema;
-//        this.controllerObjetivo = controllerObjetivo;
         associacaoPesquisa = new HashMap<>();
     }
 
@@ -59,9 +55,9 @@ public class ControllerAssociacaoPesquisa {
                 }
             }
         }
-        CompPesquisaObjetivo compPesquisaObjetivo = new CompPesquisaObjetivo();
+        //CompPesquisaObjetivo compPesquisaObjetivo = new CompPesquisaObjetivo();
         if (!associacaoPesquisa.containsKey(pesquisa)){
-            associacaoPesquisa.put(pesquisa, compPesquisaObjetivo);
+            associacaoPesquisa.put(pesquisa, new CompPesquisaObjetivo());
         }
         return associacaoPesquisa.get(pesquisa).asssociaObjetivo(objetivo);
     }
@@ -78,9 +74,11 @@ public class ControllerAssociacaoPesquisa {
 
     List<String> ordenaPorIDProblema(){
         ArrayList<String> lista = new ArrayList<>();
-        associacaoPesquisa.entrySet().stream().sorted(Map.Entry.comparingByValue(
-                (cpo1, cpo2) -> cpo1.getProblema().compareTo(cpo2.getProblema()) * -1
-        )).forEach(a -> lista.add(a.getKey()));
+//        associacaoPesquisa.entrySet().stream().sorted(Map.Entry.comparingByValue(
+//                (cpo1, cpo2) -> cpo1.getProblema().compareTo(cpo2.getProblema()) * -1
+//        )).forEach(a -> lista.add(a.getKey()));
+//        associacaoPesquisa.entrySet().stream().sorted(Map.Entry.comparingByValue(new OrdenaPorIDProblema())).
+//                forEach(a -> lista.add(a.getKey()));
         return lista;
     }
 

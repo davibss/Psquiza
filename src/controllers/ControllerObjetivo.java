@@ -19,7 +19,7 @@ public class ControllerObjetivo {
     public void cadastraObjetivo(String tipo, String descricao, int aderencia, int viabilidade) {
         verificaValidadeObjetivo(tipo, descricao, aderencia, viabilidade);
         String chave = "O"+(this.idObjetivo);
-        this.objetivos.put(chave, new Objetivo(tipo, descricao, aderencia, viabilidade));
+        this.objetivos.put(chave, new Objetivo(chave, tipo, descricao, aderencia, viabilidade));
         this.idObjetivo += 1;
     }
 
@@ -50,7 +50,8 @@ public class ControllerObjetivo {
         if(!this.objetivos.containsKey(codigo)) {
             throw new IllegalArgumentException("Objetivo nao encontrado");
         }
-        return codigo + " - " + this.objetivos.get(codigo).toString();
+        //return codigo + " - " + this.objetivos.get(codigo).toString();
+        return this.objetivos.get(codigo).toString();
     }
 
     private void verificaVazioNulo(String atributo, String nomeAtributo) {
@@ -61,5 +62,9 @@ public class ControllerObjetivo {
         if (atributo == null || atributo.equals("")){
             throw new IllegalArgumentException(joiner.toString());
         }
+    }
+
+    public Objetivo getObjetivo(String idObjetivo) {
+        return this.objetivos.get(idObjetivo);
     }
 }
