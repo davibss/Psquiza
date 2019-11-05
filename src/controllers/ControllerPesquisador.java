@@ -41,6 +41,13 @@ public class ControllerPesquisador {
         pesquisadores.put(email , new Pesquisador(nome, funcao, biografia, email, fotoURL));
     }
 
+    public void cadastraEspecialidadeAluno(String email, String semestre, Double iea){
+
+    }
+
+    public void cadastraEspecialidadeProfessor(String email, String formacao, String unidade, String data){
+
+    }
     /**
      *  Verifica uma String representando um possivel email de um Pesquisador. Verifica se o email nao eh nulo ou vazioa, em seguida
      *  se segue o formato adequado.
