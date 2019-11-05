@@ -5,13 +5,6 @@ import easyaccept.EasyAccept;
 
 public class FacadePsquiza {
 
-    private ControllerAtividade controllerAtividade;
-    private ControllerPesquisa controllerPesquisa;
-    private ControllerProblema controllerProblema;
-    private ControllerObjetivo controllerObjetivo;
-    private ControllerPesquisador controllerPesquisador;
-    private ControllerAssociacaoPesquisa controllerAssociacaoPesquisa;
-
     private ControllerGeral controllerGeral;
 
     public static void main(String[] args) {
@@ -25,13 +18,6 @@ public class FacadePsquiza {
     }
 
     public FacadePsquiza() {
-        controllerAtividade = new ControllerAtividade();
-        controllerProblema = new ControllerProblema();
-        controllerObjetivo = new ControllerObjetivo();
-        controllerPesquisador = new ControllerPesquisador();
-        controllerPesquisa = new ControllerPesquisa();
-        controllerAssociacaoPesquisa = new ControllerAssociacaoPesquisa(controllerPesquisa);
-
         controllerGeral = new ControllerGeral();
     }
 

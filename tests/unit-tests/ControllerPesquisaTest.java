@@ -1,6 +1,5 @@
 package com.tests;
 
-import com.psquiza.controllers.ControllerAssociacaoPesquisa;
 import com.psquiza.controllers.ControllerPesquisa;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,6 @@ class ControllerPesquisaTest {
 
     @BeforeEach
     void criarController(){
-        ControllerAssociacaoPesquisa controllerAssociacaoPesquisa = null;
         controllerPesquisa = new ControllerPesquisa();
     }
 

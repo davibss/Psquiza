@@ -8,7 +8,6 @@ public class ControllerGeral {
     private ControllerProblema controllerProblema;
     private ControllerObjetivo controllerObjetivo;
     private ControllerPesquisador controllerPesquisador;
-    private ControllerAssociacaoPesquisa controllerAssociacaoPesquisa;
 
     public ControllerGeral() {
         controllerAtividade = new ControllerAtividade();
@@ -16,7 +15,6 @@ public class ControllerGeral {
         controllerObjetivo = new ControllerObjetivo();
         controllerPesquisador = new ControllerPesquisador();
         controllerPesquisa = new ControllerPesquisa();
-        controllerAssociacaoPesquisa = new ControllerAssociacaoPesquisa(controllerPesquisa);
     }
 
     //Caso de uso 1(José Nestor)
@@ -124,7 +122,6 @@ public class ControllerGeral {
         return controllerPesquisa.desassociaObjetivo(idPesquisa, idObjetivo);
     }
     public String listaPesquisas(String ordem) {
-        //return controllerAssociacaoPesquisa.listaPesquisa(ordem);
         return controllerPesquisa.listaPesquisas(ordem);
     }
 }
