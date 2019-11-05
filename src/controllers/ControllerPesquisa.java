@@ -238,7 +238,7 @@ public class ControllerPesquisa {
 
     List<String> ordenaPorObjetivos(){
         ArrayList<String> lista = new ArrayList<>();
-        pesquisas.entrySet().stream().sorted(Map.Entry.comparingByValue(
+        pesquisas.entrySet().stream().filter(stringPesquisaEntry -> stringPesquisaEntry.getValue().getObjetivos() > 0).sorted(Map.Entry.comparingByValue(
                 (cpo1, cpo2) -> {
                     if (cpo1.getObjetivos() > cpo2.getObjetivos()){
                         return -1;
