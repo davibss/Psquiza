@@ -3,7 +3,7 @@ package com.psquiza.entidades;
 /**
  *  Representa um Pesquisador no Sistema.
  */
-public class Pesquisador {
+public class Pesquisador{
     /**
      *  Representacao em String da funcao de um pesquisador.
      */
@@ -28,6 +28,7 @@ public class Pesquisador {
      *  Representacao em valor booleano da situacao de atividade de um pesquisador."
      */
     private boolean ativo;
+
 
     /**
      *  Constroi um objeto Pesquisador a partir de informacoes de seu nome, funcao, biografia, email e foto. O pesquisador eh criado em estado ativo.

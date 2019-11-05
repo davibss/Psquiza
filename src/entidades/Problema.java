@@ -1,33 +1,43 @@
 package com.psquiza.entidades;
 
-/**
- * Representação de um problema no sistema
- * @author HenriqueGalindo - 119110732
- * Cada problema possui descrição e viabilidade
- */
-public class Problema {
+import java.util.Objects;
 
-    /** Representação em String da descrição do problema*/
+public class Problema {
+    private String codigo;
     private String descricao;
-    /** Valor inteiro entre 1 e 5 que representa a viabilidade do problema*/
     private int viabilidade;
 
-    /**
-     * Constrói problema a partir dos parâmetros passados.
-     * @param descricao representação em String da descrição do objetivo
-     * @param viabilidade int que representa a viabilidade do objetivo
-     */
-    public Problema(String descricao, int viabilidade) {
+    public Problema() {
+        this.codigo = null;
+        this.descricao = null;
+        this.viabilidade = 0;
+    }
+
+    public Problema(String codigo, String descricao, int viabilidade) {
+        this.codigo = codigo;
         this.descricao = descricao;
         this.viabilidade = viabilidade;
     }
 
-    /**
-     * Retorna a representação em String do objeto Problema
-     * @return a representação em String do objeto
-     */
     public String toString() {
-        return this.descricao + " - " + this.viabilidade;
+        return String.format("%s - %s - %d",this.codigo, this.descricao, this.viabilidade);
+        //return this.descricao + " - " + this.viabilidade;
     }
 
+    public String getIdProblema() {
+        return this.codigo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Problema problema = (Problema) o;
+        return Objects.equals(codigo, problema.codigo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(codigo);
+    }
 }

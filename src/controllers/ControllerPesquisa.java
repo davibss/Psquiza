@@ -1,7 +1,12 @@
 package com.psquiza.controllers;
 
 
+import com.psquiza.associacoes.CompPesquisaObjetivo;
+import com.psquiza.comparators.OrdenaPorIDProblema;
+import com.psquiza.entidades.Objetivo;
 import com.psquiza.entidades.Pesquisa;
+import com.psquiza.entidades.Problema;
+import com.psquiza.verificadores.Verificador;
 
 import java.util.*;
 
@@ -13,19 +18,12 @@ public class ControllerPesquisa {
     /** Mapa que armazena pesquisas, pesquisas são identificadas por um código gerado no sistema*/
     private Map<String, Pesquisa> pesquisas;
 
-    //private ControllerAssociacaoPesquisa controllerAssociacaoPesquisa;
-
-    public ControllerPesquisa(){
-        this.pesquisas = new HashMap<>();
-    }
-
     /**
      * Constrói um controller, inicializando um mapa.
      */
-//    public ControllerPesquisa(ControllerAssociacaoPesquisa controllerAssociacaoPesquisa){
-//        this.pesquisas = new HashMap<>();
-//        this.controllerAssociacaoPesquisa = controllerAssociacaoPesquisa;
-//    }
+    public ControllerPesquisa(){
+        this.pesquisas = new HashMap<>();
+    }
 
     /**
      * Cadastra uma pesquisa, cria um código que identifica pesquisas no mapa, lança exceções se necessário e retorna o código em forma de String.
@@ -176,22 +174,100 @@ public class ControllerPesquisa {
             throw new NullPointerException("Pesquisa nao encontrada.");
         }
     }
+
+    public boolean associaProblema(String pesquisa, Problema problema) {
+        verificaPesquisa(pesquisa);
+        if (!pesquisAtiva(pesquisa)){
+            throw new IllegalArgumentException("Pesquisa desativada.");
+        }
+        return pesquisas.get(pesquisa).associaProblema(problema);
+    }
+
+    public boolean desassociaProblema(String pesquisa, String problema) {
+        Verificador.verificaVazioNulo(pesquisa, "idPesquisa");
+        Verificador.verificaVazioNulo(problema, "idProblema");
+        verificaPesquisa(pesquisa);
+        if (!pesquisAtiva(pesquisa)){
+            throw new IllegalArgumentException("Pesquisa desativada.");
+        }
+        return pesquisas.get(pesquisa).desassociaProblema(problema);
+    }
+
+
+    public boolean associaObjetivo(String pesquisa, Objetivo objetivo) {
+        verificaPesquisa(pesquisa);
+        if (!pesquisAtiva(pesquisa)){
+            throw new IllegalArgumentException("Pesquisa desativada.");
+        }
+        for (String p : this.pesquisas.keySet()){
+            if (!p.equals(pesquisa)){
+                if (this.pesquisas.get(p).contemObjetivo(objetivo)){
+                    throw new IllegalArgumentException("Objetivo ja associado a uma pesquisa.");
+                }
+            }
+        }
+        //CompPesquisaObjetivo compPesquisaObjetivo = new CompPesquisaObjetivo();
+//        if (!pesquisas.containsKey(pesquisa)){
+//            pesquisas.put(pesquisa, new CompPesquisaObjetivo());
+//        }
+        return pesquisas.get(pesquisa).asssociaObjetivo(objetivo);
+    }
+
+    public boolean desassociaObjetivo(String pesquisa, String objetivo) {
+        Verificador.verificaVazioNulo(pesquisa,"idPesquisa");
+        Verificador.verificaVazioNulo(objetivo,"idObjetivo");
+        verificaPesquisa(pesquisa);
+        if (!pesquisAtiva(pesquisa)){
+            throw new IllegalArgumentException("Pesquisa desativada.");
+        }
+        return pesquisas.get(pesquisa).desassociaObjetivo(objetivo);
+    }
+
+    List<String> ordenaPorIDProblema(){
+        ArrayList<String> lista = new ArrayList<>();
+//        pesquisas.entrySet().stream().sorted(Map.Entry.comparingByValue(
+//                (cpo1, cpo2) -> cpo1.getProblema().compareTo(cpo2.getProblema()) * -1
+//        )).forEach(a -> lista.add(a.getKey()));
+        pesquisas.entrySet().stream().filter(stringPesquisaEntry -> stringPesquisaEntry.getValue().getProblema() != null).
+                sorted(Map.Entry.comparingByValue(new OrdenaPorIDProblema())).forEach(a -> lista.add(a.getKey()));
+        pesquisas.entrySet().stream().filter(stringPesquisaEntry -> stringPesquisaEntry.getValue().getProblema() == null).
+                sorted((chave1, chave2) -> chave1.getKey().compareTo(chave2.getKey()) * -1).
+                forEach(a -> lista.add(a.getKey()));
+        return lista;
+    }
+
+    List<String> ordenaPorObjetivos(){
+        ArrayList<String> lista = new ArrayList<>();
+        pesquisas.entrySet().stream().filter(stringPesquisaEntry -> stringPesquisaEntry.getValue().getObjetivos() > 0).sorted(Map.Entry.comparingByValue(
+                (cpo1, cpo2) -> {
+                    if (cpo1.getObjetivos() > cpo2.getObjetivos()){
+                        return -1;
+                    }else if (cpo1.getObjetivos() < cpo1.getObjetivos()){
+                        return 1;
+                    }else{
+                        return cpo1.maiorObjetivo().compareTo(cpo2.maiorObjetivo()) * -1;
+                    }
+                }
+        )).forEach(a -> lista.add(a.getKey()));
+        return lista;
+    }
     
-    public String listaPesquisas(String ordem, ControllerAssociacaoPesquisa controllerAssociacaoPesquisa) {
+    //public String listaPesquisas(String ordem, ControllerAssociacaoPesquisa controllerAssociacaoPesquisa) {
+    public String listaPesquisas(String ordem) {
         StringJoiner joiner = new StringJoiner(" | ");
         ArrayList<Pesquisa> lista = new ArrayList<>(this.pesquisas.values());
         switch (ordem){
             case "PROBLEMA":
-                controllerAssociacaoPesquisa.ordenaPorIDProblema().forEach(c -> joiner.add(exibirPesquisa(c)));
+                ordenaPorIDProblema().forEach(c -> joiner.add(exibirPesquisa(c)));
                 this.pesquisas.keySet().stream().
-                        filter(k -> !controllerAssociacaoPesquisa.ordenaPorIDProblema().contains(k)).
+                        filter(k -> !ordenaPorIDProblema().contains(k)).
                         sorted((chave1, chave2) -> chave1.compareTo(chave2) * -1).
                         forEach(c -> joiner.add(exibirPesquisa(c)));
                 break;
             case "OBJETIVOS":
-                controllerAssociacaoPesquisa.ordenaPorObjetivos().forEach(c -> joiner.add(exibirPesquisa(c)));
+                ordenaPorObjetivos().forEach(c -> joiner.add(exibirPesquisa(c)));
                 this.pesquisas.keySet().stream().
-                        filter(k -> !controllerAssociacaoPesquisa.ordenaPorObjetivos().contains(k)).
+                        filter(k -> !ordenaPorObjetivos().contains(k)).
                         sorted((chave1, chave2) -> chave1.compareTo(chave2) * -1).
                         forEach(c -> joiner.add(exibirPesquisa(c)));
                 break;

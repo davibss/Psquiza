@@ -36,7 +36,7 @@ public class ControllerProblema {
     public void cadastraProblema(String descricao, int viabilidade) {
         verificaValidadeProblema(descricao, viabilidade);
         String chave = "P"+(this.idProblema);
-        this.problemas.put(chave, new Problema(descricao, viabilidade));
+        this.problemas.put(chave, new Problema(chave, descricao, viabilidade));
         this.idProblema += 1;
     }
 
@@ -80,7 +80,8 @@ public class ControllerProblema {
 //        if(!this.problemas.containsKey(codigo)) {
 //            throw new IllegalArgumentException("Problema nao encontrado");
 //        }
-        return codigo + " - " + this.problemas.get(codigo).toString();
+        //return codigo + " - " + this.problemas.get(codigo).toString();
+        return this.problemas.get(codigo).toString();
     }
 
     /**
