@@ -13,10 +13,11 @@ public class Professor {
 
     @Override
     public String toString() {
-        return super.toString();
+
+        return (nome + " (" + funcao + ")" +  " - " + bio + " - " + email + " - " + foto + "-" + formacao + "-" + unidade + "-" data);
     }
 
-    public void altera(){
+   /* public void altera(){
 
-    }
+    }*/
 }

@@ -11,10 +11,10 @@ public class Aluno {
 
     @Override
     public String toString() {
-        return super.toString();
+        return (nome + " (" + funcao + ")" +  " - " + bio + " - " + email + " - " + foto + "-" + semestre + "-" + IEA);
     }
 
-    public void altera(){
+  /*  public void altera(){
 
-    }
+    }*/
 }
