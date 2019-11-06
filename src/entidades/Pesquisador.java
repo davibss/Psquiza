@@ -1,5 +1,8 @@
 package com.psquiza.entidades;
 
+import com.psquiza.Especialidades.Aluno;
+import com.psquiza.Especialidades.Professor;
+
 /**
  *  Representa um Pesquisador no Sistema.
  */
@@ -31,6 +34,8 @@ public class Pesquisador{
 
     private Especialidade especialidade;
 
+
+
     /**
      *  Constroi um objeto Pesquisador a partir de informacoes de seu nome, funcao, biografia, email e foto. O pesquisador eh criado em estado ativo.
      *
@@ -48,10 +53,14 @@ public class Pesquisador{
         this.foto = foto;
         this.ativo = true;
     }
-    public Pesquisador(Especialidade especialidade){
-        this.especialidade = especialidade;
+
+    public void adicionaEspecialidadeAluno(int semestre, Double iea){
+        this.especialidade = new Aluno(semestre, iea);
     }
 
+    public void adicionaEspecialidadeProfessor(String formacao, String unidade, String data){
+        this.especialidade = new Professor(formacao, unidade, data);
+    }
     /**
      *  Metodo responsavel por verificar se um Pesquisador eh ativo, retornando true em caso afirmativo e false no contrario.
      *
@@ -121,7 +130,7 @@ public class Pesquisador{
      */
     @Override
     public java.lang.String toString() {
-        return (nome + " (" + funcao + ")" +  " - " + bio + " - " + email + " - " + foto + .toString);
+        return (nome + " (" + funcao + ")" +  " - " + bio + " - " + email + " - " + foto + especialidade.toString());
     }
 
 

@@ -1,6 +1,8 @@
 package com.psquiza.Especialidades;
 
-public class Professor {
+import com.psquiza.entidades.Especialidade;
+
+public class Professor implements Especialidade {
     private String formacao;
     private String unidade;
     private String data;
@@ -14,7 +16,7 @@ public class Professor {
     @Override
     public String toString() {
 
-        return (nome + " (" + funcao + ")" +  " - " + bio + " - " + email + " - " + foto + "-" + formacao + "-" + unidade + "-" data);
+        return (formacao + "-" + unidade + "-" + data);
     }
 
    /* public void altera(){

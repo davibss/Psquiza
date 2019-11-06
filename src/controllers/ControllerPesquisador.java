@@ -41,12 +41,12 @@ public class ControllerPesquisador {
         pesquisadores.put(email , new Pesquisador(nome, funcao, biografia, email, fotoURL));
     }
 
-    public void cadastraEspecialidadeAluno(String email, String semestre, Double iea){
-
+    public void cadastraEspecialidadeAluno(String email, int semestre, Double iea){
+        pesquisadores.get(email).adicionaEspecialidadeAluno(semestre, iea);
     }
 
     public void cadastraEspecialidadeProfessor(String email, String formacao, String unidade, String data){
-
+        pesquisadores.get(email).adicionaEspecialidadeProfessor(formacao, unidade, data);
     }
     /**
      *  Verifica uma String representando um possivel email de um Pesquisador. Verifica se o email nao eh nulo ou vazioa, em seguida
