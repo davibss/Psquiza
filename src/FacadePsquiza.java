@@ -133,7 +133,6 @@ public class FacadePsquiza {
     public boolean associaPesquisador(String idPesquisa, String emailPesquisador){
         return controllerGeral.associaPesquisador(idPesquisa, emailPesquisador);
     }
-
     public boolean desassociaPesquisador(String idPesquisa, String emailPesquisador){
         return controllerGeral.desassociaPesquisador(idPesquisa, emailPesquisador);
     }
@@ -143,6 +142,10 @@ public class FacadePsquiza {
     public void cadastraEspecialidadeAluno(String email, int semestre, Double iea){
         controllerGeral.cadastraEspecialidadeAluno(email, semestre, iea);
     }
+    public String listaPesquisadores(String tipo){
+        return controllerGeral.listaPesquisadores(tipo);
+    }
+
     // Caso de Uso 8 (Anderson)
     public String busca(String termo){
         return controllerGeral.busca(termo);

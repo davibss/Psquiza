@@ -52,6 +52,17 @@ public class ControllerPesquisador {
         verificaEmail(email);
         pesquisadores.get(email).adicionaEspecialidadeProfessor(formacao, unidade, data);
     }
+
+    public String listaPesquisadores(String tipo){
+        String lista = "";
+        String separador = "";
+        for(Pesquisador pesquisador : this.pesquisadores.values())
+            if(pesquisador.getFuncao().equals(tipo)){
+                lista += separador + pesquisador.toString();
+                separador = " | ";
+            }
+        return lista;
+    }
    // public String listaPesquisadores(String tipo){}
     /**
      *  Verifica uma String representando um possivel email de um Pesquisador. Verifica se o email nao eh nulo ou vazioa, em seguida
@@ -214,7 +225,13 @@ public class ControllerPesquisador {
                 pesquisadores.get(email).setFoto(novoValor);
                 break;
             default:
-                throw new IllegalArgumentException("Atributo invalido.");
+                if(atributo.equals("SEMESTRE") || atributo.equals("IEA") || atributo.equals("FORMACAO") || atributo.equals("UNIDADE") || atributo.equals("DATA")) {
+                    verificaNome(novoValor);
+                    pesquisadores.get(email).altera(atributo, novoValor);
+                }
+                else {
+                    throw new IllegalArgumentException("Atributo invalido.");
+                }
         }
     }
 

@@ -183,6 +183,14 @@ public class ControllerGeral {
         }
         controllerPesquisador.cadastraEspecialidadeAluno(email, semestre, iea);
     }
+
+    public String listaPesquisadores(String tipo){
+        if(tipo.equals("") || tipo == null){
+            throw new RuntimeException("Campo tipo nao pode ser nulo ou vazio.");
+        }
+
+        return controllerPesquisador.listaPesquisadores(tipo);
+    }
     // caso de uso 8 - Anderson
     public String busca(String termo){
         return buscador.buscaGeral(termo);

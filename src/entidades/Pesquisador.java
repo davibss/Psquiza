@@ -75,11 +75,20 @@ public class Pesquisador{
         return bio;
     }
 
+    public String getFuncao() {
+        return funcao;
+    }
+
+    public void altera(String nomeAtributo, String atributo){
+        especialidade.altera(nomeAtributo, atributo);
+    }
+
     /**
      *  Define um valor String para o atributo email do Pesquisador.
      *
      * @param email String representando o novo email a ser definido.
      */
+
     public void setEmail(String email) {
         this.email = email;
     }

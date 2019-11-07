@@ -16,7 +16,13 @@ public class Aluno implements Especialidade {
         return (semestre + "-" + IEA);
     }
 
-  /*  public void altera(){
+    public void altera(String nomeAtributo, String atributo){
+        if(nomeAtributo.equals("SEMESTRE")){
+            this.semestre = Integer.parseInt(atributo);
+        }
+        if(nomeAtributo.equals("IEA")){
+            this.IEA = Double.parseDouble(atributo);
+        }
 
-    }*/
+    }
 }
