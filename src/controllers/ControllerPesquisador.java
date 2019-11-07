@@ -329,7 +329,7 @@ public class ControllerPesquisador {
         List<String> found = new ArrayList<String>();
 
         pesquisadores.entrySet().stream().filter(entry -> entry.getValue().getBio().toLowerCase().contains(termo)).
-                sorted((chave1, chave2) -> chave1.getKey().compareTo(chave2.getKey()) * -1).
+                sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).
                 forEach(entry -> found.add(entry.getKey() + ": " + entry.getValue().getBio()));
 
 //        for (Map.Entry<String, Pesquisador> entry : pesquisadores.entrySet()) {

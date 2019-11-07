@@ -46,9 +46,9 @@ public class ControllerAtividade {
      * @param descricaoRisco representação em String do objeto a ser testado.
      */
     private void verificaValidadeAtividade(String descricao, String risco, String descricaoRisco) {
-        verificaVazioNulo(descricao, "Descricao");
-        verificaVazioNulo(risco, "nivelRisco");
-        verificaVazioNulo(descricaoRisco, "descricaoRisco");
+        Verificador.verificaVazioNulo(descricao, "Descricao");
+        Verificador.verificaVazioNulo(risco, "nivelRisco");
+        Verificador.verificaVazioNulo(descricaoRisco, "descricaoRisco");
         verificaValidadeRisco(risco);
     }
 
@@ -63,24 +63,19 @@ public class ControllerAtividade {
         }
     }
 
-    /**
-     * Verifica se o parâmetro passado é vazio ou nulo, se for, monta String
-     * pra lançar uma exceção.
-     * @param atributo representação em String do atributo a ser verificado.
-     * @param nomeAtributo representação em String do nome do atributo.
-     */
-    private void verificaVazioNulo(String atributo, String nomeAtributo) {
-        StringJoiner joiner = new StringJoiner(" ");
-        if (!nomeAtributo.equals("item")) {
-            joiner.add("Campo").add(nomeAtributo);
-        }else{
-            joiner.add("Item");
-        }
-        joiner.add("nao pode ser nulo ou vazio.");
-        if (atributo == null || atributo.equals("")){
-            throw new IllegalArgumentException(joiner.toString());
-        }
-    }
+
+//    private void verificaVazioNulo(String atributo, String nomeAtributo) {
+//        StringJoiner joiner = new StringJoiner(" ");
+//        if (!nomeAtributo.equals("item")) {
+//            joiner.add("Campo").add(nomeAtributo);
+//        }else{
+//            joiner.add("Item");
+//        }
+//        joiner.add("nao pode ser nulo ou vazio.");
+//        if (atributo == null || atributo.equals("")){
+//            throw new IllegalArgumentException(joiner.toString());
+//        }
+//    }
 
     /**
      * Remove uma atividade do mapa de atividades a partir do código.
@@ -88,7 +83,7 @@ public class ControllerAtividade {
      * @param codigo representação em String do código da atividade.
      */
     public void apagarAtividade(String codigo) {
-        verificaVazioNulo(codigo, "codigo");
+        Verificador.verificaVazioNulo(codigo, "codigo");
         verificaExistenciaAtividade(codigo);
         atividades.remove(codigo);
     }
@@ -120,8 +115,8 @@ public class ControllerAtividade {
      * @param nomeItem reresentação em String do objeto a ser verificado.
      */
     private void verificaValidadeItem(String codigo, String nomeItem) {
-        verificaVazioNulo(codigo, "codigo");
-        verificaVazioNulo(nomeItem, "item");
+        Verificador.verificaVazioNulo(codigo, "codigo");
+        Verificador.verificaVazioNulo(nomeItem, "item");
     }
 
     /**
@@ -131,7 +126,7 @@ public class ControllerAtividade {
      * @return String com a representaão da atividade.
      */
     public String exibeAtividade(String codigo) {
-        verificaVazioNulo(codigo,"codigo");
+        Verificador.verificaVazioNulo(codigo,"codigo");
         verificaExistenciaAtividade(codigo);
         return this.atividades.get(codigo).toString();
     }
@@ -143,7 +138,7 @@ public class ControllerAtividade {
      * @return um inteiro com a quantidade de itens pendentes.
      */
     public int contaItensPendentes(String codigo) {
-        verificaVazioNulo(codigo,"codigo");
+        Verificador.verificaVazioNulo(codigo,"codigo");
         verificaExistenciaAtividade(codigo);
         return (this.atividades.get(codigo).contaItensPendentes());
     }
@@ -155,14 +150,15 @@ public class ControllerAtividade {
      * @return um inteiro com a quantidade de itens realizados.
      */
     public int contaItensRealizados(String codigo) {
-        verificaVazioNulo(codigo,"codigo");
+        Verificador.verificaVazioNulo(codigo, "codigo");
+        //verificaVazioNulo(codigo,"codigo");
         verificaExistenciaAtividade(codigo);
         return (this.atividades.get(codigo).contaItensRealizados());
     }
     public List<String>  buscaAtividade(String termo){
         List<String> found = new ArrayList<>();
 
-        atividades.entrySet().stream().sorted((chave1, chave2) -> chave1.getKey().compareTo(chave2.getKey()) * -1).
+        atividades.entrySet().stream().sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).
         forEach(entry -> {
             if (entry.getValue().getDescricao().toLowerCase().contains(termo)){
                 found.add(entry.getKey() + ": " + entry.getValue().getDescricao());

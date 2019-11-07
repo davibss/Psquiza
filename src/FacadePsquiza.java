@@ -15,7 +15,9 @@ public class FacadePsquiza {
                                                          "tests/accept-tests/use_case_4.txt",
                                                          "tests/accept-tests/use_case_5.txt",
                                                          "tests/accept-tests/use_case_6.txt",
-                                                        "tests/accept-tests/use_case_7.txt"};
+                                                         "tests/accept-tests/use_case_7.txt",
+                                                         "tests/accept-tests/use_case_8.txt",
+                                                        };
         EasyAccept.main(args);
     }
 

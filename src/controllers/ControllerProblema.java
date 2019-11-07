@@ -1,6 +1,7 @@
 package com.psquiza.controllers;
 
 import com.psquiza.entidades.Problema;
+import com.psquiza.verificadores.Verificador;
 
 import java.util.*;
 
@@ -44,7 +45,7 @@ public class ControllerProblema {
      * @param viabilidade int sob teste
      */
     private void verificaValidadeProblema(String descricao, int viabilidade) {
-        verificaVazioNulo(descricao, "descricao");
+        Verificador.verificaVazioNulo(descricao, "descricao");
         if(viabilidade < 1 || viabilidade > 5) {
             throw new IllegalArgumentException("Valor invalido de viabilidade.");
         }
@@ -57,7 +58,7 @@ public class ControllerProblema {
      * @param codigo representação em String do código do problema a ser removido
      */
     public void apagarProblema(String codigo) {
-        verificaVazioNulo(codigo, "codigo");
+        Verificador.verificaVazioNulo(codigo, "codigo");
         verificaProblema(codigo);
 //        if(!this.problemas.containsKey(codigo)) {
 //            throw new IllegalArgumentException("Problema nao encontrado");
@@ -73,7 +74,7 @@ public class ControllerProblema {
      * @return representação em String de um objeto Problema
      */
     public String exibeProblema(String codigo) {
-        verificaVazioNulo(codigo,"codigo");
+        Verificador.verificaVazioNulo(codigo,"codigo");
         verificaProblema(codigo);
 //        if(!this.problemas.containsKey(codigo)) {
 //            throw new IllegalArgumentException("Problema nao encontrado");
@@ -82,26 +83,20 @@ public class ControllerProblema {
         return this.problemas.get(codigo).toString();
     }
 
-    /**
-     * Verifica se o parâmetro passado é vazio ou nulo, se for, monta String
-     * pra lançar uma exceção.
-     * @param atributo representação em String do atributo a ser verificado.
-     * @param nomeAtributo representação em String do nome do atributo.
-     */
-    private void verificaVazioNulo(String atributo, String nomeAtributo) {
-        StringJoiner joiner = new StringJoiner(" ");
-
-        if (!nomeAtributo.equals("item")) {
-            joiner.add("Campo").add(nomeAtributo);
-        }else{
-            joiner.add("Item");
-        }
-
-        joiner.add("nao pode ser nulo ou vazio.");
-        if (atributo == null || atributo.equals("")) {
-            throw new IllegalArgumentException(joiner.toString());
-        }
-    }
+//    private void verificaVazioNulo(String atributo, String nomeAtributo) {
+//        StringJoiner joiner = new StringJoiner(" ");
+//
+//        if (!nomeAtributo.equals("item")) {
+//            joiner.add("Campo").add(nomeAtributo);
+//        }else{
+//            joiner.add("Item");
+//        }
+//
+//        joiner.add("nao pode ser nulo ou vazio.");
+//        if (atributo == null || atributo.equals("")) {
+//            throw new IllegalArgumentException(joiner.toString());
+//        }
+//    }
 
     public void verificaProblema(String codigo){
         if(!this.problemas.containsKey(codigo)) {
@@ -117,7 +112,7 @@ public class ControllerProblema {
         List<String> found = new ArrayList<>();
 
         problemas.entrySet().stream().filter(entry -> entry.getValue().getDescricao().toLowerCase().contains(termo)).
-                sorted((chave1, chave2) -> chave1.getKey().compareTo(chave2.getKey()) * -1).
+                sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).
                 forEach(entry -> found.add(entry.getKey() + ": " + entry.getValue().getDescricao()));
 
 //        for (Map.Entry<String, Problema> entry : problemas.entrySet()){

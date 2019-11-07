@@ -7,7 +7,6 @@ import com.psquiza.entidades.*;
 import com.psquiza.verificadores.Verificador;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Controller de pesquisa, classe responsável por cadastrar, alterar, ativar, encerrar e exibir pesquisa
@@ -241,8 +240,7 @@ public class ControllerPesquisa {
     private List<String> ordenaPorIDProblema(){
         ArrayList<String> lista = new ArrayList<>();
         this.pesquisas.entrySet().stream().filter(stringPesquisaEntry -> stringPesquisaEntry.getValue().getProblema() != null).
-                sorted(Map.Entry.comparingByValue(new OrdenaPorIDProblema())).
-                forEach(a -> lista.add(a.getKey()));
+                sorted(Map.Entry.comparingByValue(new OrdenaPorIDProblema())).forEach(a -> lista.add(a.getKey()));
         this.pesquisas.keySet().stream().filter(k -> !lista.contains(k)).
                 sorted((chave1, chave2) -> chave1.compareTo(chave2) * -1).forEach(lista::add);
         return lista;
@@ -268,8 +266,10 @@ public class ControllerPesquisa {
                 ordenaPorObjetivos().forEach(c -> joiner.add(exibirPesquisa(c)));
                 break;
             case "PESQUISA":
-                lista.sort((pesquisa1, pesquisa2) -> pesquisa1.getCodigo().compareTo(pesquisa2.getCodigo()) * -1);
-                lista.forEach(pesquisa -> joiner.add(pesquisa.toString()));
+                lista.stream().sorted(Comparator.comparing(Pesquisa::getCodigo).reversed()).
+                        forEach(pesquisa -> joiner.add(pesquisa.toString()));
+//                lista.sort((pesquisa1, pesquisa2) -> pesquisa1.getCodigo().compareTo(pesquisa2.getCodigo()) * -1);
+//                lista.forEach(pesquisa -> joiner.add(pesquisa.toString()));
                 break;
             default:
                 throw new IllegalArgumentException("Valor invalido da ordem");
@@ -278,8 +278,7 @@ public class ControllerPesquisa {
     }
     public List<String> buscaPesquisa(String termo){
         List<String> found = new ArrayList<String>();
-
-        pesquisas.entrySet().stream().sorted((chave1, chave2) -> chave1.getKey().compareTo(chave2.getKey()) * -1).
+        pesquisas.entrySet().stream().sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).
                 forEach(entry -> {
                     if (entry.getValue().getDescricao().toLowerCase().contains(termo)){
                         found.add(entry.getKey() + ": " + entry.getValue().getDescricao());
