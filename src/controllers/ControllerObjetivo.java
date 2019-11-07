@@ -115,12 +115,17 @@ public class ControllerObjetivo {
     }
     public List<String> buscaObjetivo(String termo){
         List<String> found = new ArrayList<String>();
-        for (Map.Entry<String, Objetivo> entry : objetivos.entrySet()){
-            String descricao = entry.getValue().getDescricao();
-            if (descricao.toLowerCase().contains(termo)){
-                found.add(entry.getKey() + ": " + descricao);
-            }
-        }
+
+        objetivos.entrySet().stream().filter(entry -> entry.getValue().getDescricao().contains(termo)).
+                sorted((chave1, chave2) -> chave1.getKey().compareTo(chave2.getKey()) * -1).
+                forEach(entry -> found.add(entry.getKey() + ": " + entry.getValue().getDescricao()));
+
+//        for (Map.Entry<String, Objetivo> entry : objetivos.entrySet()){
+//            String descricao = entry.getValue().getDescricao();
+//            if (descricao.toLowerCase().contains(termo)){
+//                found.add(entry.getKey() + ": " + descricao);
+//            }
+//        }
         return found;
     }
 }

@@ -44,16 +44,20 @@ public class Buscador {
     public String buscaPorNumero(String termo, int posicao){
         verificaTermo(termo);
         if( posicao < 0){
-            throw new IllegalArgumentException("Numero do resultado nao pode ser negativo.");
+            throw new IllegalArgumentException("Numero do resultado nao pode ser negativo");
         }
         List<String> buscados = buscaGenerica(termo);
         if (posicao > buscados.size()){
             throw new IllegalArgumentException("Entidade nao encontrada.");
         }
-        return buscados.get(posicao);
+        //buscados.forEach(System.out::println);
+        return buscados.get(posicao-1);
     }
     public int contaResultados(String termo){
         List<String> buscados = buscaGenerica(termo);
+        if (buscados.size() == 0){
+            throw new IllegalArgumentException("Nenhum resultado encontrado");
+        }
         return buscados.size();
     }
 }

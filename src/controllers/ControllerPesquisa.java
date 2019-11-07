@@ -223,17 +223,11 @@ public class ControllerPesquisa {
         if (!pesquisAtiva(pesquisa)){
             throw new IllegalArgumentException("Pesquisa desativada.");
         }
-        for (String p : this.pesquisas.keySet()){
-            if (!p.equals(pesquisa)){
-                if (this.pesquisas.get(p).contemObjetivo(objetivo)){
-                    throw new IllegalArgumentException("Objetivo ja associado a uma pesquisa.");
-                }
-            }
+
+        if (this.pesquisas.keySet().stream().filter(p -> !p.equals(pesquisa)).anyMatch(p -> this.pesquisas.get(p).contemObjetivo(objetivo))){
+            throw new IllegalArgumentException("Objetivo ja associado a uma pesquisa.");
         }
-        //CompPesquisaObjetivo compPesquisaObjetivo = new CompPesquisaObjetivo();
-//        if (!pesquisas.containsKey(pesquisa)){
-//            pesquisas.put(pesquisa, new CompPesquisaObjetivo());
-//        }
+
         return pesquisas.get(pesquisa).asssociaObjetivo(objetivo);
     }
 
@@ -249,62 +243,32 @@ public class ControllerPesquisa {
 
     private List<String> ordenaPorIDProblema(){
         ArrayList<String> lista = new ArrayList<>();
-//        pesquisas.entrySet().stream().filter(stringPesquisaEntry -> stringPesquisaEntry.getValue().getProblema() != null).
-//                sorted(Map.Entry.comparingByValue(new OrdenaPorIDProblema())).
-//                forEach(a -> lista.add(a.getKey()));
         this.pesquisas.entrySet().stream().filter(stringPesquisaEntry -> stringPesquisaEntry.getValue().getProblema() != null).
                 sorted(Map.Entry.comparingByValue(new OrdenaPorIDProblema())).
                 forEach(a -> lista.add(a.getKey()));
         this.pesquisas.keySet().stream().filter(k -> !lista.contains(k)).
                 sorted((chave1, chave2) -> chave1.compareTo(chave2) * -1).forEach(lista::add);
-//        pesquisas.entrySet().stream().filter(stringPesquisaEntry -> stringPesquisaEntry.getValue().getProblema() == null).
-//                sorted((chave1, chave2) -> chave1.getKey().compareTo(chave2.getKey()) * -1).
-//                forEach(a -> lista.add(a.getKey()));
         return lista;
     }
 
     private List<String> ordenaPorObjetivos(){
         ArrayList<String> lista = new ArrayList<>();
-//        return pesquisas.entrySet().stream().filter(stringPesquisaEntry -> stringPesquisaEntry.getValue().getObjetivos() > 0).
-//                sorted(Map.Entry.comparingByValue(new OrdenaPorObjetivo())).
-//                map(Map.Entry::getKey).collect(Collectors.toList());
         pesquisas.entrySet().stream().filter(stringPesquisaEntry -> stringPesquisaEntry.getValue().getObjetivos() > 0).
                sorted(Map.Entry.comparingByValue(new OrdenaPorObjetivo())).forEach(a -> lista.add(a.getKey()));
         this.pesquisas.keySet().stream().filter(k -> !lista.contains(k)).
                 sorted((chave1, chave2) -> chave1.compareTo(chave2) * -1).forEach(lista::add);
-
-//        pesquisas.entrySet().stream().filter(stringPesquisaEntry -> stringPesquisaEntry.getValue().getObjetivos() > 0).sorted(Map.Entry.comparingByValue(
-//                (cpo1, cpo2) -> {
-//                    if (cpo1.getObjetivos() > cpo2.getObjetivos()){
-//                        return -1;
-//                    }else if (cpo1.getObjetivos() < cpo1.getObjetivos()){
-//                        return 1;
-//                    }else{
-//                        return cpo1.maiorObjetivo().compareTo(cpo2.maiorObjetivo()) * -1;
-//                    }
-//                }
-//        )).forEach(a -> lista.add(a.getKey()));
         return lista;
     }
     
-    //public String listaPesquisas(String ordem, ControllerAssociacaoPesquisa controllerAssociacaoPesquisa) {
     public String listaPesquisas(String ordem) {
         StringJoiner joiner = new StringJoiner(" | ");
         ArrayList<Pesquisa> lista = new ArrayList<>(this.pesquisas.values());
         switch (ordem){
             case "PROBLEMA":
                 ordenaPorIDProblema().forEach(c -> joiner.add(exibirPesquisa(c)));
-//                this.pesquisas.keySet().stream().
-//                        filter(k -> !ordenaPorIDProblema().contains(k)).
-//                        sorted((chave1, chave2) -> chave1.compareTo(chave2) * -1).
-//                        forEach(c -> joiner.add(exibirPesquisa(c)));
                 break;
             case "OBJETIVOS":
                 ordenaPorObjetivos().forEach(c -> joiner.add(exibirPesquisa(c)));
-//                this.pesquisas.keySet().stream().
-//                        filter(k -> !ordenaPorObjetivos().contains(k)).
-//                        sorted((chave1, chave2) -> chave1.compareTo(chave2) * -1).
-//                        forEach(c -> joiner.add(exibirPesquisa(c)));
                 break;
             case "PESQUISA":
                 lista.sort((pesquisa1, pesquisa2) -> pesquisa1.getCodigo().compareTo(pesquisa2.getCodigo()) * -1);
@@ -317,16 +281,16 @@ public class ControllerPesquisa {
     }
     public List<String> buscaPesquisa(String termo){
         List<String> found = new ArrayList<String>();
-        for (Map.Entry<String, Pesquisa> entry : pesquisas.entrySet()) {
-            String interesse = entry.getValue().getCampoInteresse();
-            String descricao = entry.getValue().getDescricao();
-            if (interesse.toLowerCase().contains(termo)){
-                found.add(entry.getKey() + ": " + interesse);
-            }
-            if (descricao.toLowerCase().contains(termo)){
-                found.add(entry.getKey() + ": " + descricao);
-            }
-        }
+
+        pesquisas.entrySet().stream().sorted((chave1, chave2) -> chave1.getKey().compareTo(chave2.getKey()) * -1).
+                forEach(entry -> {
+                    if (entry.getValue().getDescricao().toLowerCase().contains(termo)){
+                        found.add(entry.getKey() + ": " + entry.getValue().getDescricao());
+                    }
+                    if (entry.getValue().getCampoInteresse().toLowerCase().contains(termo)){
+                        found.add(entry.getKey() + ": " + entry.getValue().getCampoInteresse());
+                    }
+                });
         return found;
     }
 }
