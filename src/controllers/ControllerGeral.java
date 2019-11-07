@@ -131,9 +131,10 @@ public class ControllerGeral {
 
     //Caso de uso 6 (Nestor)
     public boolean associaPesquisador(String idPesquisa, String emailPesquisador){
-        if(idPesquisa.equals("") || idPesquisa == null){
-            throw new RuntimeException("Campo idPesquisa nao pode ser nulo ou vazio.");
-        }
+        Verificador.verificaVazioNulo(idPesquisa,"idPesquisa");
+//        if(idPesquisa == null || idPesquisa.equals("")){
+//            throw new RuntimeException("Campo idPesquisa nao pode ser nulo ou vazio.");
+//        }
         if(emailPesquisador.equals("") || emailPesquisador == null){
             throw new RuntimeException("Campo emailPesquisador nao pode ser nulo ou vazio.");
         }

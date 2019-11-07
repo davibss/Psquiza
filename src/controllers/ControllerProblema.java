@@ -112,14 +112,20 @@ public class ControllerProblema {
     public Problema getProblema(String problema) {
         return this.problemas.get(problema);
     }
+
     public List<String> buscaProblema(String termo){
         List<String> found = new ArrayList<>();
-        for (Map.Entry<String, Problema> entry : problemas.entrySet()){
-            String descricao = entry.getValue().getDescricao();
-            if (descricao.toLowerCase().contains(termo)){
-                found.add(entry.getKey() + ": " + descricao);
-            }
-        }
+
+        problemas.entrySet().stream().filter(entry -> entry.getValue().getDescricao().toLowerCase().contains(termo)).
+                sorted((chave1, chave2) -> chave1.getKey().compareTo(chave2.getKey()) * -1).
+                forEach(entry -> found.add(entry.getKey() + ": " + entry.getValue().getDescricao()));
+
+//        for (Map.Entry<String, Problema> entry : problemas.entrySet()){
+//            String descricao = entry.getValue().getDescricao();
+//            if (descricao.toLowerCase().contains(termo)){
+//                found.add(entry.getKey() + ": " + descricao);
+//            }
+//        }
         return found;
     }
 }

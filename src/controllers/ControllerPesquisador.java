@@ -310,13 +310,18 @@ public class ControllerPesquisador {
     }
     public List<String> buscaPesquisador(String termo){
         List<String> found = new ArrayList<String>();
-        for (Map.Entry<String, Pesquisador> entry : pesquisadores.entrySet()) {
-            String biografia = entry.getValue().getBio().toLowerCase();
-            if (biografia.contains(termo)) {
-                String pesquisador = entry.getKey() + ": " + entry.getValue().getBio();
-                found.add(pesquisador);
-            }
-        }
+
+        pesquisadores.entrySet().stream().filter(entry -> entry.getValue().getBio().toLowerCase().contains(termo)).
+                sorted((chave1, chave2) -> chave1.getKey().compareTo(chave2.getKey()) * -1).
+                forEach(entry -> found.add(entry.getKey() + ": " + entry.getValue().getBio()));
+
+//        for (Map.Entry<String, Pesquisador> entry : pesquisadores.entrySet()) {
+//            String biografia = entry.getValue().getBio().toLowerCase();
+//            if (biografia.contains(termo)) {
+//                String pesquisador = entry.getKey() + ": " + entry.getValue().getBio();
+//                found.add(pesquisador);
+//            }
+//        }
         return found;
     }
 }

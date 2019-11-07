@@ -161,16 +161,26 @@ public class ControllerAtividade {
     }
     public List<String>  buscaAtividade(String termo){
         List<String> found = new ArrayList<>();
-        for (Map.Entry<String, Atividade> entry : atividades.entrySet()){
-            String descricao = entry.getValue().getDescricao();
-            String risco = entry.getValue().getDescricaoRisco();
-            if (descricao.toLowerCase().contains(termo)){
-                found.add(entry.getKey() + ": " + descricao);
+
+        atividades.entrySet().stream().sorted((chave1, chave2) -> chave1.getKey().compareTo(chave2.getKey()) * -1).
+        forEach(entry -> {
+            if (entry.getValue().getDescricao().toLowerCase().contains(termo)){
+                found.add(entry.getKey() + ": " + entry.getValue().getDescricao());
             }
-            if (risco.toLowerCase().contains(termo)){
-                found.add(entry.getKey() + ": " + risco);
+            if (entry.getValue().getDescricaoRisco().toLowerCase().contains(termo)){
+                found.add(entry.getKey() + ": " + entry.getValue().getDescricaoRisco());
             }
-        }
+        });
+//        for (Map.Entry<String, Atividade> entry : atividades.entrySet()){
+//            String descricao = entry.getValue().getDescricao();
+//            String risco = entry.getValue().getDescricaoRisco();
+//            if (descricao.toLowerCase().contains(termo)){
+//                found.add(entry.getKey() + ": " + descricao);
+//            }
+//            if (risco.toLowerCase().contains(termo)){
+//                found.add(entry.getKey() + ": " + risco);
+//            }
+//        }
         return found;
     }
 }
