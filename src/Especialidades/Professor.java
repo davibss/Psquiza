@@ -19,7 +19,15 @@ public class Professor implements Especialidade {
         return (formacao + "-" + unidade + "-" + data);
     }
 
-   /* public void altera(){
-
-    }*/
+    public void altera(String nomeAtributo, String atributo){
+        if(nomeAtributo.equals("FORMACAO")){
+            this.formacao = atributo;
+        }
+        if(nomeAtributo.equals("UNIDADE")){
+            this.unidade = atributo;
+        }
+        if(nomeAtributo.equals("DATA")){
+            this.data = atributo;
+        }
+    }
 }

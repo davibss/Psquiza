@@ -52,6 +52,17 @@ public class ControllerPesquisador {
         verificaEmail(email);
         pesquisadores.get(email).adicionaEspecialidadeProfessor(formacao, unidade, data);
     }
+
+    public String listaPesquisadores(String tipo){
+        String lista = "";
+        String separador = "";
+        for(Pesquisador pesquisador : this.pesquisadores.values())
+            if(pesquisador.getFuncao().equals(tipo)){
+                lista += separador + pesquisador.toString();
+                separador = " | ";
+            }
+        return lista;
+    }
    // public String listaPesquisadores(String tipo){}
     /**
      *  Verifica uma String representando um possivel email de um Pesquisador. Verifica se o email nao eh nulo ou vazioa, em seguida
@@ -214,7 +225,13 @@ public class ControllerPesquisador {
                 pesquisadores.get(email).setFoto(novoValor);
                 break;
             default:
-                throw new IllegalArgumentException("Atributo invalido.");
+                if(atributo.equals("SEMESTRE") || atributo.equals("IEA") || atributo.equals("FORMACAO") || atributo.equals("UNIDADE") || atributo.equals("DATA")) {
+                    verificaNome(novoValor);
+                    pesquisadores.get(email).altera(atributo, novoValor);
+                }
+                else {
+                    throw new IllegalArgumentException("Atributo invalido.");
+                }
         }
     }
 
@@ -310,13 +327,18 @@ public class ControllerPesquisador {
     }
     public List<String> buscaPesquisador(String termo){
         List<String> found = new ArrayList<String>();
-        for (Map.Entry<String, Pesquisador> entry : pesquisadores.entrySet()) {
-            String biografia = entry.getValue().getBio().toLowerCase();
-            if (biografia.contains(termo)) {
-                String pesquisador = entry.getKey() + ": " + entry.getValue().getBio();
-                found.add(pesquisador);
-            }
-        }
+
+        pesquisadores.entrySet().stream().filter(entry -> entry.getValue().getBio().toLowerCase().contains(termo)).
+                sorted((chave1, chave2) -> chave1.getKey().compareTo(chave2.getKey()) * -1).
+                forEach(entry -> found.add(entry.getKey() + ": " + entry.getValue().getBio()));
+
+//        for (Map.Entry<String, Pesquisador> entry : pesquisadores.entrySet()) {
+//            String biografia = entry.getValue().getBio().toLowerCase();
+//            if (biografia.contains(termo)) {
+//                String pesquisador = entry.getKey() + ": " + entry.getValue().getBio();
+//                found.add(pesquisador);
+//            }
+//        }
         return found;
     }
 }
