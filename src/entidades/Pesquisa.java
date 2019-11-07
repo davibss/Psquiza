@@ -107,6 +107,14 @@ public class Pesquisa  {
         return this.objetivos.containsValue(objetivo);
     }
 
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public String getCampoInteresse() {
+        return campoInteresse;
+    }
+
     public String getProblema() {
         return this.problema.getIdProblema();
     }

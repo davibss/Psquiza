@@ -28,6 +28,10 @@ public class Problema {
         return this.codigo;
     }
 
+    public String getDescricao() {
+        return descricao;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

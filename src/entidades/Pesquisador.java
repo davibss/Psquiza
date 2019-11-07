@@ -70,6 +70,10 @@ public class Pesquisador{
         return ativo;
     }
 
+    public String getBio() {
+        return bio;
+    }
+
     /**
      *  Define um valor String para o atributo email do Pesquisador.
      *

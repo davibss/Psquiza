@@ -143,4 +143,14 @@ public class FacadePsquiza {
     public void cadastraEspecialidadeAluno(String email, int semestre, Double iea){
         controllerGeral.cadastraEspecialidadeAluno(email, semestre, iea);
     }
+    // Caso de Uso 8 (Anderson)
+    public String busca(String termo){
+        return controllerGeral.busca(termo);
+    }
+    public String busca(String termo, int numeroDoResultado){
+        return controllerGeral.buscaPorNumero(termo, numeroDoResultado);
+    }
+    public int contaResultadosBusca(String termo){
+        return controllerGeral.contaResultadosBusca(termo);
+    }
 }

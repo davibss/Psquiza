@@ -159,4 +159,18 @@ public class ControllerAtividade {
         verificaExistenciaAtividade(codigo);
         return (this.atividades.get(codigo).contaItensRealizados());
     }
+    public List<String>  buscaAtividade(String termo){
+        List<String> found = new ArrayList<>();
+        for (Map.Entry<String, Atividade> entry : atividades.entrySet()){
+            String descricao = entry.getValue().getDescricao();
+            String risco = entry.getValue().getDescricaoRisco();
+            if (descricao.toLowerCase().contains(termo)){
+                found.add(entry.getKey() + ": " + descricao);
+            }
+            if (risco.toLowerCase().contains(termo)){
+                found.add(entry.getKey() + ": " + risco);
+            }
+        }
+        return found;
+    }
 }

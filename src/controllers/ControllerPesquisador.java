@@ -1,9 +1,8 @@
 package com.psquiza.controllers;
 
 import com.psquiza.entidades.Pesquisador;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringJoiner;
+
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -308,5 +307,16 @@ public class ControllerPesquisador {
 
     public Pesquisador getPesquisador(String email){
         return this.pesquisadores.get(email);
+    }
+    public List<String> buscaPesquisador(String termo){
+        List<String> found = new ArrayList<String>();
+        for (Map.Entry<String, Pesquisador> entry : pesquisadores.entrySet()) {
+            String biografia = entry.getValue().getBio().toLowerCase();
+            if (biografia.contains(termo)) {
+                String pesquisador = entry.getKey() + ": " + entry.getValue().getBio();
+                found.add(pesquisador);
+            }
+        }
+        return found;
     }
 }

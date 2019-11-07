@@ -3,9 +3,7 @@ package com.psquiza.controllers;
 import com.psquiza.entidades.Objetivo;
 import com.psquiza.entidades.Problema;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.*;
 
 /**
  * Controller do objeto Objetivo
@@ -114,5 +112,15 @@ public class ControllerObjetivo {
 
     public Objetivo getObjetivo(String idObjetivo) {
         return this.objetivos.get(idObjetivo);
+    }
+    public List<String> buscaObjetivo(String termo){
+        List<String> found = new ArrayList<String>();
+        for (Map.Entry<String, Objetivo> entry : objetivos.entrySet()){
+            String descricao = entry.getValue().getDescricao();
+            if (descricao.toLowerCase().contains(termo)){
+                found.add(entry.getKey() + ": " + descricao);
+            }
+        }
+        return found;
     }
 }

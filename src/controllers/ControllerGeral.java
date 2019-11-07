@@ -1,5 +1,6 @@
 package com.psquiza.controllers;
 
+import com.psquiza.entidades.Buscador;
 import com.psquiza.entidades.Pesquisador;
 import com.psquiza.verificadores.Verificador;
 
@@ -9,6 +10,7 @@ public class ControllerGeral {
     private ControllerProblema controllerProblema;
     private ControllerObjetivo controllerObjetivo;
     private ControllerPesquisador controllerPesquisador;
+    private Buscador buscador;
 
     public ControllerGeral() {
         controllerAtividade = new ControllerAtividade();
@@ -16,6 +18,7 @@ public class ControllerGeral {
         controllerObjetivo = new ControllerObjetivo();
         controllerPesquisador = new ControllerPesquisador();
         controllerPesquisa = new ControllerPesquisa();
+        buscador =  new Buscador(controllerAtividade, controllerPesquisa, controllerPesquisador, controllerObjetivo, controllerProblema);
     }
 
     //Caso de uso 1(José Nestor)
@@ -180,4 +183,15 @@ public class ControllerGeral {
         }
         controllerPesquisador.cadastraEspecialidadeAluno(email, semestre, iea);
     }
+    // caso de uso 8 - Anderson
+    public String busca(String termo){
+        return buscador.buscaGeral(termo);
+    }
+    public String buscaPorNumero(String termo, int posicao){
+        return buscador.buscaPorNumero(termo, posicao);
+    }
+    public int contaResultadosBusca(String termo){
+        return buscador.contaResultados(termo);
+    }
+
 }

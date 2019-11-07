@@ -2,9 +2,7 @@ package com.psquiza.controllers;
 
 import com.psquiza.entidades.Problema;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.*;
 
 /**
  * Controller do objeto Problema
@@ -113,5 +111,15 @@ public class ControllerProblema {
 
     public Problema getProblema(String problema) {
         return this.problemas.get(problema);
+    }
+    public List<String> buscaProblema(String termo){
+        List<String> found = new ArrayList<>();
+        for (Map.Entry<String, Problema> entry : problemas.entrySet()){
+            String descricao = entry.getValue().getDescricao();
+            if (descricao.toLowerCase().contains(termo)){
+                found.add(entry.getKey() + ": " + descricao);
+            }
+        }
+        return found;
     }
 }

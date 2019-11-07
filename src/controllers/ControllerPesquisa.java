@@ -315,5 +315,19 @@ public class ControllerPesquisa {
         }
         return joiner.toString();
     }
+    public List<String> buscaPesquisa(String termo){
+        List<String> found = new ArrayList<String>();
+        for (Map.Entry<String, Pesquisa> entry : pesquisas.entrySet()) {
+            String interesse = entry.getValue().getCampoInteresse();
+            String descricao = entry.getValue().getDescricao();
+            if (interesse.toLowerCase().contains(termo)){
+                found.add(entry.getKey() + ": " + interesse);
+            }
+            if (descricao.toLowerCase().contains(termo)){
+                found.add(entry.getKey() + ": " + descricao);
+            }
+        }
+        return found;
+    }
 }
 

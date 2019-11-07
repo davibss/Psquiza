@@ -38,6 +38,14 @@ public class Atividade {
         this.descricaoRisco = descricaoRisco;
     }
 
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public String getDescricaoRisco() {
+        return descricaoRisco;
+    }
+
     /**
      * Cadastra um novo item na lista de itens.
      * Verifica se já existe aquele item.

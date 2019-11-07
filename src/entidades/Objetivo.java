@@ -25,4 +25,8 @@ public class Objetivo {
     public String getId() {
         return this.codigo;
     }
+
+    public String getDescricao() {
+        return descricao;
+    }
 }
