@@ -16,15 +16,18 @@ public class Atividade {
     /** Representação em String da descrição da atividade*/
     private String descricao;
     /** Representação em lista do objeto Item da atividade*/
-    private List<Item> resultados;
+    private List<Item> itens;
     /** Representação em String do risco da atividade, só poderá ser: BAIXO, MEDIO, ALTO*/
     private String risco;
     /** Representação em String da descrição do risco da atividade*/
     private String descricaoRisco;
 
+    private int duracao;
+
     /**
      * Constrói atividade a partir dos parâmetros passados.
      * Inicia lista de itens.
+     * A duração da atividade inicia como 0.
      * @param codigo representação em String do código da atividade
      * @param descricao representação em String da descrição da atividade
      * @param risco representação em String do risco da atividade
@@ -33,9 +36,10 @@ public class Atividade {
     public Atividade(String codigo, String descricao, String risco, String descricaoRisco) {
         this.codigo = codigo;
         this.descricao = descricao;
-        this.resultados = new ArrayList<>();
+        this.itens = new ArrayList<>();
         this.risco = risco;
         this.descricaoRisco = descricaoRisco;
+        this.duracao = 0;
     }
 
     public String getDescricao() {
@@ -52,12 +56,20 @@ public class Atividade {
      * @param nomeItem representação em String do nome do item.
      */
     public void cadastraItem(String nomeItem){
-        for (Item item : this.resultados) {
+        for (Item item : this.itens) {
             if (item.getNome().equals(nomeItem)){
                 throw new IllegalArgumentException("Item ja cadastrado nesta atividade.");
             }
         }
-        this.resultados.add(new Item(nomeItem));
+        this.itens.add(new Item(nomeItem));
+    }
+
+    public void executaAtividade(int item, int duracao) {
+        if(item > this.itens.size()){
+            throw new IllegalArgumentException("Item nao encontrado.");
+        }
+        this.itens.get(item - 1).executa();
+        this.duracao += duracao;
     }
 
     /**
@@ -69,7 +81,7 @@ public class Atividade {
     public String toString() {
         StringJoiner joiner = new StringJoiner(" | ");
         joiner.add(String.format("%s (%s - %s)",this.descricao, this.risco, this.descricaoRisco));
-        this.resultados.forEach((r) -> joiner.add(r.toString()));
+        this.itens.forEach((r) -> joiner.add(r.toString()));
         return joiner.toString();
     }
 
@@ -100,7 +112,7 @@ public class Atividade {
      * @return int representando a quantidade de itens pendentes.
      */
     public int contaItensPendentes() {
-        return this.resultados.size() - contaItensRealizados();
+        return this.itens.size() - contaItensRealizados();
     }
 
     /**
@@ -108,6 +120,6 @@ public class Atividade {
      * @return int representando a quantidade de itens realizados.
      */
     public int contaItensRealizados() {
-        return (int) this.resultados.stream().filter(Item::isRealizado).count();
+        return (int) this.itens.stream().filter(Item::isRealizado).count();
     }
 }

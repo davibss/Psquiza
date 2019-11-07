@@ -12,6 +12,7 @@ public class ControllerGeral {
     private ControllerPesquisador controllerPesquisador;
     private Buscador buscador;
 
+
     public ControllerGeral() {
         controllerAtividade = new ControllerAtividade();
         controllerProblema = new ControllerProblema();
@@ -183,6 +184,37 @@ public class ControllerGeral {
         }
         controllerPesquisador.cadastraEspecialidadeAluno(email, semestre, iea);
     }
+
+    // Caso de uso 7 - Henrique
+    public boolean associaAtividade(String codigoPesquisa, String codigoAtividade) {
+        Verificador.verificaVazioNulo(codigoPesquisa, "codigoPesquisa");
+        Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
+
+        return controllerPesquisa.associaAtividade(codigoPesquisa, codigoAtividade, controllerAtividade.getAtividade(codigoAtividade));
+    }
+
+    public boolean desassociaAtividade(String codigoPesquisa, String codigoAtividade) {
+        Verificador.verificaVazioNulo(codigoPesquisa, "codigoPesquisa");
+        Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
+        controllerAtividade.getAtividade(codigoAtividade);
+
+        return controllerPesquisa.desassociaAtividade(codigoPesquisa, codigoAtividade);
+    }
+
+    public void executaAtividade(String codigoAtividade, int item, int duracao) {
+        Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
+        if(item < 1) {
+            throw new IllegalArgumentException("Item nao pode ser nulo ou negativo.");
+        }
+        if(duracao < 1) {
+            throw new IllegalArgumentException("Duracao nao pode ser nulo ou negativo.");
+        }
+
+        if(controllerPesquisa.associacao(codigoAtividade)) {
+            controllerAtividade.executaAtividade(codigoAtividade, item, duracao);
+        }
+    }
+
     // caso de uso 8 - Anderson
     public String busca(String termo){
         return buscador.buscaGeral(termo);

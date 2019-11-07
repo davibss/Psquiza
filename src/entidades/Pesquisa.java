@@ -24,6 +24,8 @@ public class Pesquisa  {
 
     private Map<String, Pesquisador> pesquisadores = new HashMap<>();
 
+    private Map<String, Atividade> atividades;
+
 
     /**
      * Constrói uma pesquisa através dos parâmetros
@@ -38,6 +40,8 @@ public class Pesquisa  {
         this.campoInteresse = campoInteresse;
         this.problema = new Problema();
         this.objetivos = new HashMap<>();
+        this.pesquisadores = new HashMap<>();
+        this.atividades = new HashMap<>();
     }
 
     public boolean associaPesquisador(String emailPesquisador, Pesquisador pesquisador){
@@ -105,6 +109,29 @@ public class Pesquisa  {
     public boolean contemObjetivo(Objetivo objetivo){
         //return this.objetivos.contains(objetivo);
         return this.objetivos.containsValue(objetivo);
+    }
+
+    public boolean associaAtividade(String codigoAtividade, Atividade atividade) {
+        if(this.atividades.containsKey(codigoAtividade)) {
+            return false;
+        }
+        this.atividades.put(codigoAtividade, atividade);
+        return true;
+    }
+
+    public boolean desassociaAtividade(String codigoAtividade) {
+        if(!this.atividades.containsKey(codigoAtividade)) {
+            return false;
+        }
+        this.atividades.remove(codigoAtividade);
+        return true;
+    }
+
+    public boolean hasAtividade(String codigoAtividade){
+        if(this.atividades.containsKey(codigoAtividade)) {
+            return true;
+        }
+        return false;
     }
 
     public String getDescricao() {

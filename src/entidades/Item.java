@@ -38,6 +38,13 @@ public class Item {
         return nome;
     }
 
+    public void executa() {
+        if(this.realizado == true){
+            throw new IllegalArgumentException("Item ja executado.");
+        }
+        this.realizado = true;
+    }
+
     /**
      * Representação completa do item, no formato: status - nome
      * @return representação em String do item.

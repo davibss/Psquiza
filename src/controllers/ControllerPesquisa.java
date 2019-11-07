@@ -3,10 +3,7 @@ package com.psquiza.controllers;
 
 import com.psquiza.comparators.OrdenaPorIDProblema;
 import com.psquiza.comparators.OrdenaPorObjetivo;
-import com.psquiza.entidades.Objetivo;
-import com.psquiza.entidades.Pesquisa;
-import com.psquiza.entidades.Pesquisador;
-import com.psquiza.entidades.Problema;
+import com.psquiza.entidades.*;
 import com.psquiza.verificadores.Verificador;
 
 import java.util.*;
@@ -328,6 +325,34 @@ public class ControllerPesquisa {
             }
         }
         return found;
+    }
+
+    public boolean associaAtividade(String codigoPesquisa, String codigoAtividade, Atividade atividade) {
+        if(!this.pesquisas.containsKey(codigoPesquisa)) {
+            throw new IllegalArgumentException("Pesquisa nao encontrada.");
+        }
+        if(!this.pesquisas.get(codigoPesquisa).estadoAtivacao()) {
+            throw new IllegalArgumentException("Pesquisa desativada.");
+        }
+        return this.pesquisas.get(codigoPesquisa).associaAtividade(codigoAtividade, atividade);
+    }
+
+    public boolean desassociaAtividade(String codigoPesquisa, String codigoAtividade) {
+        if(!this.pesquisas.containsKey(codigoPesquisa)) {
+            throw new IllegalArgumentException("Pesquisa nao encontrada.");
+        }
+        if(!this.pesquisas.get(codigoPesquisa).estadoAtivacao()) {
+            throw new IllegalArgumentException("Pesquisa desativada.");
+        }
+        return this.pesquisas.get(codigoPesquisa).desassociaAtividade(codigoAtividade);
+    }
+
+    public boolean associacao(String codigoAtividade) {
+        boolean saida = false;
+        for(Pesquisa pesquisa : this.pesquisas.values()) {
+            if(pesquisa.hasAtividade(codigoAtividade)){saida = true;}
+        }
+        return saida;
     }
 }
 

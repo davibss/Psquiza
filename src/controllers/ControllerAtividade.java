@@ -173,4 +173,15 @@ public class ControllerAtividade {
         }
         return found;
     }
+
+    public Atividade getAtividade(String codigo) {
+        if(!this.atividades.containsKey(codigo)) {
+            throw new IllegalArgumentException("Atividade nao encontrada");
+        }
+        return this.atividades.get(codigo);
+    }
+
+    public void executaAtividade(String codigoAtividade, int item, int duracao) {
+        this.atividades.get(codigoAtividade).executaAtividade(item, duracao);
+    }
 }
