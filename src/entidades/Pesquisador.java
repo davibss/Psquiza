@@ -52,6 +52,7 @@ public class Pesquisador{
         this.email = email;
         this.foto = foto;
         this.ativo = true;
+        this.especialidade = null;
     }
 
     public void adicionaEspecialidadeAluno(int semestre, Double iea){
@@ -134,7 +135,11 @@ public class Pesquisador{
      */
     @Override
     public java.lang.String toString() {
-        return (nome + " (" + funcao + ")" +  " - " + bio + " - " + email + " - " + foto + especialidade.toString());//+ especialidade.toString()
+        if (this.especialidade == null){
+            return String.format("%s (%s) - %s - %s - %s", this.nome, this.funcao, this.bio, this.email, this.foto);
+        }else{
+            return (nome + " (" + funcao + ")" +  " - " + bio + " - " + email + " - " + foto + especialidade.toString());//+ especialidade.toString()
+        }
     }
 
 
