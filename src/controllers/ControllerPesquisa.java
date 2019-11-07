@@ -5,6 +5,7 @@ import com.psquiza.comparators.OrdenaPorIDProblema;
 import com.psquiza.comparators.OrdenaPorObjetivo;
 import com.psquiza.entidades.Objetivo;
 import com.psquiza.entidades.Pesquisa;
+import com.psquiza.entidades.Pesquisador;
 import com.psquiza.entidades.Problema;
 import com.psquiza.verificadores.Verificador;
 
@@ -19,10 +20,12 @@ public class ControllerPesquisa {
     /** Mapa que armazena pesquisas, pesquisas são identificadas por um código gerado no sistema*/
     private Map<String, Pesquisa> pesquisas;
 
+
     /**
      * Constrói um controller, inicializando um mapa.
      */
     public ControllerPesquisa(){
+
         this.pesquisas = new HashMap<>();
     }
 
@@ -174,6 +177,26 @@ public class ControllerPesquisa {
         if (!pesquisas.containsKey(codigo)){
             throw new NullPointerException("Pesquisa nao encontrada.");
         }
+    }
+
+    public  boolean associaPesquisador(String idPesquisa, String emailPesquisador, Pesquisador pesquisador){
+        if(!pesquisas.get(idPesquisa).estadoAtivacao()){
+            throw new RuntimeException("Pesquisa desativada.");
+        }
+        if(!pesquisas.containsKey(idPesquisa)){
+            throw new RuntimeException("Pesquisa nao encontrada.");
+        }
+        return pesquisas.get(idPesquisa).associaPesquisador(emailPesquisador, pesquisador);
+    }
+
+    public boolean desassociaPesquisadores(String idPesquisa, String emailPesquisador){
+        if(!pesquisas.get(idPesquisa).estadoAtivacao()){
+            throw new RuntimeException("Pesquisa desativada.");
+        }
+        if(!pesquisas.containsKey(idPesquisa)){
+            throw new RuntimeException("Pesquisa nao encontrada.");
+        }
+        return pesquisas.get(idPesquisa).desassociaPesquisador(emailPesquisador);
     }
 
     public boolean associaProblema(String pesquisa, Problema problema) {

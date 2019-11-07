@@ -42,12 +42,18 @@ public class ControllerPesquisador {
     }
 
     public void cadastraEspecialidadeAluno(String email, int semestre, Double iea){
+        verificaEmail(email);
+        if(email.equals("") || email == null){
+
+        }
         pesquisadores.get(email).adicionaEspecialidadeAluno(semestre, iea);
     }
 
     public void cadastraEspecialidadeProfessor(String email, String formacao, String unidade, String data){
+        verificaEmail(email);
         pesquisadores.get(email).adicionaEspecialidadeProfessor(formacao, unidade, data);
     }
+   // public String listaPesquisadores(String tipo){}
     /**
      *  Verifica uma String representando um possivel email de um Pesquisador. Verifica se o email nao eh nulo ou vazioa, em seguida
      *  se segue o formato adequado.
@@ -300,4 +306,7 @@ public class ControllerPesquisador {
         }
     }
 
+    public Pesquisador getPesquisador(String email){
+        return this.pesquisadores.get(email);
+    }
 }

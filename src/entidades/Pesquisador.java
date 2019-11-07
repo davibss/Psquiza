@@ -130,7 +130,7 @@ public class Pesquisador{
      */
     @Override
     public java.lang.String toString() {
-        return (nome + " (" + funcao + ")" +  " - " + bio + " - " + email + " - " + foto + especialidade.toString());
+        return (nome + " (" + funcao + ")" +  " - " + bio + " - " + email + " - " + foto + especialidade.toString());//+ especialidade.toString()
     }
 
 

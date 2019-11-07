@@ -13,7 +13,8 @@ public class FacadePsquiza {
                                                          "tests/accept-tests/use_case_2.txt",
                                                          "tests/accept-tests/use_case_3.txt",
                                                          "tests/accept-tests/use_case_4.txt",
-                                                         "tests/accept-tests/use_case_5.txt"};
+                                                         "tests/accept-tests/use_case_5.txt",
+                                                         "tests/accept-tests/use_case_6.txt"};
         EasyAccept.main(args);
     }
 
@@ -126,5 +127,20 @@ public class FacadePsquiza {
     public String listaPesquisas(String ordem) {
         //return controllerGeral.listaPesquisa(ordem);
         return controllerGeral.listaPesquisas(ordem);
+    }
+
+    //Caso de uso 6 (Nestor)
+    public boolean associaPesquisador(String idPesquisa, String emailPesquisador){
+        return controllerGeral.associaPesquisador(idPesquisa, emailPesquisador);
+    }
+
+    public boolean desassociaPesquisador(String idPesquisa, String emailPesquisador){
+        return controllerGeral.desassociaPesquisador(idPesquisa, emailPesquisador);
+    }
+    public void cadastraEspecialidadeProfessor(String email, String formacao, String unidade, String data){
+        controllerGeral.cadastraEspecialidadeProfessor(email, formacao, unidade, data);
+    }
+    public void cadastraEspecialidadeAluno(String email, int semestre, Double iea){
+        controllerGeral.cadastraEspecialidadeAluno(email, semestre, iea);
     }
 }

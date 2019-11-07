@@ -1,5 +1,6 @@
 package com.psquiza.controllers;
 
+import com.psquiza.entidades.Pesquisador;
 import com.psquiza.verificadores.Verificador;
 
 public class ControllerGeral {
@@ -123,5 +124,60 @@ public class ControllerGeral {
     }
     public String listaPesquisas(String ordem) {
         return controllerPesquisa.listaPesquisas(ordem);
+    }
+
+    //Caso de uso 6 (Nestor)
+    public boolean associaPesquisador(String idPesquisa, String emailPesquisador){
+        if(idPesquisa.equals("") || idPesquisa == null){
+            throw new RuntimeException("Campo idPesquisa nao pode ser nulo ou vazio.");
+        }
+        if(emailPesquisador.equals("") || emailPesquisador == null){
+            throw new RuntimeException("Campo emailPesquisador nao pode ser nulo ou vazio.");
+        }
+        return controllerPesquisa.associaPesquisador(idPesquisa, emailPesquisador, controllerPesquisador.getPesquisador(emailPesquisador));
+    }
+
+    public boolean desassociaPesquisador(String idPesquisa, String emailPesquisador){
+        if(idPesquisa.equals("") || idPesquisa == null) {
+            throw new RuntimeException("Campo idPesquisa nao pode ser nulo ou vazio.");
+        }
+        if(emailPesquisador.equals("") || emailPesquisador == null){
+            throw new RuntimeException("Campo emailPesquisador nao pode ser nulo ou vazio.");
+        }
+
+        return controllerPesquisa.desassociaPesquisadores(idPesquisa, emailPesquisador);
+    }
+
+    public void cadastraEspecialidadeProfessor(String email, String formacao, String unidade, String data){
+        if(email.equals("") || email == null){
+            throw new RuntimeException("Campo email nao pode ser nulo ou vazio.");
+        }
+
+        if(formacao.equals("") || formacao == null){
+            throw new RuntimeException("Campo formacao nao pode ser nulo ou vazio.");
+        }
+
+        if(unidade.equals("") || unidade == null){
+            throw new RuntimeException("Campo unidade nao pode ser nulo ou vazio.");
+        }
+
+        if(data.equals("") || data == null){
+            throw new RuntimeException("Campo data nao pode ser nulo ou vazio.");
+        }
+        controllerPesquisador.cadastraEspecialidadeProfessor(email, formacao, unidade, data);
+    }
+    public void cadastraEspecialidadeAluno(String email, int semestre, Double iea){
+        if(email.equals("") || email == null){
+            throw new RuntimeException("Campo email nao pode ser nulo ou vazio.");
+        }
+
+        if(semestre < 1){
+            throw new RuntimeException("Campo semestre nao pode ser nulo ou vazio.");
+        }
+
+        if(iea < 0){
+            throw new RuntimeException("Campo IEA nao pode ser nulo ou vazio.");
+        }
+        controllerPesquisador.cadastraEspecialidadeAluno(email, semestre, iea);
     }
 }

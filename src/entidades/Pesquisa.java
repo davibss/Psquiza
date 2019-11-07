@@ -22,6 +22,9 @@ public class Pesquisa  {
     private Problema problema;
     private Map<String, Objetivo> objetivos;
 
+    private Map<String, Pesquisador> pesquisadores = new HashMap<>();
+
+
     /**
      * Constrói uma pesquisa através dos parâmetros
      * @param estadoAtivacao representação boleana do estado da pesquisa
@@ -35,6 +38,22 @@ public class Pesquisa  {
         this.campoInteresse = campoInteresse;
         this.problema = new Problema();
         this.objetivos = new HashMap<>();
+    }
+
+    public boolean associaPesquisador(String emailPesquisador, Pesquisador pesquisador){
+        if(pesquisadores.containsKey(emailPesquisador)){
+            return false;
+        }
+        this.pesquisadores.put(emailPesquisador, pesquisador);
+        return true;
+    }
+
+    public boolean desassociaPesquisador(String emailPesquisador){
+        if(!pesquisadores.containsKey(emailPesquisador)){
+            return false;
+        }
+        this.pesquisadores.remove(emailPesquisador);
+        return true;
     }
 
     public boolean associaProblema(Problema problema) {
