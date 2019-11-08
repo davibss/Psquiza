@@ -188,6 +188,37 @@ public class ControllerAtividade {
     }
 
     public void executaAtividade(String codigoAtividade, int item, int duracao) {
+        if(!this.atividades.containsKey(codigoAtividade)) {
+            throw new IllegalArgumentException("Atividade nao encontrada");
+        }
         this.atividades.get(codigoAtividade).executaAtividade(item, duracao);
+    }
+
+    public int cadastraResultado(String codigoAtividade, String resultado) {
+        if(!this.atividades.containsKey(codigoAtividade)) {
+            throw new IllegalArgumentException("Atividade nao encontrada");
+        }
+        return this.atividades.get(codigoAtividade).cadastraResultado(resultado);
+    }
+
+    public boolean removeResultado(String codigoAtividade, int numeroResultado) {
+        if(!this.atividades.containsKey(codigoAtividade)) {
+            throw new IllegalArgumentException("Atividade nao encontrada");
+        }
+        return this.atividades.get(codigoAtividade).removeResultado(numeroResultado);
+    }
+
+    public String listaResultados(String codigoAtividade) {
+        if(!this.atividades.containsKey(codigoAtividade)) {
+            throw new IllegalArgumentException("Atividade nao encontrada");
+        }
+        return this.atividades.get(codigoAtividade).listaResultados();
+    }
+
+    public int getDuracao(String codigoAtividade) {
+        if(!this.atividades.containsKey(codigoAtividade)) {
+            throw new IllegalArgumentException("Atividade nao encontrada");
+        }
+        return this.atividades.get(codigoAtividade).getDuracao();
     }
 }

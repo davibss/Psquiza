@@ -23,6 +23,7 @@ public class Atividade {
     private String descricaoRisco;
 
     private int duracao;
+    private List<String> resultados;
 
     /**
      * Constrói atividade a partir dos parâmetros passados.
@@ -40,6 +41,7 @@ public class Atividade {
         this.risco = risco;
         this.descricaoRisco = descricaoRisco;
         this.duracao = 0;
+        this.resultados = new ArrayList<>();
     }
 
     public String getDescricao() {
@@ -70,6 +72,36 @@ public class Atividade {
         }
         this.itens.get(item - 1).executa();
         this.duracao += duracao;
+    }
+
+    public int cadastraResultado(String resultado) {
+        this.resultados.add(resultado);
+        return this.resultados.size();
+    }
+
+    public boolean removeResultado(int numeroResultado) {
+        if(numeroResultado > this.resultados.size()) {
+            throw new IllegalArgumentException("Resultado nao encontrado.");
+        }
+        if(this.resultados.get(numeroResultado - 1) == "") {
+            return false;
+        }
+        this.resultados.set(numeroResultado - 1, "");
+        return true;
+    }
+
+    public String listaResultados() {
+        StringJoiner joiner = new StringJoiner(" | ");
+        for(String resultado : this.resultados) {
+            if(resultado != "") {
+                joiner.add(resultado);
+            }
+        }
+        return joiner.toString();
+    }
+
+    public int getDuracao() {
+        return this.duracao;
     }
 
     /**

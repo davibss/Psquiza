@@ -203,16 +203,46 @@ public class ControllerGeral {
 
     public void executaAtividade(String codigoAtividade, int item, int duracao) {
         Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
-        if(item < 1) {
+        if(item <= 0) {
             throw new IllegalArgumentException("Item nao pode ser nulo ou negativo.");
         }
-        if(duracao < 1) {
-            throw new IllegalArgumentException("Duracao nao pode ser nulo ou negativo.");
+        if(duracao <= 0) {
+            throw new IllegalArgumentException("Duracao nao pode ser nula ou negativa.");
         }
 
         if(controllerPesquisa.associacao(codigoAtividade)) {
             controllerAtividade.executaAtividade(codigoAtividade, item, duracao);
         }
+    }
+
+    public int cadastraResultado(String codigoAtividade, String resultado) {
+        Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
+        if (resultado == null || resultado.equals("")){
+            throw new IllegalArgumentException("Resultado nao pode ser nulo ou vazio.");
+        }
+
+        return controllerAtividade.cadastraResultado(codigoAtividade, resultado);
+    }
+
+    public boolean removeResultado(String codigoAtividade, int numeroResultado) {
+        Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
+        if(numeroResultado <= 0) {
+            throw new IllegalArgumentException("numeroResultado nao pode ser nulo ou negativo.");
+        }
+
+        return controllerAtividade.removeResultado(codigoAtividade, numeroResultado);
+    }
+
+    public String listaResultados(String codigoAtividade) {
+        Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
+
+        return controllerAtividade.listaResultados(codigoAtividade);
+    }
+
+    public int getDuracao(String codigoAtividade) {
+        Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
+
+        return controllerAtividade.getDuracao(codigoAtividade);
     }
 
     // caso de uso 8 - Anderson

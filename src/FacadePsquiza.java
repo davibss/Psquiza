@@ -160,6 +160,22 @@ public class FacadePsquiza {
         controllerGeral.executaAtividade(codigoAtividade, item, duracao);
     }
 
+    public int cadastraResultado(String codigoAtividade, String resultado) {
+        return controllerGeral.cadastraResultado(codigoAtividade, resultado);
+    }
+
+    public boolean removeResultado(String codigoAtividade, int numeroResultado) {
+        return controllerGeral.removeResultado(codigoAtividade, numeroResultado);
+    }
+
+    public String listaResultados(String codigoAtividade) {
+        return controllerGeral.listaResultados(codigoAtividade);
+    }
+
+    public int getDuracao(String codigoAtividade) {
+        return controllerGeral.getDuracao(codigoAtividade);
+    }
+
     // Caso de Uso 8 (Anderson)
     public String busca(String termo){
         return controllerGeral.busca(termo);
