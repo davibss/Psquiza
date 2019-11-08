@@ -42,15 +42,19 @@ public class ControllerPesquisador {
 
     public void cadastraEspecialidadeAluno(String email, int semestre, Double iea){
         verificaEmail(email);
-        if(email.equals("") || email == null){
-
+        if(!pesquisadores.containsKey(email)){
+            throw new RuntimeException();
         }
+
         pesquisadores.get(email).adicionaEspecialidadeAluno(semestre, iea);
     }
 
     public void cadastraEspecialidadeProfessor(String email, String formacao, String unidade, String data){
         verificaEmail(email);
         pesquisadores.get(email).adicionaEspecialidadeProfessor(formacao, unidade, data);
+        if(!pesquisadores.containsKey(email)){
+            throw new RuntimeException("Pesquisadora nao encontrada.");
+        }
     }
 
     public String listaPesquisadores(String tipo){
@@ -191,9 +195,7 @@ public class ControllerPesquisador {
         verificaEmail(email);
         if (atributo == null || atributo.equals("")){
             throw new NullPointerException("Atributo nao pode ser vazio ou nulo.");
-        }// else if (atributo.equals("")){
-         //   throw new IllegalArgumentException("Atributo nao pode ser vazio ou nulo.");
-        //}
+        }
         if (!pesquisadores.containsKey(email)){
             throw new IllegalArgumentException("Pesquisador nao encontrado");
         }
@@ -234,6 +236,10 @@ public class ControllerPesquisador {
                 }
         }
     }
+
+    /*public String listaPesquisadores(String tipo){
+        return "a";
+    }*/
 
     /**
      *  Verifica se um Pesquisador, identificado pelo email, esta ativo ou nao. Retornando verdadeiro caso esteja ativo

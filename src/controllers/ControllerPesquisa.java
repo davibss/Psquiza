@@ -176,22 +176,24 @@ public class ControllerPesquisa {
     }
 
     public  boolean associaPesquisador(String idPesquisa, String emailPesquisador, Pesquisador pesquisador){
-        if(!pesquisas.get(idPesquisa).estadoAtivacao()){
-            throw new RuntimeException("Pesquisa desativada.");
-        }
         if(!pesquisas.containsKey(idPesquisa)){
             throw new RuntimeException("Pesquisa nao encontrada.");
         }
+        if(!pesquisas.get(idPesquisa).estadoAtivacao()){
+            throw new RuntimeException("Pesquisa desativada.");
+        }
+
         return pesquisas.get(idPesquisa).associaPesquisador(emailPesquisador, pesquisador);
     }
 
     public boolean desassociaPesquisadores(String idPesquisa, String emailPesquisador){
-        if(!pesquisas.get(idPesquisa).estadoAtivacao()){
-            throw new RuntimeException("Pesquisa desativada.");
-        }
         if(!pesquisas.containsKey(idPesquisa)){
             throw new RuntimeException("Pesquisa nao encontrada.");
         }
+        if(!pesquisas.get(idPesquisa).estadoAtivacao()){
+            throw new RuntimeException("Pesquisa desativada.");
+        }
+
         return pesquisas.get(idPesquisa).desassociaPesquisador(emailPesquisador);
     }
 

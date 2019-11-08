@@ -146,6 +146,9 @@ public class FacadePsquiza {
     public void cadastraEspecialidadeAluno(String email, int semestre, Double iea){
         controllerGeral.cadastraEspecialidadeAluno(email, semestre, iea);
     }
+    public String listaPesquisadores(String tipo){
+        return controllerGeral.listaPesquisadores(tipo);
+    }
 
     //Caso de uso 7 (Henrique)
     public boolean associaAtividade(String codigoPesquisa, String codigoAtividade) {
