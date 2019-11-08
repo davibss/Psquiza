@@ -67,7 +67,7 @@ public class ControllerPesquisador {
         String lista = "";
         String separador = "";
         for (Pesquisador pesquisador : this.pesquisadores.values()){
-            if (pesquisador.getFuncao().equals(tipo)) {
+            if (pesquisador.getFuncao().equals(tipo.toLowerCase())) {
                 lista += separador + pesquisador.toString();
                 separador = " | ";
             }
