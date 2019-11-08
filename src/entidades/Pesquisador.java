@@ -56,10 +56,16 @@ public class Pesquisador{
     }
 
     public void adicionaEspecialidadeAluno(int semestre, Double iea){
+        if(!funcao.equals("estudante")){
+            throw new RuntimeException("Pesquisador nao compativel com a especialidade.");
+        }
         this.especialidade = new Aluno(semestre, iea);
     }
 
     public void adicionaEspecialidadeProfessor(String formacao, String unidade, String data){
+        if(!funcao.equals("professor")){
+            throw new RuntimeException("Pesquisador nao compativel com a especialidade.");
+        }
         this.especialidade = new Professor(formacao, unidade, data);
     }
     /**
@@ -147,7 +153,7 @@ public class Pesquisador{
         if (this.especialidade == null){
             return String.format("%s (%s) - %s - %s - %s", this.nome, this.funcao, this.bio, this.email, this.foto);
         }else{
-            return (nome + " (" + funcao + ")" +  " - " + bio + " - " + email + " - " + foto + especialidade.toString());//+ especialidade.toString()
+            return (nome + " (" + funcao + ")" +  " - " + bio + " - " + email + " - " + foto + " - " + especialidade.toString());//+ especialidade.toString()
         }
     }
 

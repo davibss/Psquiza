@@ -43,28 +43,35 @@ public class ControllerPesquisador {
     public void cadastraEspecialidadeAluno(String email, int semestre, Double iea){
         verificaEmail(email);
         if(!pesquisadores.containsKey(email)){
-            throw new RuntimeException();
+            throw new RuntimeException("Pesquisadora nao encontrada.");
         }
-
         pesquisadores.get(email).adicionaEspecialidadeAluno(semestre, iea);
     }
 
     public void cadastraEspecialidadeProfessor(String email, String formacao, String unidade, String data){
         verificaEmail(email);
-        pesquisadores.get(email).adicionaEspecialidadeProfessor(formacao, unidade, data);
         if(!pesquisadores.containsKey(email)){
             throw new RuntimeException("Pesquisadora nao encontrada.");
         }
+        pesquisadores.get(email).adicionaEspecialidadeProfessor(formacao, unidade, data);
+
     }
 
-    public String listaPesquisadores(String tipo){
+    public String listaPesquisadores(String tipo) {
+        if (tipo == null || tipo.equals("")) {
+            throw new RuntimeException("Campo tipo nao pode ser nulo ou vazio.");
+        }
+        if (!(tipo.equals("EXTERNO") || tipo.equals("ALUNA") || tipo.equals("PROFESSORA"))) {
+            throw new RuntimeException("Tipo " + tipo + " inexistente.");
+        }
         String lista = "";
         String separador = "";
-        for(Pesquisador pesquisador : this.pesquisadores.values())
-            if(pesquisador.getFuncao().equals(tipo)){
+        for (Pesquisador pesquisador : this.pesquisadores.values()){
+            if (pesquisador.getFuncao().equals(tipo)) {
                 lista += separador + pesquisador.toString();
                 separador = " | ";
             }
+        }
         return lista;
     }
    // public String listaPesquisadores(String tipo){}
@@ -228,7 +235,7 @@ public class ControllerPesquisador {
                 break;
             default:
                 if(atributo.equals("SEMESTRE") || atributo.equals("IEA") || atributo.equals("FORMACAO") || atributo.equals("UNIDADE") || atributo.equals("DATA")) {
-                    verificaNome(novoValor);
+
                     pesquisadores.get(email).altera(atributo, novoValor);
                 }
                 else {

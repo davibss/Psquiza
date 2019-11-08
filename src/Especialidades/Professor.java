@@ -23,7 +23,7 @@ public class Professor implements Especialidade {
     @Override
     public String toString() {
 
-        return (formacao + "-" + unidade + "-" + data);
+        return (formacao + " - " + unidade + " - " + data);
     }
 
     public void altera(String nomeAtributo, String atributo){

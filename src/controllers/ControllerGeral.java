@@ -178,11 +178,11 @@ public class ControllerGeral {
         }
 
         if(semestre < 1){
-            throw new RuntimeException("Campo semestre nao pode ser nulo ou vazio.");
+            throw new RuntimeException("Atributo semestre com formato invalido.");
         }
 
-        if(iea < 0){
-            throw new RuntimeException("Campo IEA nao pode ser nulo ou vazio.");
+        if(iea < 0 || iea > 10){
+            throw new RuntimeException("Atributo IEA com formato invalido.");
         }
         controllerPesquisador.cadastraEspecialidadeAluno(email, semestre, iea);
     }

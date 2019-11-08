@@ -13,10 +13,17 @@ public class Aluno implements Especialidade {
 
     @Override
     public String toString() {
-        return (semestre + "-" + IEA);
+
+        return (semestre + "o SEMESTRE" + " - " + IEA);
     }
 
     public void altera(String nomeAtributo, String atributo){
+        if(semestre < 1){
+            throw new RuntimeException("Atributo semestre com formato invalido.");
+        }
+        if(IEA > 10 || IEA < 0){
+            throw new RuntimeException("Atributo IEA com formato invalido.");
+        }
         if(nomeAtributo.equals("SEMESTRE")){
             this.semestre = Integer.parseInt(atributo);
         }
