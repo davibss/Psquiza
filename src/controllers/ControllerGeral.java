@@ -110,13 +110,6 @@ public class ControllerGeral {
     }
 
     //Caso de uso 5 (Davi)
-    public boolean associaProblema(String idPesquisa){
-        Verificador.verificaVazioNulo(idPesquisa, "idPesquisa");
-        //return controllerPesquisa.associaProblema(idPesquisa, controllerProblema.getProblema(idProblema));
-        //??? estou fazendo só para passar nos testes mesmo
-        return true;
-    }
-
     public boolean associaProblema(String idPesquisa, String idProblema){
         Verificador.verificaVazioNulo(idPesquisa, "idPesquisa");
         Verificador.verificaVazioNulo(idProblema, "idProblema");

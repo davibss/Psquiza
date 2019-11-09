@@ -115,10 +115,6 @@ public class FacadePsquiza {
     }
 
     //Caso de uso 5 (Davi)
-    public boolean associaProblema(String idPesquisa){
-        return controllerGeral.associaProblema(idPesquisa);
-    }
-
     public boolean associaProblema(String idPesquisa, String idProblema){
         return controllerGeral.associaProblema(idPesquisa, idProblema);
     }
