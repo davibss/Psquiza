@@ -71,12 +71,13 @@ public class Pesquisa  {
         return true;
     }
 
-    public boolean desassociaProblema(String problema){
+    public boolean desassociaProblema(){
         if (this.problema.getIdProblema() == null){
             return false;
-        }else if (!this.problema.getIdProblema().equals(problema)){
-            return false;
         }
+//        else if (!this.problema.getIdProblema().equals(problema)){
+//            return false;
+//        }
         this.problema = new Problema();
         return true;
     }
@@ -128,10 +129,7 @@ public class Pesquisa  {
     }
 
     public boolean hasAtividade(String codigoAtividade){
-        if(this.atividades.containsKey(codigoAtividade)) {
-            return true;
-        }
-        return false;
+        return this.atividades.containsKey(codigoAtividade);
     }
 
     public String getDescricao() {

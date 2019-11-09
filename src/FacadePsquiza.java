@@ -115,18 +115,26 @@ public class FacadePsquiza {
     }
 
     //Caso de uso 5 (Davi)
+    public boolean associaProblema(String idPesquisa){
+        return controllerGeral.associaProblema(idPesquisa);
+    }
+
     public boolean associaProblema(String idPesquisa, String idProblema){
         return controllerGeral.associaProblema(idPesquisa, idProblema);
     }
-    public boolean desassociaProblema(String idPesquisa, String idProblema){
-        return controllerGeral.desassociaProblema(idPesquisa,idProblema);
+
+    public boolean desassociaProblema(String idPesquisa){
+        return controllerGeral.desassociaProblema(idPesquisa);
     }
+
     public boolean associaObjetivo(String idPesquisa, String idObjetivo){
         return controllerGeral.associaObjetivo(idPesquisa, idObjetivo);
     }
+
     public boolean desassociaObjetivo(String idPesquisa, String idObjetivo){
         return controllerGeral.desassociaObjetivo(idPesquisa, idObjetivo);
     }
+
     public String listaPesquisas(String ordem) {
         //return controllerGeral.listaPesquisa(ordem);
         return controllerGeral.listaPesquisas(ordem);

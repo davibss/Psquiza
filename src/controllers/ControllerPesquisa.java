@@ -205,14 +205,13 @@ public class ControllerPesquisa {
         return pesquisas.get(pesquisa).associaProblema(problema);
     }
 
-    public boolean desassociaProblema(String pesquisa, String problema) {
+    public boolean desassociaProblema(String pesquisa) {
         Verificador.verificaVazioNulo(pesquisa, "idPesquisa");
-        Verificador.verificaVazioNulo(problema, "idProblema");
         verificaPesquisa(pesquisa);
         if (!pesquisAtiva(pesquisa)){
             throw new IllegalArgumentException("Pesquisa desativada.");
         }
-        return pesquisas.get(pesquisa).desassociaProblema(problema);
+        return pesquisas.get(pesquisa).desassociaProblema();
     }
 
 
@@ -313,11 +312,12 @@ public class ControllerPesquisa {
     }
 
     public boolean associacao(String codigoAtividade) {
-        boolean saida = false;
-        for(Pesquisa pesquisa : this.pesquisas.values()) {
-            if(pesquisa.hasAtividade(codigoAtividade)){saida = true;}
-        }
-        return saida;
+        //boolean saida = false;
+        return this.pesquisas.values().stream().anyMatch(pesquisa -> pesquisa.hasAtividade(codigoAtividade));
+//        for(Pesquisa pesquisa : this.pesquisas.values()) {
+//            if(pesquisa.hasAtividade(codigoAtividade)){saida = true;}
+//        }
+//        return saida;
     }
 }
 
