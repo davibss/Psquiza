@@ -1,6 +1,7 @@
 package com.tests;
 
 import com.psquiza.controllers.ControllerPesquisa;
+import com.psquiza.entidades.Pesquisador;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +24,8 @@ class ControllerPesquisaTest {
     void criarController(){
         controllerPesquisa = new ControllerPesquisa();
     }
+
+    // Testes para o caso de uso 1
 
     @Test
     void cadastrarPesquisaInvalido() {
@@ -130,5 +133,45 @@ class ControllerPesquisaTest {
         assertTrue(controllerPesquisa.pesquisAtiva("AST1"));
         controllerPesquisa.encerrarPesquisa("AST1","pesquisa concluida");
         assertFalse(controllerPesquisa.pesquisAtiva("AST1"));
+    }
+
+    // Testes para o caso de uso 6
+
+    @Test
+    void associaPesquisadorInvalido(){
+        assertEquals("Pesquisa nao encontrada.", verificaExcecao(() ->
+                controllerPesquisa.associaPesquisador("PSI1","email@email",
+                        new Pesquisador("Teste","externo","123","email@email","http://foto"))));
+        encerrarPesquisa();
+        assertEquals("Pesquisa desativada.",
+                verificaExcecao(() -> controllerPesquisa.associaPesquisador("AST1","email@email",
+                        new Pesquisador("Teste","externo","123","email@email","http://foto"))));
+    }
+
+    @Test
+    void associaPesquisador(){
+        cadastrarPesquisa();
+        assertTrue(controllerPesquisa.associaPesquisador("AST1","email@email",
+                new Pesquisador("Teste","externo","123","email@email","http://foto")));
+        assertFalse(controllerPesquisa.associaPesquisador("AST1","email@email",
+                new Pesquisador("Teste","externo","123","email@email","http://foto")));
+        assertTrue(controllerPesquisa.associaPesquisador("AST1","maria@email",
+                new Pesquisador("Maria","estudante","estuda","maria@email","http://foto3x4")));
+    }
+
+    @Test
+    void desassociaPesquisadoresInvalido(){
+        assertEquals("Pesquisa nao encontrada.", verificaExcecao(() ->
+                controllerPesquisa.desassociaPesquisadores("PSI1","email@email")));
+        encerrarPesquisa();
+        assertEquals("Pesquisa desativada.",
+                verificaExcecao(() -> controllerPesquisa.desassociaPesquisadores("AST1","email@email")));
+    }
+
+    @Test
+    void desassociaPesquisadores(){
+        associaPesquisador();
+        assertTrue(controllerPesquisa.desassociaPesquisadores("AST1","email@email"));
+        assertFalse(controllerPesquisa.desassociaPesquisadores("AST1","email@email"));
     }
 }

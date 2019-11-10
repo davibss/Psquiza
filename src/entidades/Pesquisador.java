@@ -34,8 +34,6 @@ public class Pesquisador{
 
     private Especialidade especialidade;
 
-
-
     /**
      *  Constroi um objeto Pesquisador a partir de informacoes de seu nome, funcao, biografia, email e foto. O pesquisador eh criado em estado ativo.
      *
@@ -86,6 +84,15 @@ public class Pesquisador{
     }
 
     public void altera(String nomeAtributo, String atributo){
+        if (this.funcao.equals("professor") && !(nomeAtributo.equals("FORMACAO") || nomeAtributo.equals("UNIDADE") || nomeAtributo.equals("DATA"))){
+            throw new IllegalArgumentException("Atributo nao pertencem a esta especialidade.");
+        }
+        if (this.funcao.equals("estudante") && !(nomeAtributo.equals("SEMESTRE") || nomeAtributo.equals("IEA"))){
+            throw new IllegalArgumentException("Atributo nao pertencem a esta especialidade.");
+        }
+        if (this.especialidade == null){
+            throw new IllegalArgumentException("Pesquisador nao possui especialidade cadastrada para se modificar.");
+        }
         especialidade.altera(nomeAtributo, atributo);
     }
 
@@ -153,7 +160,8 @@ public class Pesquisador{
         if (this.especialidade == null){
             return String.format("%s (%s) - %s - %s - %s", this.nome, this.funcao, this.bio, this.email, this.foto);
         }else{
-            return (nome + " (" + funcao + ")" +  " - " + bio + " - " + email + " - " + foto + " - " + especialidade.toString());//+ especialidade.toString()
+            return String.format("%s (%s) - %s - %s - %s - %s", this.nome, this.funcao, this.bio, this.email, this.foto, this.especialidade.toString());
+            //return (nome + " (" + funcao + ")" +  " - " + bio + " - " + email + " - " + foto + " - " + especialidade.toString());//+ especialidade.toString()
         }
     }
 

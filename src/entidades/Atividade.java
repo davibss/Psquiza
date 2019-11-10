@@ -83,7 +83,7 @@ public class Atividade {
         if(numeroResultado > this.resultados.size()) {
             throw new IllegalArgumentException("Resultado nao encontrado.");
         }
-        if(this.resultados.get(numeroResultado - 1) == "") {
+        if(this.resultados.get(numeroResultado - 1).equals("")) {
             return false;
         }
         this.resultados.set(numeroResultado - 1, "");
@@ -93,7 +93,7 @@ public class Atividade {
     public String listaResultados() {
         StringJoiner joiner = new StringJoiner(" | ");
         for(String resultado : this.resultados) {
-            if(resultado != "") {
+            if(!resultado.equals("")) {
                 joiner.add(resultado);
             }
         }

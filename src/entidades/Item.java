@@ -39,7 +39,7 @@ public class Item {
     }
 
     public void executa() {
-        if(this.realizado == true){
+        if(this.realizado){
             throw new IllegalArgumentException("Item ja executado.");
         }
         this.realizado = true;

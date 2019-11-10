@@ -29,7 +29,7 @@ public class Buscador {
     private List<String> buscaGenerica(String termo){
         verificaTermo(termo);
         termo = termo.toLowerCase();
-        List<String> buscados = new ArrayList<String>();
+        List<String> buscados = new ArrayList<>();
         buscados.addAll(controllerPesquisa.buscaPesquisa(termo));
         buscados.addAll(controllerPesquisador.buscaPesquisador(termo));
         buscados.addAll(controllerProblema.buscaProblema(termo));

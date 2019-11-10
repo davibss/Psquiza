@@ -2,6 +2,8 @@ package com.psquiza.Especialidades;
 
 import com.psquiza.entidades.Especialidade;
 
+import java.util.Locale;
+
 public class Aluno implements Especialidade {
     private int semestre;
     private Double IEA;
@@ -13,23 +15,22 @@ public class Aluno implements Especialidade {
 
     @Override
     public String toString() {
-
-        return (semestre + "o SEMESTRE" + " - " + IEA);
+        return String.format(Locale.US,"%do SEMESTRE - %.1f", semestre, IEA);
+        //return (semestre + "o SEMESTRE" + " - " + IEA);
     }
 
     public void altera(String nomeAtributo, String atributo){
-        if(semestre < 1){
-            throw new RuntimeException("Atributo semestre com formato invalido.");
-        }
-        if(IEA > 10 || IEA < 0){
-            throw new RuntimeException("Atributo IEA com formato invalido.");
-        }
         if(nomeAtributo.equals("SEMESTRE")){
+            if(Integer.parseInt(atributo) < 1){
+                throw new RuntimeException("Atributo semestre com formato invalido.");
+            }
             this.semestre = Integer.parseInt(atributo);
         }
         if(nomeAtributo.equals("IEA")){
+            if(Double.parseDouble(atributo) > 10 || Double.parseDouble(atributo) < 0){
+                throw new RuntimeException("Atributo IEA com formato invalido.");
+            }
             this.IEA = Double.parseDouble(atributo);
         }
-
     }
 }

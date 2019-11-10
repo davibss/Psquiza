@@ -22,7 +22,7 @@ public class Pesquisa  {
     private Problema problema;
     private Map<String, Objetivo> objetivos;
 
-    private Map<String, Pesquisador> pesquisadores = new HashMap<>();
+    private Map<String, Pesquisador> pesquisadores;
 
     private Map<String, Atividade> atividades;
 

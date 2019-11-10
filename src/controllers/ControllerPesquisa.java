@@ -94,8 +94,8 @@ public class ControllerPesquisa {
      * @param motivo representação em String do motivo de encerrar a pesquisa
      */
     public void encerrarPesquisa(String codigo, String motivo){
-        verificaVazioNulo(codigo,"Codigo");
-        verificaVazioNulo(motivo,"Motivo");
+        Verificador.verificaVazioNulo(codigo,"Codigo");
+        Verificador.verificaVazioNulo(motivo,"Motivo");
         verificaPesquisa(codigo);
 //        if (!pesquisas.containsKey(codigo)){
 //            throw new NullPointerException("Pesquisa nao encontrada.");
@@ -111,7 +111,7 @@ public class ControllerPesquisa {
      * @param codigo representação em String do código que identifica pesquisas
      */
     public void ativarPesquisa(String codigo){
-        verificaVazioNulo(codigo,"Codigo");
+        Verificador.verificaVazioNulo(codigo,"Codigo");
         verificaPesquisa(codigo);
 //        if (!pesquisas.containsKey(codigo)){
 //            throw new NullPointerException("Pesquisa nao encontrada.");
@@ -130,7 +130,7 @@ public class ControllerPesquisa {
      * @return A representação em String de uma pesquisa
      */
     public String exibirPesquisa(String codigo){
-        verificaVazioNulo(codigo,"Codigo");
+        Verificador.verificaVazioNulo(codigo,"Codigo");
         if (!pesquisas.containsKey(codigo)){
             throw new NullPointerException("Pesquisa nao encontrada.");
         }
@@ -154,20 +154,20 @@ public class ControllerPesquisa {
         return pesquisas.get(codigo).estadoAtivacao();
     }
 
-    /**
-     * Verifica se o parâmetro passado é vazio ou nulo, se for, monta String
-     * pra lançar uma exceção.
-     * @param atributo representação em String do atributo a ser verificado.
-     * @param nomeAtributo representação em String do nome do atributo.
-     */
-    private void verificaVazioNulo(String atributo, String nomeAtributo) {
-        StringJoiner joiner = new StringJoiner(" ");
-        joiner.add(nomeAtributo);
-        joiner.add("nao pode ser nulo ou vazio.");
-        if (atributo == null || atributo.equals("")){
-            throw new IllegalArgumentException(joiner.toString());
-        }
-    }
+//    /**
+//     * Verifica se o parâmetro passado é vazio ou nulo, se for, monta String
+//     * pra lançar uma exceção.
+//     * @param atributo representação em String do atributo a ser verificado.
+//     * @param nomeAtributo representação em String do nome do atributo.
+//     */
+//    private void verificaVazioNulo(String atributo, String nomeAtributo) {
+//        StringJoiner joiner = new StringJoiner(" ");
+//        joiner.add(nomeAtributo);
+//        joiner.add("nao pode ser nulo ou vazio.");
+//        if (atributo == null || atributo.equals("")){
+//            throw new IllegalArgumentException(joiner.toString());
+//        }
+//    }
 
     public void verificaPesquisa(String codigo){
         if (!pesquisas.containsKey(codigo)){

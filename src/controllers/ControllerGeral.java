@@ -1,7 +1,6 @@
 package com.psquiza.controllers;
 
 import com.psquiza.entidades.Buscador;
-import com.psquiza.entidades.Pesquisador;
 import com.psquiza.verificadores.Verificador;
 
 public class ControllerGeral {
@@ -59,12 +58,15 @@ public class ControllerGeral {
     public void desativaPesquisador(String email){
         controllerPesquisador.desativaPesquisador(email);
     }
+
     public void ativaPesquisador(String email){
         controllerPesquisador.ativaPesquisador(email);
     }
+
     public String exibePesquisador(String email){
         return controllerPesquisador.exibePesquisador(email);
     }
+
     public boolean pesquisadorEhAtivo(String email){
         return controllerPesquisador.pesquisadorEhAtivo(email);
     }
@@ -147,10 +149,10 @@ public class ControllerGeral {
     }
 
     public boolean desassociaPesquisador(String idPesquisa, String emailPesquisador){
-        if(idPesquisa.equals("") || idPesquisa == null) {
+        if(idPesquisa == null || idPesquisa.equals("")) {
             throw new RuntimeException("Campo idPesquisa nao pode ser nulo ou vazio.");
         }
-        if(emailPesquisador.equals("") || emailPesquisador == null){
+        if(emailPesquisador == null || emailPesquisador.equals("")){
             throw new RuntimeException("Campo emailPesquisador nao pode ser nulo ou vazio.");
         }
 
@@ -158,22 +160,26 @@ public class ControllerGeral {
     }
 
     public void cadastraEspecialidadeProfessor(String email, String formacao, String unidade, String data){
-        if(email == null || email.equals("")){
-            throw new RuntimeException("Campo email nao pode ser nulo ou vazio.");
-        }
+        Verificador.verificaVazioNulo(email,"email");
+        Verificador.verificaVazioNulo(formacao,"formacao");
+        Verificador.verificaVazioNulo(unidade, "unidade");
+        Verificador.verificaVazioNulo(data,"data");
 
-        if(formacao == null || formacao.equals("")){
-            throw new RuntimeException("Campo formacao nao pode ser nulo ou vazio.");
-        }
-
-        if(unidade == null || unidade.equals("")){
-            throw new RuntimeException("Campo unidade nao pode ser nulo ou vazio.");
-        }
-
-        if(data == null || data.equals("")){
-            throw new RuntimeException("Campo data nao pode ser nulo ou vazio.");
-        }
-
+//        if(email == null || email.equals("")){
+//            throw new RuntimeException("Campo email nao pode ser nulo ou vazio.");
+//        }
+//
+//        if(formacao == null || formacao.equals("")){
+//            throw new RuntimeException("Campo formacao nao pode ser nulo ou vazio.");
+//        }
+//
+//        if(unidade == null || unidade.equals("")){
+//            throw new RuntimeException("Campo unidade nao pode ser nulo ou vazio.");
+//        }
+//
+//        if(data == null || data.equals("")){
+//            throw new RuntimeException("Campo data nao pode ser nulo ou vazio.");
+//        }
         controllerPesquisador.cadastraEspecialidadeProfessor(email, formacao, unidade, data);
     }
     public void cadastraEspecialidadeAluno(String email, int semestre, Double iea){
@@ -260,9 +266,11 @@ public class ControllerGeral {
     public String busca(String termo){
         return buscador.buscaGeral(termo);
     }
+
     public String buscaPorNumero(String termo, int posicao){
         return buscador.buscaPorNumero(termo, posicao);
     }
+
     public int contaResultadosBusca(String termo){
         return buscador.contaResultados(termo);
     }

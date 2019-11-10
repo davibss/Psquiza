@@ -1,7 +1,7 @@
 package com.psquiza.controllers;
 
 import com.psquiza.entidades.Objetivo;
-import com.psquiza.entidades.Problema;
+import com.psquiza.verificadores.Verificador;
 
 import java.util.*;
 
@@ -51,8 +51,8 @@ public class ControllerObjetivo {
      * @param viabilidade int sob teste
      */
     private void verificaValidadeObjetivo(String tipo, String descricao, int aderencia, int viabilidade) {
-        verificaVazioNulo(descricao, "descricao");
-        verificaVazioNulo(tipo, "tipo");
+        Verificador.verificaVazioNulo(descricao, "descricao");
+        Verificador.verificaVazioNulo(tipo, "tipo");
         if(!(tipo.equals("GERAL") || tipo.equals("ESPECIFICO"))) {
             throw new IllegalArgumentException("Valor invalido de tipo.");
         }
@@ -71,7 +71,7 @@ public class ControllerObjetivo {
      * @param codigo representação em String do código do objetivo a ser removido
      */
     public void apagarObjetivo(String codigo) {
-        verificaVazioNulo(codigo, "codigo");
+        Verificador.verificaVazioNulo(codigo, "codigo");
         if(!this.objetivos.containsKey(codigo)) {
             throw new IllegalArgumentException("Objetivo nao encontrado");
         }
@@ -86,7 +86,7 @@ public class ControllerObjetivo {
      * @return representação em String de um objeto Objetivo
      */
     public String exibeObjetivo(String codigo) {
-        verificaVazioNulo(codigo, "codigo");
+        Verificador.verificaVazioNulo(codigo, "codigo");
         if(!this.objetivos.containsKey(codigo)) {
             throw new IllegalArgumentException("Objetivo nao encontrado");
         }
@@ -94,27 +94,28 @@ public class ControllerObjetivo {
         return this.objetivos.get(codigo).toString();
     }
 
-    /**
-     * Verifica se o parâmetro passado é vazio ou nulo, se for, monta String
-     * pra lançar uma exceção.
-     * @param atributo representação em String do atributo a ser verificado.
-     * @param nomeAtributo representação em String do nome do atributo.
-     */
-    private void verificaVazioNulo(String atributo, String nomeAtributo) {
-        StringJoiner joiner = new StringJoiner(" ");
-
-        joiner.add("Campo").add(nomeAtributo);
-        joiner.add("nao pode ser nulo ou vazio.");
-        if (atributo == null || atributo.equals("")){
-            throw new IllegalArgumentException(joiner.toString());
-        }
-    }
+//    /**
+//     * Verifica se o parâmetro passado é vazio ou nulo, se for, monta String
+//     * pra lançar uma exceção.
+//     * @param atributo representação em String do atributo a ser verificado.
+//     * @param nomeAtributo representação em String do nome do atributo.
+//     */
+//    private void verificaVazioNulo(String atributo, String nomeAtributo) {
+//        StringJoiner joiner = new StringJoiner(" ");
+//
+//        joiner.add("Campo").add(nomeAtributo);
+//        joiner.add("nao pode ser nulo ou vazio.");
+//        if (atributo == null || atributo.equals("")){
+//            throw new IllegalArgumentException(joiner.toString());
+//        }
+//    }
 
     public Objetivo getObjetivo(String idObjetivo) {
         return this.objetivos.get(idObjetivo);
     }
+
     public List<String> buscaObjetivo(String termo){
-        List<String> found = new ArrayList<String>();
+        List<String> found = new ArrayList<>();
 
         objetivos.entrySet().stream().filter(entry -> entry.getValue().getDescricao().contains(termo)).
                 sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).

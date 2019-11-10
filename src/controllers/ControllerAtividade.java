@@ -63,20 +63,6 @@ public class ControllerAtividade {
         }
     }
 
-
-//    private void verificaVazioNulo(String atributo, String nomeAtributo) {
-//        StringJoiner joiner = new StringJoiner(" ");
-//        if (!nomeAtributo.equals("item")) {
-//            joiner.add("Campo").add(nomeAtributo);
-//        }else{
-//            joiner.add("Item");
-//        }
-//        joiner.add("nao pode ser nulo ou vazio.");
-//        if (atributo == null || atributo.equals("")){
-//            throw new IllegalArgumentException(joiner.toString());
-//        }
-//    }
-
     /**
      * Remove uma atividade do mapa de atividades a partir do código.
      * Verifica se o código é vazio ou nulo e se a atividade existe.
@@ -116,7 +102,7 @@ public class ControllerAtividade {
      */
     private void verificaValidadeItem(String codigo, String nomeItem) {
         Verificador.verificaVazioNulo(codigo, "codigo");
-        Verificador.verificaVazioNulo(nomeItem, "item");
+        Verificador.verificaVazioNulo(nomeItem, "Item");
     }
 
     /**
@@ -151,7 +137,6 @@ public class ControllerAtividade {
      */
     public int contaItensRealizados(String codigo) {
         Verificador.verificaVazioNulo(codigo, "codigo");
-        //verificaVazioNulo(codigo,"codigo");
         verificaExistenciaAtividade(codigo);
         return (this.atividades.get(codigo).contaItensRealizados());
     }
@@ -167,16 +152,6 @@ public class ControllerAtividade {
                 found.add(entry.getKey() + ": " + entry.getValue().getDescricaoRisco());
             }
         });
-//        for (Map.Entry<String, Atividade> entry : atividades.entrySet()){
-//            String descricao = entry.getValue().getDescricao();
-//            String risco = entry.getValue().getDescricaoRisco();
-//            if (descricao.toLowerCase().contains(termo)){
-//                found.add(entry.getKey() + ": " + descricao);
-//            }
-//            if (risco.toLowerCase().contains(termo)){
-//                found.add(entry.getKey() + ": " + risco);
-//            }
-//        }
         return found;
     }
 
