@@ -174,4 +174,46 @@ class ControllerPesquisaTest {
         assertTrue(controllerPesquisa.desassociaPesquisadores("AST1","email@email"));
         assertFalse(controllerPesquisa.desassociaPesquisadores("AST1","email@email"));
     }
+
+    @Test
+    void associaProblemaInvalido(){
+        cadastrarPesquisa();
+
+    }
+
+    @Test
+    void associaProblema(){
+        cadastrarPesquisa();
+
+    }
+
+    @Test
+    void desassociaProblemaInvalido(){
+
+    }
+
+    @Test
+    void desassociaProblema(){
+
+    }
+
+    @Test
+    void associaObjetivoInvalido(){
+
+    }
+
+    @Test
+    void associaObjetivo(){
+
+    }
+
+    @Test
+    void desassociaObjetivoInvalido(){
+
+    }
+
+    @Test
+    void desassociaObjetivo(){
+
+    }
 }
