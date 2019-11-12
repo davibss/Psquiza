@@ -17,6 +17,7 @@ public class FacadePsquiza {
                                                          "tests/accept-tests/use_case_6.txt",
                                                          "tests/accept-tests/use_case_7.txt",
                                                          "tests/accept-tests/use_case_8.txt",
+                                                         "tests/accept-tests/use_case_11.txt"
                                                         };
         EasyAccept.main(args);
     }
@@ -193,4 +194,14 @@ public class FacadePsquiza {
     public int contaResultadosBusca(String termo){
         return controllerGeral.contaResultadosBusca(termo);
     }
+
+    // Caso de Uso 10 (Nestor)
+    public void gravarResumo(String codigoPesquisa){
+
+    }
+    public void gravarResultados(String codigoPesquisa){
+
+    }
 }
+
+
