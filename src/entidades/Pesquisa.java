@@ -24,6 +24,7 @@ public class Pesquisa  {
 
     private Map<String, Pesquisador> pesquisadores;
 
+
     private Map<String, Atividade> atividades;
 
 
