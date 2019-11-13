@@ -1,5 +1,6 @@
 package com.psquiza.entidades;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +11,7 @@ import java.util.Objects;
  * A pesquisa possui estado que informa se está ativa ou desativa, descrição, campo de interesse.
  * @author José Nestor - 119110608
  */
-public class Pesquisa  {
+public class Pesquisa implements Serializable {
     private String codigo;
     /** Representação boleana do estado da pesquisa, true para ativada e false para desativada*/
     private boolean estadoAtivacao;

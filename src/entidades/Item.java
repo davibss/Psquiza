@@ -1,5 +1,6 @@
 package com.psquiza.entidades;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Objects;
  * Item possui nome, como atributo único e atributo para representar o status de pendência do item.
  * @author davibss - 119111034
  */
-public class Item {
+public class Item implements Serializable {
     /** Representação em String do nome do item */
     private String nome;
     /** Representação em boolean do status do item */

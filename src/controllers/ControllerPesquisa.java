@@ -6,6 +6,10 @@ import com.psquiza.comparators.OrdenaPorObjetivo;
 import com.psquiza.entidades.*;
 import com.psquiza.verificadores.Verificador;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -153,21 +157,6 @@ public class ControllerPesquisa {
 //        }
         return pesquisas.get(codigo).estadoAtivacao();
     }
-
-//    /**
-//     * Verifica se o parâmetro passado é vazio ou nulo, se for, monta String
-//     * pra lançar uma exceção.
-//     * @param atributo representação em String do atributo a ser verificado.
-//     * @param nomeAtributo representação em String do nome do atributo.
-//     */
-//    private void verificaVazioNulo(String atributo, String nomeAtributo) {
-//        StringJoiner joiner = new StringJoiner(" ");
-//        joiner.add(nomeAtributo);
-//        joiner.add("nao pode ser nulo ou vazio.");
-//        if (atributo == null || atributo.equals("")){
-//            throw new IllegalArgumentException(joiner.toString());
-//        }
-//    }
 
     public void verificaPesquisa(String codigo){
         if (!pesquisas.containsKey(codigo)){
@@ -318,6 +307,14 @@ public class ControllerPesquisa {
 //            if(pesquisa.hasAtividade(codigoAtividade)){saida = true;}
 //        }
 //        return saida;
+    }
+
+    public void grava(ObjectOutputStream objectOutputStream) throws IOException {
+        objectOutputStream.writeObject(this.pesquisas);
+    }
+
+    public void carrega(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
+        this.pesquisas = (Map<String, Pesquisa>) objectInputStream.readObject();
     }
 }
 

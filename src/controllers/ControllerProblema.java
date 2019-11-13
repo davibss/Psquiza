@@ -3,6 +3,10 @@ package com.psquiza.controllers;
 import com.psquiza.entidades.Problema;
 import com.psquiza.verificadores.Verificador;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -122,5 +126,15 @@ public class ControllerProblema {
 //            }
 //        }
         return found;
+    }
+
+    public void grava(ObjectOutputStream objectOutputStream) throws IOException {
+        objectOutputStream.writeObject(this.problemas);
+        objectOutputStream.writeObject(this.idProblema);
+    }
+
+    public void carrega(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
+        this.problemas = (Map<String, Problema>) objectInputStream.readObject();
+        this.idProblema = (int) objectInputStream.readObject();
     }
 }

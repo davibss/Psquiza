@@ -3,10 +3,12 @@ package com.psquiza.entidades;
 import com.psquiza.Especialidades.Aluno;
 import com.psquiza.Especialidades.Professor;
 
+import java.io.Serializable;
+
 /**
  *  Representa um Pesquisador no Sistema.
  */
-public class Pesquisador{
+public class Pesquisador implements Serializable {
     /**
      *  Representacao em String da funcao de um pesquisador.
      */

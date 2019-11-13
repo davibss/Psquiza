@@ -3,7 +3,9 @@ package com.psquiza.Especialidades;
 import com.psquiza.entidades.Especialidade;
 import com.psquiza.verificadores.Verificador;
 
-public class Professor implements Especialidade {
+import java.io.Serializable;
+
+public class Professor implements Especialidade, Serializable {
     private String formacao;
     private String unidade;
     private String data;

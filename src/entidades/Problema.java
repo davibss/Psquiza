@@ -1,8 +1,9 @@
 package com.psquiza.entidades;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Problema {
+public class Problema implements Serializable {
     private String codigo;
     private String descricao;
     private int viabilidade;

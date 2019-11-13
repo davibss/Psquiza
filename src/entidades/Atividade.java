@@ -1,5 +1,6 @@
 package com.psquiza.entidades;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -10,7 +11,7 @@ import java.util.StringJoiner;
  * A atividade possui codigo único, descrição, lista de itens, risco e descrição do risco.
  * @author davibss - 119111034
  */
-public class Atividade {
+public class Atividade implements Serializable {
     /** Representação em String do código da atividade, no formato: A[número]*/
     private String codigo;
     /** Representação em String da descrição da atividade*/

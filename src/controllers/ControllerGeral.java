@@ -3,7 +3,13 @@ package com.psquiza.controllers;
 import com.psquiza.entidades.Buscador;
 import com.psquiza.verificadores.Verificador;
 
+import java.io.*;
+
 public class ControllerGeral {
+
+    private static String diretorio = "data"+System.getProperty("file.separator")+"pzquiza.txt";
+    private static File file = new File(diretorio);
+
     private ControllerAtividade controllerAtividade;
     private ControllerPesquisa controllerPesquisa;
     private ControllerProblema controllerProblema;
@@ -275,4 +281,41 @@ public class ControllerGeral {
         return buscador.contaResultados(termo);
     }
 
+
+    // Caso de Uso 12 (Davi)
+    public void salva() {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            controllerPesquisa.grava(objectOutputStream);
+            controllerPesquisador.grava(objectOutputStream);
+            controllerObjetivo.grava(objectOutputStream);
+            controllerProblema.grava(objectOutputStream);
+            controllerAtividade.grava(objectOutputStream);
+            objectOutputStream.flush();
+            objectOutputStream.close();
+            fileOutputStream.flush();
+            fileOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void carrega() {
+        if (file.exists() && file.length() > 0){
+            try {
+                FileInputStream fileInputStream = new FileInputStream(file);
+                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+                controllerPesquisa.carrega(objectInputStream);
+                controllerPesquisador.carrega(objectInputStream);
+                controllerObjetivo.carrega(objectInputStream);
+                controllerProblema.carrega(objectInputStream);
+                controllerAtividade.carrega(objectInputStream);
+                objectInputStream.close();
+                fileInputStream.close();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

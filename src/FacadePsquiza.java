@@ -17,8 +17,9 @@ public class FacadePsquiza {
                                                          "tests/accept-tests/use_case_6.txt",
                                                          "tests/accept-tests/use_case_7.txt",
                                                          "tests/accept-tests/use_case_8.txt",
-                                                         "tests/accept-tests/use_case_11.txt"
-                                                        };
+                                                         "tests/accept-tests/use_case_11.txt",
+                                                         "tests/accept-tests/use_case_12.txt"};
+        //args = new String[]{"com.psquiza.FacadePsquiza", "tests/accept-tests/use_case_12.txt"};
         EasyAccept.main(args);
     }
 
@@ -201,6 +202,15 @@ public class FacadePsquiza {
     }
     public void gravarResultados(String codigoPesquisa){
 
+    }
+
+    // Caso de Uso 12 (Davi)
+    public void salva(){
+        controllerGeral.salva();
+    }
+
+    public void carrega(){
+        controllerGeral.carrega();
     }
 }
 

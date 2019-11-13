@@ -3,6 +3,10 @@ package com.psquiza.controllers;
 import com.psquiza.entidades.Atividade;
 import com.psquiza.verificadores.Verificador;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -195,5 +199,15 @@ public class ControllerAtividade {
             throw new IllegalArgumentException("Atividade nao encontrada");
         }
         return this.atividades.get(codigoAtividade).getDuracao();
+    }
+
+    public void grava(ObjectOutputStream objectOutputStream) throws IOException {
+        objectOutputStream.writeObject(this.atividades);
+        objectOutputStream.writeObject(this.atividadesCriadas);
+    }
+
+    public void carrega(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
+        this.atividades = (Map<String, Atividade>) objectInputStream.readObject();
+        this.atividadesCriadas = (int) objectInputStream.readObject();
     }
 }

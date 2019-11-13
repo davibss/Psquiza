@@ -2,9 +2,10 @@ package com.psquiza.Especialidades;
 
 import com.psquiza.entidades.Especialidade;
 
+import java.io.Serializable;
 import java.util.Locale;
 
-public class Aluno implements Especialidade {
+public class Aluno implements Especialidade, Serializable {
     private int semestre;
     private Double IEA;
 

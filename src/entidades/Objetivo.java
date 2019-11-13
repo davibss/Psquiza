@@ -1,6 +1,8 @@
 package com.psquiza.entidades;
 
-public class Objetivo {
+import java.io.Serializable;
+
+public class Objetivo implements Serializable {
     private String codigo;
     private String tipo;
     private String descricao;

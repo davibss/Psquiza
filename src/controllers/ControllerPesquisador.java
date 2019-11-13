@@ -3,8 +3,11 @@ package com.psquiza.controllers;
 import com.psquiza.entidades.Pesquisador;
 import com.psquiza.verificadores.Verificador;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.*;
-import java.util.regex.Pattern;
 
 /**
  *  Classe Controladora da Classe Pesquisador. Responsavel por criar, guardar e manipular os pesquisadores no sistema.
@@ -339,5 +342,13 @@ public class ControllerPesquisador {
 //            }
 //        }
         return found;
+    }
+
+    public void grava(ObjectOutputStream objectOutputStream) throws IOException {
+        objectOutputStream.writeObject(this.pesquisadores);
+    }
+
+    public void carrega(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
+        this.pesquisadores = (Map<String, Pesquisador>) objectInputStream.readObject();
     }
 }
