@@ -1,10 +1,7 @@
 package com.psquiza.entidades;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Representação de uma pesquisa no sistema.
@@ -25,7 +22,6 @@ public class Pesquisa implements Serializable {
 
     private Map<String, Pesquisador> pesquisadores;
 
-
     private Map<String, Atividade> atividades;
 
 
@@ -41,9 +37,9 @@ public class Pesquisa implements Serializable {
         this.descricao = descricao;
         this.campoInteresse = campoInteresse;
         this.problema = new Problema();
-        this.objetivos = new HashMap<>();
-        this.pesquisadores = new HashMap<>();
-        this.atividades = new HashMap<>();
+        this.objetivos = new LinkedHashMap<>();
+        this.pesquisadores = new LinkedHashMap<>();
+        this.atividades = new LinkedHashMap<>();
     }
 
     public boolean associaPesquisador(String emailPesquisador, Pesquisador pesquisador){
@@ -207,5 +203,10 @@ public class Pesquisa implements Serializable {
         return estadoAtivacao;
     }
 
+    public String getAtividadesResumo(){
+        StringJoiner joiner = new StringJoiner("\n");
+        this.atividades.values().forEach(atividade -> joiner.add(atividade.toStringResumo()));
+        return joiner.toString();
+    }
 
 }
