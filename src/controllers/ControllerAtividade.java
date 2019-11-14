@@ -218,4 +218,16 @@ public class ControllerAtividade {
         this.atividadesCriadas = (int) objectInputStream.readObject();
     }
 
+    public void defineProximaAtividade(String idPrecedente, String idSubsequente){
+        atividades.get(idPrecedente).defineProximaAtividade(atividades.get(idSubsequente));
+    }
+    public void tiraProximaAtividade(String idPrecedente){
+        atividades.get(idPrecedente).tiraProximaAtividade();
+    }
+    public int contaProximos(String idPrecedente){
+        return atividades.get(idPrecedente).contaProximos();
+    }
+    public String pegaProximo(String idPrecedente, int enesimaAtividade){
+        return atividades.get(idPrecedente).pegaProximo(enesimaAtividade);
+    }
 }

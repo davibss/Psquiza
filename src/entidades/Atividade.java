@@ -25,6 +25,7 @@ public class Atividade implements Serializable {
 
     private int duracao;
     private List<String> resultados;
+    private Atividade nextAtividade;
 
     /**
      * Constrói atividade a partir dos parâmetros passados.
@@ -167,5 +168,27 @@ public class Atividade implements Serializable {
      */
     public int contaItensRealizados() {
         return (int) this.itens.stream().filter(Item::isRealizado).count();
+    }
+
+    public void defineProximaAtividade(Atividade proxima){
+        if (nextAtividade == null){
+            nextAtividade = proxima;
+        }
+        defineProximaAtividade(nextAtividade);
+    }
+    public void tiraProximaAtividade(){
+        nextAtividade = null;
+    }
+    public int contaProximos(){
+        if (nextAtividade == null){
+            return 0;
+        }
+        return 1 + nextAtividade.contaProximos();
+    }
+    public String pegaProximo(int numero){
+        if (numero == 0){
+            return this.codigo;
+        }
+        return nextAtividade.pegaProximo(numero - 1);
     }
 }

@@ -203,6 +203,20 @@ public class FacadePsquiza {
         return controllerGeral.contaResultadosBusca(termo);
     }
 
+    // Caso de Uso 9 (Anderson)
+    public void defineProximaAtividade(String idPrecedente, String idSubsquente){
+        controllerGeral.defineProximaAtividade(idPrecedente, idSubsquente);
+    }
+    public void tiraProximaAtividade(String idPrecedente){
+        controllerGeral.tiraProximaAtividade(idPrecedente);
+    }
+    public int contaProximos(String idPrecedente){
+        return controllerGeral.contaProximos(idPrecedente);
+    }
+    public String pegaProximo(String idAtividade, int enesimaAtividade){
+        return controllerGeral.pegaProximo(idAtividade, enesimaAtividade);
+    }
+
     // Caso de Uso 10 (Henrique)
     public void configuraEstrategia(String estrategia) {
         controllerGeral.configuraEstrategia(estrategia);
