@@ -282,6 +282,30 @@ public class ControllerGeral {
     }
 
 
+    // Caso de Uso 11 (Nestor)
+    public void gravarResumo(String codigoPesquisa) throws IOException {
+        if (codigoPesquisa.equals("") || codigoPesquisa == null){
+            throw new RuntimeException("Pesquisa nao pode ser nula ou vazia.");
+        }
+        if (!controllerPesquisa.containsPesquisa(codigoPesquisa)){
+            throw new RuntimeException("Pesquisa nao encontrada.");
+        }
+
+        controllerPesquisa.gravarResumo(codigoPesquisa);
+    }
+
+    public void gravarResultados(String codigoPesquisa) throws IOException{
+        if (codigoPesquisa.equals("") || codigoPesquisa == null){
+            throw new RuntimeException("Pesquisa nao pode ser nula ou vazia.");
+        }
+        if (!controllerPesquisa.containsPesquisa(codigoPesquisa)){
+            throw new RuntimeException("Pesquisa nao encontrada.");
+        }
+
+        controllerPesquisa.gravarResultados(codigoPesquisa);
+
+    }
+
     // Caso de Uso 12 (Davi)
     public void salva() {
         try {
@@ -319,64 +343,4 @@ public class ControllerGeral {
         }
     }
 
-    public void gravarResumo(String codigoPesquisa) throws IOException {
-        if (codigoPesquisa.equals("") || codigoPesquisa == null){
-            throw new RuntimeException("Pesquisa nao pode ser nula ou vazia.");
-        }
-        if (!controllerPesquisa.containsPesquisa(codigoPesquisa)){
-            throw new RuntimeException("Pesquisa nao encontrada.");
-        }
-
-        String resumoPesquisa = "- Pesquisa: " + exibirPesquisa(codigoPesquisa) + "\n" +
-                "\n" +
-                "    - Pesquisadores:\n" +
-                "\n" +
-                "        - " + controllerPesquisador.listaPesquisadoresResumo(codigoPesquisa) +
-                "\n" +
-                "    - Problema:\n" +
-                "\n" +
-                "        - " + //exibeProblema(codigoPesquisa) +
-                "\n" +
-                "    - Objetivos:\n" +
-                "\n" +
-                "        - " + //exibeObjetivo(codigoPesquisa) +
-                "\n" +
-                "    - Atividades:\n" +
-                "\n" +
-                "        - "; //+ controllerAtividade.exibeAtividadeResumo(codigoPesquisa);
-
-        File file = new File("CODIGO.txt");
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(file);
-            String reumo = resumoPesquisa;
-            fos.write(reumo.getBytes());
-        } finally {
-            fos.close();
-        }
-    }
-
-    public void gravarResultados(String codigoPesquisa) throws IOException{
-        if (codigoPesquisa.equals("") || codigoPesquisa == null){
-            throw new RuntimeException("Pesquisa nao pode ser nula ou vazia.");
-        }
-        if (!controllerPesquisa.containsPesquisa(codigoPesquisa)){
-            throw new RuntimeException("Pesquisa nao encontrada.");
-        }
-
-        String resultadosPesquisa = "- Pesquisa: " + exibirPesquisa(codigoPesquisa) + "\n" +
-                "\n" +
-                "    - Resultados:\n" +
-                "\n" +
-                "       - " + "Resultados";
-        File file = new File("CODIGO.txt");
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(file);
-            String resultados = resultadosPesquisa;
-            fos.write(resultados.getBytes());
-        } finally {
-            fos.close();
-        }
-    }
 }

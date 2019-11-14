@@ -209,4 +209,18 @@ public class Pesquisa implements Serializable {
         return joiner.toString();
     }
 
+    public String listaPesquisadores(){
+        StringJoiner joiner = new StringJoiner("\n");
+        this.pesquisadores.values().forEach(pesquisador -> joiner.add(pesquisador.toString()));
+        return joiner.toString();
+    }
+
+    public String getProblemaResumo(){
+        return problema.toString();
+    }
+
+    public String getObjetivosResumo(){
+        return objetivos.toString();
+    }
+
 }
