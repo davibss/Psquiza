@@ -53,6 +53,10 @@ public class Atividade implements Serializable {
         return descricaoRisco;
     }
 
+    public String getRisco() {
+        return risco;
+    }
+
     /**
      * Cadastra um novo item na lista de itens.
      * Verifica se já existe aquele item.

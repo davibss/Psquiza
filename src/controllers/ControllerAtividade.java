@@ -19,6 +19,7 @@ public class ControllerAtividade {
     /** Quantidade de atividades criadas no sistema*/
     private int atividadesCriadas;
 
+
     /**
      * Constrói o controller, inicializando mapa e a quantidade de atividades criadas,
      * por padrão a quantidade de atividades criadas é 1, pois a contagem começa de 1.
@@ -216,4 +217,5 @@ public class ControllerAtividade {
         this.atividades = (Map<String, Atividade>) objectInputStream.readObject();
         this.atividadesCriadas = (int) objectInputStream.readObject();
     }
+
 }

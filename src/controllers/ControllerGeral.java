@@ -281,6 +281,15 @@ public class ControllerGeral {
         return buscador.contaResultados(termo);
     }
 
+    //Caso de Uso 10 (Henrique)
+    public void configuraEstrategia(String estrategia) {
+        controllerPesquisa.configuraEstrategia(estrategia);
+    }
+
+    public String proximaAtividade(String codigoPesquisa) {
+        return controllerPesquisa.proximaAtividade(codigoPesquisa);
+    }
+
 
     // Caso de Uso 12 (Davi)
     public void salva() {

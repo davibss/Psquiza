@@ -19,14 +19,17 @@ import java.util.*;
 public class ControllerPesquisa {
     /** Mapa que armazena pesquisas, pesquisas são identificadas por um código gerado no sistema*/
     private Map<String, Pesquisa> pesquisas;
+    /** Estrtégia utilizada na sugestão da próxima atividade a ser executada*/
+    private String estrategia;
 
 
     /**
      * Constrói um controller, inicializando um mapa.
+     * A estratégia de sugestão é definida por padrão como "MAIS_ANTIGA"
      */
     public ControllerPesquisa(){
-
         this.pesquisas = new HashMap<>();
+        this.estrategia = "MAIS_ANTIGA";
     }
 
     /**
@@ -357,6 +360,14 @@ public class ControllerPesquisa {
 
     public boolean containsPesquisa(String codigoPesquisa){
         return pesquisas.containsKey(codigoPesquisa);
+    }
+
+    public void configuraEstrategia(String estrategia) {
+        this.estrategia = estrategia;
+    }
+
+    public String proximaAtividade(String codigoPesquisa) {
+        return this.pesquisas.get(codigoPesquisa).proximaAtividade(this.estrategia);
     }
 }
 

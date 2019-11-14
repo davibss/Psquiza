@@ -203,6 +203,15 @@ public class FacadePsquiza {
         return controllerGeral.contaResultadosBusca(termo);
     }
 
+    // Caso de Uso 10 (Henrique)
+    public void configuraEstrategia(String estrategia) {
+        controllerGeral.configuraEstrategia(estrategia);
+    }
+
+    public String proximaAtividade(String codigoPesquisa) {
+        return controllerGeral.proximaAtividade(codigoPesquisa);
+    }
+
     // Caso de Uso 11 (Nestor)
     public void gravarResumo(String codigoPesquisa) throws IOException {
         controllerGeral.gravarResumo(codigoPesquisa);
