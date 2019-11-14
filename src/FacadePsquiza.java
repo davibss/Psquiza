@@ -10,7 +10,10 @@ public class FacadePsquiza {
     private ControllerGeral controllerGeral;
 
     public static void main(String[] args) {
-
+        // SÓ DESCOMENTAR QUANDO FOREM FEITOS OS CASOS DE USO 9 E 10
+//        args = new String[]{"com.psquiza.FacadePsquiza", "tests/accept-tests/use_case_12SALVAR.txt",
+//                "tests/accept-tests/use_case_12CARREGAR.txt"};
+//        EasyAccept.main(args);
         args = new String[]{"com.psquiza.FacadePsquiza", "tests/accept-tests/use_case_1.txt",
                                                          "tests/accept-tests/use_case_2.txt",
                                                          "tests/accept-tests/use_case_3.txt",
@@ -19,10 +22,12 @@ public class FacadePsquiza {
                                                          "tests/accept-tests/use_case_6.txt",
                                                          "tests/accept-tests/use_case_7.txt",
                                                          "tests/accept-tests/use_case_8.txt",
-                                                         "tests/accept-tests/use_case_11.txt",
-                                                         "tests/accept-tests/use_case_12.txt"};
+                                                         "tests/accept-tests/use_case_9.txt",
+                                                         "tests/accept-tests/use_case_10.txt",
+                                                         "tests/accept-tests/use_case_11.txt"};
         //args = new String[]{"com.psquiza.FacadePsquiza", "tests/accept-tests/use_case_12.txt"};
         EasyAccept.main(args);
+
     }
 
     public FacadePsquiza() {
@@ -207,11 +212,11 @@ public class FacadePsquiza {
     }
 
     // Caso de Uso 12 (Davi)
-    public void salva(){
+    public void salvar(){
         controllerGeral.salva();
     }
 
-    public void carrega(){
+    public void carregar(){
         controllerGeral.carrega();
     }
 }
