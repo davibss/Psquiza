@@ -1,7 +1,5 @@
 package com.psquiza.entidades;
 
-import com.psquiza.comparators.AtividadeMaisAntiga;
-
 import java.io.Serializable;
 import java.util.*;
 
@@ -39,9 +37,9 @@ public class Pesquisa implements Serializable {
         this.descricao = descricao;
         this.campoInteresse = campoInteresse;
         this.problema = new Problema();
-        this.objetivos = new HashMap<>();
-        this.pesquisadores = new HashMap<>();
-        this.atividades = new HashMap<>();
+        this.objetivos = new LinkedHashMap<>();
+        this.pesquisadores = new LinkedHashMap<>();
+        this.atividades = new LinkedHashMap<>();
     }
 
     public boolean associaPesquisador(String emailPesquisador, Pesquisador pesquisador){
@@ -128,54 +126,6 @@ public class Pesquisa implements Serializable {
         return true;
     }
 
-    public String proximaAtividade(String estrategia) {
-        String proxima = new String();
-        switch (estrategia) {
-            case "MAIS_ANTIGA":
-                List<String> lista = new ArrayList<>();
-                lista.addAll(this.atividades.keySet());
-                Collections.sort(lista, new AtividadeMaisAntiga());
-                for(String codigoAtividade : lista){
-                    if(this.atividades.get(codigoAtividade).contaItensPendentes() != 0) {
-                        proxima = codigoAtividade;
-                    }
-                }
-                break;
-
-            case "MENOS_PENDENCIAS":
-                Iterator<String> itr1 = this.atividades.keySet().iterator();
-                proxima = itr1.next();
-                int pendencias = this.atividades.get(proxima).contaItensPendentes();
-                while (itr1.hasNext()) {
-                    String codigoAtividade = itr1.next();
-                    if(this.atividades.get(codigoAtividade).contaItensPendentes() == pendencias) { }
-                    
-                    if((this.atividades.get(codigoAtividade).contaItensPendentes() < pendencias && this.atividades.get(codigoAtividade).contaItensPendentes() != 0) || pendencias == 0) {
-                        proxima = codigoAtividade;
-                        pendencias = this.atividades.get(codigoAtividade).contaItensPendentes();
-                    }
-                }
-                break;
-
-            case "MAIOR_RISCO":
-                break;
-
-            case "MAIOR_DURACAO":
-                Iterator<String> itr2 = this.atividades.keySet().iterator();
-                proxima = itr2.next();
-                int duracao = this.atividades.get(proxima).getDuracao();
-                while (itr2.hasNext()) {
-                    String codigoAtividade = itr2.next();
-                    if(this.atividades.get(codigoAtividade).getDuracao() > duracao && this.atividades.get(codigoAtividade).contaItensPendentes() != 0) {
-                        proxima = codigoAtividade;
-                        duracao = this.atividades.get(codigoAtividade).getDuracao();
-                    }
-                }
-                break;
-        }
-        return proxima;
-    }
-
     public boolean hasAtividade(String codigoAtividade){
         return this.atividades.containsKey(codigoAtividade);
     }
@@ -251,6 +201,12 @@ public class Pesquisa implements Serializable {
      */
     public boolean estadoAtivacao() {
         return estadoAtivacao;
+    }
+
+    public String getAtividadesResumo(){
+        StringJoiner joiner = new StringJoiner("\n");
+        this.atividades.values().forEach(atividade -> joiner.add(atividade.toStringResumo()));
+        return joiner.toString();
     }
 
 }

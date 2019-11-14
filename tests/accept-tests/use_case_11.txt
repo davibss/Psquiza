@@ -1,4 +1,4 @@
-﻿#Gravando resumo das pesquisas COM1, COM2 e COM3
+#Gravando resumo das pesquisas COM1, COM2 e COM3
 #Gravando resumo dos resultados COM1, COM2 e COM3
 #Criando P5 e O7
 #Associando COM3 e eliane@computacao.ufcg.edu.br, borutofathers@1997, livia@computacao.ufcg.edu.br.
@@ -14,9 +14,9 @@ cadastraObjetivo tipo="ESPECIFICO" descricao="Minimizar a quantidade de testes r
 
 expectError "Pesquisa nao pode ser nula ou vazia." gravarResumo codigoPesquisa=""
 expectError "Pesquisa nao encontrada." gravarResumo codigoPesquisa="ENE1"
-gravarResumo codigoPesquisa="COM1"
 gravarResumo codigoPesquisa="COM2"
 gravarResumo codigoPesquisa="COM3"
+gravarResumo codigoPesquisa="COM1"
 
 
 expectError "Pesquisa nao pode ser nula ou vazia." gravarResultados codigoPesquisa=""
@@ -85,5 +85,31 @@ COM3.txt ="- Pesquisa: COM3 - Dificuldade de pensar em bons exemplos para os tes
 	- Busca e analise de uma razao para a Netflix cancelar BoJack Horseman (ALTO - Nao existe uma razao plausivel, assim o risco e elevado.)
             - PENDENTE - ITEM1
 	- Mudancas nas relacoes do instagram, apos a ocultacao do numero de curtidas das postagens. (ALTO - Por envolver uma crise economica brutal, com diversas blogueirinhas perdendo seus empregos, e de uma crise social, com diversas pessoas perdendo o rummo de suas vidas, o risco e extremamente elevado.)"
+
+COM1-Resultados.txt ="- Pesquisa: COM1 - Homofobia em mensagens online de alunos de computacao do primeiro periodo. - computacao, homofobia
+    - Resultados:
+        - Monitoramento de chats dos alunos de computacao do primeiro periodo.
+            - ITEM1 - 5 - DESCRIÇÃO_RESULTADO
+            - ITEM2 - 5 - DESCRIÇÃO_RESULTADO
+            - ITEM3 - 5 - DESCRIÇÃO_RESULTADO
+            - ITEM4 - 5 - DESCRIÇÃO_RESULTADO"
+
+COM2-Resultados.txt ="- Pesquisa: COM1 - Homofobia em mensagens online de alunos de computacao do primeiro periodo. - computacao, homofobia
+    - Resultados:
+        - DESCRIÇÃO
+            - ITEM1 - DURAÇÃO - DESCRIÇÃO_RESULTADO
+            - ITEM2 - DURAÇÃO - DESCRIÇÃO_RESULTADO
+        - DESCRIÇÃO
+            - ITEM4 - DURAÇÃO - DESCRIÇÃO_RESULTADO
+            - ITEM5 - DURAÇÃO - DESCRIÇÃO_RESULTADO"
+
+COM3-Resultados.txt ="- Pesquisa: COM1 - Homofobia em mensagens online de alunos de computacao do primeiro periodo. - computacao, homofobia
+    - Resultados:
+        - DESCRIÇÃO
+            - ITEM1 - DURAÇÃO - DESCRIÇÃO_RESULTADO
+            - ITEM2 - DURAÇÃO - DESCRIÇÃO_RESULTADO
+        - DESCRIÇÃO
+            - ITEM4 - DURAÇÃO - DESCRIÇÃO_RESULTADO
+            - ITEM5 - DURAÇÃO - DESCRIÇÃO_RESULTADO"
 
 

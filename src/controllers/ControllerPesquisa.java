@@ -6,10 +6,7 @@ import com.psquiza.comparators.OrdenaPorObjetivo;
 import com.psquiza.entidades.*;
 import com.psquiza.verificadores.Verificador;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -320,42 +317,44 @@ public class ControllerPesquisa {
         this.pesquisas = (Map<String, Pesquisa>) objectInputStream.readObject();
     }
 
-    public void carregaResumo(String codigoPesquisa){
-        String resumo = "- Pesquisa: "+ "\n" +
+    public void gravarResumo(String codigoPesquisa) throws IOException {
+        String resumoPesquisa = "- Pesquisa: %s - %s - %s%n" +
                 "\n" +
                 "    - Pesquisadores:\n" +
-                "\n" +
-                "        - NOME (FUNÇÃO) - BIOGRAFIA - EMAIL - FOTO - Detalhes\n" +
-                "\n" +
-                "        - NOME (FUNÇÃO) - BIOGRAFIA - EMAIL - FOTO - Detalhes\n" +
-                "\n" +
-                "        - NOME (FUNÇÃO) - BIOGRAFIA - EMAIL - FOTO - Detalhes\n" +
+                pesquisas.get(codigoPesquisa).listaPesquisadores() +
                 "\n" +
                 "    - Problema:\n" +
-                "\n" +
-                "        - CÓDIGO - DESCRIÇÃO - VIABILIDADE\n" +
+                "       - " + pesquisas.get(codigoPesquisa).getProblemaResumo() +
                 "\n" +
                 "    - Objetivos:\n" +
-                "\n" +
-                "        - CÓDIGO - TIPO - DESCRIÇÃO - VALOR\n" +
+                "       - " + pesquisas.get(codigoPesquisa).getObjetivosResumo() +
                 "\n" +
                 "    - Atividades:\n" +
-                "\n" +
-                "        - DESCRIÇÃO (NIVEL_RISCO - DESC_RISCO)\n" +
-                "\n" +
-                "            - REALIZADO - ITEM1\n" +
-                "\n" +
-                "            - REALIZADO - ITEM2\n" +
-                "\n" +
-                "            - PENDENTE - ITEM3\n" +
-                "\n" +
-                "        - DESCRIÇÃO (NIVEL_RISCO - DESC_RISCO)\n" +
-                "\n" +
-                "            - REALIZADO - ITEM4\n" +
-                "\n" +
-                "            - REALIZADO - ITEM5\n" +
-                "\n" +
-                "            - PENDENTE - ITEM6";
+                "       - " + pesquisas.get(codigoPesquisa).getAtividadesResumo();
+
+
+        File file = new File("tests"+System.getProperty("file.separator")+"accept-tests"+System.getProperty("file.separator")+"COM6.txt");
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(file);
+            String reumo = resumoPesquisa;
+            fos.write(reumo.getBytes());
+        } finally {
+            fos.close();
+        }
+    }
+
+    public void gravarResultados(String codigoPesquisa) throws IOException{
+
+        File file = new File("CODIGO.txt");
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(file);
+            String resultados = "";
+            fos.write(resultados.getBytes());
+        } finally {
+            fos.close();
+        }
     }
 
     public boolean containsPesquisa(String codigoPesquisa){

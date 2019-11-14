@@ -90,7 +90,7 @@ public class ControllerPesquisador {
         //return lista;
         return joiner.toString();
     }
-    public String listaPesquisadoresResumo(String codigoPesquisador) {
+    public String listaPesquisadoresResumo() {
         String lista = "";
         String separador = "";
 
