@@ -10,6 +10,7 @@ public class FacadePsquiza {
     private ControllerGeral controllerGeral;
 
     public static void main(String[] args) {
+        // RODAR SALVAR E CARREGAR SOZINHOS
         // SÓ DESCOMENTAR QUANDO FOREM FEITOS OS CASOS DE USO 9 E 10
 //        args = new String[]{"com.psquiza.FacadePsquiza", "tests/accept-tests/use_case_12SALVAR.txt",
 //                "tests/accept-tests/use_case_12CARREGAR.txt"};
@@ -25,7 +26,6 @@ public class FacadePsquiza {
                                                          "tests/accept-tests/use_case_9.txt",
                                                          "tests/accept-tests/use_case_10.txt",
                                                          "tests/accept-tests/use_case_11.txt"};
-        //args = new String[]{"com.psquiza.FacadePsquiza", "tests/accept-tests/use_case_12.txt"};
         EasyAccept.main(args);
 
     }
