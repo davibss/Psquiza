@@ -3,6 +3,8 @@ package com.psquiza;
 import com.psquiza.controllers.*;
 import easyaccept.EasyAccept;
 
+import java.io.IOException;
+
 public class FacadePsquiza {
 
     private ControllerGeral controllerGeral;
@@ -196,12 +198,12 @@ public class FacadePsquiza {
         return controllerGeral.contaResultadosBusca(termo);
     }
 
-    // Caso de Uso 10 (Nestor)
-    public void gravarResumo(String codigoPesquisa){
-
+    // Caso de Uso 11 (Nestor)
+    public void gravarResumo(String codigoPesquisa) throws IOException {
+        controllerGeral.gravarResumo(codigoPesquisa);
     }
-    public void gravarResultados(String codigoPesquisa){
-
+    public void gravarResultados(String codigoPesquisa) throws IOException{
+        controllerGeral.gravarResultados(codigoPesquisa);
     }
 
     // Caso de Uso 12 (Davi)

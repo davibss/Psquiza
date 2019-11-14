@@ -90,6 +90,16 @@ public class ControllerPesquisador {
         //return lista;
         return joiner.toString();
     }
+    public String listaPesquisadoresResumo(String codigoPesquisador) {
+        String lista = "";
+        String separador = "";
+
+        for (Pesquisador pesquisador : this.pesquisadores.values()){
+                lista += separador + pesquisador.toString();
+                separador = "       - ";
+        }
+        return lista;
+    }
    // public String listaPesquisadores(String tipo){}
     /**
      *  Verifica uma String representando um possivel email de um Pesquisador. Verifica se o email nao eh nulo ou vazioa, em seguida

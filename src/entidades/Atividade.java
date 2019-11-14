@@ -118,6 +118,15 @@ public class Atividade implements Serializable {
         return joiner.toString();
     }
 
+
+    public String toStringResumo() {
+        StringJoiner joiner = new StringJoiner("\n" +
+                "               - ");
+        joiner.add(String.format("%s (%s - %s)",this.descricao, this.risco, this.descricaoRisco));
+        this.itens.forEach((r) -> joiner.add(r.toString()));
+        return joiner.toString();
+    }
+
     /**
      * Compara dois objetos e retorna se são iguais.
      * @param o objeto a ser comparado.

@@ -316,5 +316,47 @@ public class ControllerPesquisa {
     public void carrega(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
         this.pesquisas = (Map<String, Pesquisa>) objectInputStream.readObject();
     }
+
+    public void carregaResumo(String codigoPesquisa){
+        String resumo = "- Pesquisa: "+ "\n" +
+                "\n" +
+                "    - Pesquisadores:\n" +
+                "\n" +
+                "        - NOME (FUNÇÃO) - BIOGRAFIA - EMAIL - FOTO - Detalhes\n" +
+                "\n" +
+                "        - NOME (FUNÇÃO) - BIOGRAFIA - EMAIL - FOTO - Detalhes\n" +
+                "\n" +
+                "        - NOME (FUNÇÃO) - BIOGRAFIA - EMAIL - FOTO - Detalhes\n" +
+                "\n" +
+                "    - Problema:\n" +
+                "\n" +
+                "        - CÓDIGO - DESCRIÇÃO - VIABILIDADE\n" +
+                "\n" +
+                "    - Objetivos:\n" +
+                "\n" +
+                "        - CÓDIGO - TIPO - DESCRIÇÃO - VALOR\n" +
+                "\n" +
+                "    - Atividades:\n" +
+                "\n" +
+                "        - DESCRIÇÃO (NIVEL_RISCO - DESC_RISCO)\n" +
+                "\n" +
+                "            - REALIZADO - ITEM1\n" +
+                "\n" +
+                "            - REALIZADO - ITEM2\n" +
+                "\n" +
+                "            - PENDENTE - ITEM3\n" +
+                "\n" +
+                "        - DESCRIÇÃO (NIVEL_RISCO - DESC_RISCO)\n" +
+                "\n" +
+                "            - REALIZADO - ITEM4\n" +
+                "\n" +
+                "            - REALIZADO - ITEM5\n" +
+                "\n" +
+                "            - PENDENTE - ITEM6";
+    }
+
+    public boolean containsPesquisa(String codigoPesquisa){
+        return pesquisas.containsKey(codigoPesquisa);
+    }
 }
 

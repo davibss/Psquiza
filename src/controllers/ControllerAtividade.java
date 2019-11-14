@@ -121,6 +121,12 @@ public class ControllerAtividade {
         return this.atividades.get(codigo).toString();
     }
 
+    public String exibeAtividadeResumo(String codigo) {
+        Verificador.verificaVazioNulo(codigo,"codigo");
+        verificaExistenciaAtividade(codigo);
+        return this.atividades.get(codigo).toStringResumo();
+    }
+
     /**
      * Conta todos os itens pendentes de uma atividade a partir do código.
      * Verifica se código é vazio ou nulo, e se a atividade existe.
