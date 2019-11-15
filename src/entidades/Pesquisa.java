@@ -11,6 +11,8 @@ import java.util.*;
  * @author José Nestor - 119110608
  */
 public class Pesquisa implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String codigo;
     /** Representação boleana do estado da pesquisa, true para ativada e false para desativada*/
     private boolean estadoAtivacao;
@@ -39,9 +41,9 @@ public class Pesquisa implements Serializable {
         this.descricao = descricao;
         this.campoInteresse = campoInteresse;
         this.problema = new Problema();
-        this.objetivos = new HashMap<>();
-        this.pesquisadores = new HashMap<>();
-        this.atividades = new HashMap<>();
+        this.objetivos = new LinkedHashMap<>();
+        this.pesquisadores = new LinkedHashMap<>();
+        this.atividades = new LinkedHashMap<>();
     }
 
     public boolean associaPesquisador(String emailPesquisador, Pesquisador pesquisador){
@@ -129,9 +131,12 @@ public class Pesquisa implements Serializable {
     }
 
     public String proximaAtividade(String estrategia) {
-        String proxima = new String();
+        String proxima = "";
         switch (estrategia) {
             case "MAIS_ANTIGA":
+                //sugestao
+//                proxima = this.atividades.entrySet().stream().filter(entry ->  entry.getValue().contaItensPendentes() > 0)
+//                        .findFirst().get().getKey();
                 List<String> lista = new ArrayList<>();
                 lista.addAll(this.atividades.keySet());
                 Collections.sort(lista, new AtividadeMaisAntiga());
@@ -159,7 +164,6 @@ public class Pesquisa implements Serializable {
 
             case "MAIOR_RISCO":
                 break;
-
             case "MAIOR_DURACAO":
                 Iterator<String> itr2 = this.atividades.keySet().iterator();
                 proxima = itr2.next();
@@ -253,4 +257,21 @@ public class Pesquisa implements Serializable {
         return estadoAtivacao;
     }
 
+    public String listaPesquisadores() {
+        return null;
+    }
+
+    public String getProblemaResumo() {
+        return null;
+    }
+
+    public String getObjetivosResumo() {
+        return null;
+    }
+
+    public String getAtividadesResumo(){
+        StringJoiner joiner = new StringJoiner("\n");
+        this.atividades.values().forEach(atividade -> joiner.add(atividade.toStringResumo()));
+        return joiner.toString();
+    }
 }

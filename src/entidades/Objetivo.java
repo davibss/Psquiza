@@ -3,6 +3,8 @@ package com.psquiza.entidades;
 import java.io.Serializable;
 
 public class Objetivo implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String codigo;
     private String tipo;
     private String descricao;

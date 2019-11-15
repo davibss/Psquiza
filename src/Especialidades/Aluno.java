@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.Locale;
 
 public class Aluno implements Especialidade, Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int semestre;
     private Double IEA;
 
@@ -17,7 +19,6 @@ public class Aluno implements Especialidade, Serializable {
     @Override
     public String toString() {
         return String.format(Locale.US,"%do SEMESTRE - %.1f", semestre, IEA);
-        //return (semestre + "o SEMESTRE" + " - " + IEA);
     }
 
     public void altera(String nomeAtributo, String atributo){

@@ -293,23 +293,25 @@ public class ControllerGeral {
 
     // Caso de Uso 11 (Nestor)
     public void gravarResumo(String codigoPesquisa) throws IOException {
-        if (codigoPesquisa.equals("") || codigoPesquisa == null){
+        if (codigoPesquisa == null ||codigoPesquisa.equals("")){
             throw new RuntimeException("Pesquisa nao pode ser nula ou vazia.");
         }
-        if (!controllerPesquisa.containsPesquisa(codigoPesquisa)){
-            throw new RuntimeException("Pesquisa nao encontrada.");
-        }
+        controllerPesquisa.verificaPesquisa(codigoPesquisa);
+//        if (!controllerPesquisa.containsPesquisa(codigoPesquisa);){
+//            throw new RuntimeException("Pesquisa nao encontrada.");
+//        }
 
         controllerPesquisa.gravarResumo(codigoPesquisa);
     }
 
     public void gravarResultados(String codigoPesquisa) throws IOException{
-        if (codigoPesquisa.equals("") || codigoPesquisa == null){
+        if (codigoPesquisa == null || codigoPesquisa.equals("")){
             throw new RuntimeException("Pesquisa nao pode ser nula ou vazia.");
         }
-        if (!controllerPesquisa.containsPesquisa(codigoPesquisa)){
-            throw new RuntimeException("Pesquisa nao encontrada.");
-        }
+        controllerPesquisa.verificaPesquisa(codigoPesquisa);
+//        if (!controllerPesquisa.containsPesquisa(codigoPesquisa)){
+//            throw new RuntimeException("Pesquisa nao encontrada.");
+//        }
 
         controllerPesquisa.gravarResultados(codigoPesquisa);
 

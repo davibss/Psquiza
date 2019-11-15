@@ -8,6 +8,7 @@ import com.psquiza.verificadores.Verificador;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Controller de pesquisa, classe responsável por cadastrar, alterar, ativar, encerrar e exibir pesquisa
@@ -39,23 +40,29 @@ public class ControllerPesquisa {
        if(descricao == null || descricao.equals("")){
             throw new NullPointerException("Descricao nao pode ser nula ou vazia.");
        }
-
        String[] campos = campoInteresse.split(",");
        if (campos.length > 4 || campos[0].trim().length() < 3 || campoInteresse.length() > 255){
            throw new IllegalArgumentException ("Formato do campo de interesse invalido.");
        }
        for(String topico : campos){
-           //if (topico == null || topico.equals("") || topico.equals(" ")){
            if (topico == null || topico.trim().equals("")){
                throw new IllegalArgumentException ("Formato do campo de interesse invalido.");
            }
        }
        int valorInt = 1;
-       for(String codigo : this.pesquisas.keySet()){
-           if(codigo.substring(0,3).equals(campos[0].trim().substring(0, 3).toUpperCase())){
-               valorInt = Integer.parseInt(String.valueOf(codigo.charAt(3))) + 1;
-           }
+       if (this.pesquisas.keySet().stream().anyMatch(s -> s.substring(0, 3).equals(campos[0].substring(0, 3).toUpperCase()))){
+           valorInt = this.pesquisas.keySet().stream().
+                   filter(s -> s.substring(0,3).equals(campos[0].substring(0,3).toUpperCase())).
+                   mapToInt(s -> Integer.parseInt(s.substring(3))).max().getAsInt() + 1;
        }
+
+//       for(String codigo : this.pesquisas.keySet().stream().sorted(String::compareTo).collect(Collectors.toList())){
+//           if(codigo.substring(0,3).equals(campos[0].trim().substring(0, 3).toUpperCase())){
+////               System.out.println(codigo);
+////               System.out.println(campos[0].trim().toUpperCase());
+//               valorInt = Integer.parseInt(String.valueOf(codigo.charAt(3))) + 1;
+//           }
+//       }
        String codigo = campos[0].trim().substring(0, 3).toUpperCase() + valorInt;
        this.pesquisas.put(codigo, new Pesquisa(codigo,true, descricao, campoInteresse));
        return codigo;
@@ -75,9 +82,6 @@ public class ControllerPesquisa {
             throw new RuntimeException("Formato do campo de interesse invalido.");
         }
         verificaPesquisa(codigo);
-//        else if(!pesquisas.containsKey(codigo)){
-//            throw new RuntimeException("Pesquisa nao encontrada.");
-//        }
         if(!pesquisas.get(codigo).estadoAtivacao()){
             throw new RuntimeException("Pesquisa desativada.");
         }
@@ -331,25 +335,27 @@ public class ControllerPesquisa {
                 "\n" +
                 "    - Atividades:\n" +
                 "       - " + pesquisas.get(codigoPesquisa).getAtividadesResumo();
-
-
-        File file = new File("tests"+System.getProperty("file.separator")+"accept-tests"+System.getProperty("file.separator")+"COM6.txt");
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(file);
-            String reumo = resumoPesquisa;
-            fos.write(reumo.getBytes());
-        } finally {
-            fos.close();
+        if (!new File("tests/accept-tests/easyaccept/").exists()){
+            new File("tests/accept-tests/easyaccept").mkdir();
         }
+        File file = new File(".\\COM1.txt");
+        FileWriter writer = new FileWriter(file);
+        writer.write(resumoPesquisa);
+        writer.flush();
+        writer.close();
+//        try (FileOutputStream fos = new FileOutputStream(file)) {
+//            fos.write(resumoPesquisa.getBytes());
+//            fos.close();
+//            fos.flush();
+//        }
     }
 
     public void gravarResultados(String codigoPesquisa) throws IOException{
 
-        File file = new File("CODIGO.txt");
+        File file = new File("./tests/COM1.txt");
         FileOutputStream fos = null;
         try {
-            fos = new FileOutputStream(file);
+            fos = new FileOutputStream(file.getAbsolutePath());
             String resultados = "";
             fos.write(resultados.getBytes());
         } finally {
@@ -357,9 +363,9 @@ public class ControllerPesquisa {
         }
     }
 
-    public boolean containsPesquisa(String codigoPesquisa){
-        return pesquisas.containsKey(codigoPesquisa);
-    }
+//    public boolean containsPesquisa(String codigoPesquisa){
+//        return pesquisas.containsKey(codigoPesquisa);
+//    }
 
     public void configuraEstrategia(String estrategia) {
         this.estrategia = estrategia;

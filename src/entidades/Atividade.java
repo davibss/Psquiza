@@ -1,10 +1,7 @@
 package com.psquiza.entidades;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.StringJoiner;
+import java.util.*;
 
 /**
  * Representação de uma atividade no sistema.
@@ -12,6 +9,8 @@ import java.util.StringJoiner;
  * @author davibss - 119111034
  */
 public class Atividade implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     /** Representação em String do código da atividade, no formato: A[número]*/
     private String codigo;
     /** Representação em String da descrição da atividade*/
@@ -44,6 +43,7 @@ public class Atividade implements Serializable {
         this.descricaoRisco = descricaoRisco;
         this.duracao = 0;
         this.resultados = new ArrayList<>();
+        this.nextAtividade = null;
     }
 
     public String getDescricao() {
@@ -173,22 +173,54 @@ public class Atividade implements Serializable {
     public void defineProximaAtividade(Atividade proxima){
         if (nextAtividade == null){
             nextAtividade = proxima;
+        }else{
+            throw new IllegalArgumentException("coloque o erro aqui");
         }
-        defineProximaAtividade(nextAtividade);
     }
     public void tiraProximaAtividade(){
         nextAtividade = null;
     }
+
     public int contaProximos(){
-        if (nextAtividade == null){
+        // solução em 1 linha
+        //return this.nextAtividade == null ? 0 : 1 + this.nextAtividade.contaProximos();
+        if (this.nextAtividade == null){
             return 0;
         }
-        return 1 + nextAtividade.contaProximos();
+        return 1 + this.nextAtividade.contaProximos();
     }
+
     public String pegaProximo(int numero){
         if (numero == 0){
             return this.codigo;
         }
         return nextAtividade.pegaProximo(numero - 1);
     }
+
+    // MINHA SOLUÇÃO (DAVI), se arranjar uma forma melhor, só colocar aqui, o máximo que pensei foi isso, por enquanto.
+    public String pegaMaiorRiscoAtividades(){
+        return pegaMaiorRiscoAtividadesRecursivo(this);
+    }
+
+    // MINHA SOLUÇÃO (DAVI), NÃO TESTEI AINDA, MAS É UMA IDEIA PARA FAZER ESSA FUNCIONALIDADE.
+    private String pegaMaiorRiscoAtividadesRecursivo(Atividade maior) {
+        Map<String, Integer> mapaRiscos = new HashMap<>(){{ put("ALTO", 3); put("MEDIO", 2); put("BAIXO", 1);}};
+        if (this.nextAtividade == null){
+            return mapaRiscos.get(this.risco) > mapaRiscos.get(maior.risco) ? this.codigo: maior.codigo; // 1-LINE
+//            if (mapaRiscos.get(this.risco) > mapaRiscos.get(maior.risco)){
+//                return this.codigo;
+//            }else{
+//                return maior.codigo;
+//            }
+        }else{
+            return this.nextAtividade.pegaMaiorRiscoAtividadesRecursivo(
+                    mapaRiscos.get(this.risco) > mapaRiscos.get(maior.risco) ? this : maior); // 1-LINE
+//            if (mapaRiscos.get(this.risco) > mapaRiscos.get(maior.risco)){
+//                return this.nextAtividade.pegaMaiorRiscoAtividadesRecursivo(this);
+//            }else{
+//                return this.nextAtividade.pegaMaiorRiscoAtividadesRecursivo(maior);
+//            }
+        }
+    }
+
 }

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Problema implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String codigo;
     private String descricao;
     private int viabilidade;
@@ -22,7 +24,6 @@ public class Problema implements Serializable {
 
     public String toString() {
         return String.format("%s - %s - %d",this.codigo, this.descricao, this.viabilidade);
-        //return this.descricao + " - " + this.viabilidade;
     }
 
     public String getIdProblema() {

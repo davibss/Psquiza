@@ -2,6 +2,7 @@ package com.psquiza;
 
 import com.psquiza.controllers.*;
 import easyaccept.EasyAccept;
+import easyaccept.EasyAcceptException;
 
 import java.io.IOException;
 
@@ -10,11 +11,6 @@ public class FacadePsquiza {
     private ControllerGeral controllerGeral;
 
     public static void main(String[] args) {
-        // RODAR SALVAR E CARREGAR SOZINHOS
-        // SÓ DESCOMENTAR QUANDO FOREM FEITOS OS CASOS DE USO 9 E 10
-//        args = new String[]{"com.psquiza.FacadePsquiza", "tests/accept-tests/use_case_12SALVAR.txt",
-//                "tests/accept-tests/use_case_12CARREGAR.txt"};
-//        EasyAccept.main(args);
         args = new String[]{"com.psquiza.FacadePsquiza", "tests/accept-tests/use_case_1.txt",
                                                          "tests/accept-tests/use_case_2.txt",
                                                          "tests/accept-tests/use_case_3.txt",
@@ -26,8 +22,21 @@ public class FacadePsquiza {
                                                          "tests/accept-tests/use_case_9.txt",
                                                          "tests/accept-tests/use_case_10.txt",
                                                          "tests/accept-tests/use_case_11.txt"};
-        EasyAccept.main(args);
-
+        try {
+            EasyAccept.executeEasyAccept(args);
+        } catch (EasyAcceptException e) {
+            e.printStackTrace();
+        }
+        try {
+            EasyAccept.executeEasyAccept(new String[]{"com.psquiza.FacadePsquiza", "tests/accept-tests/use_case_12SALVAR.txt"});
+        } catch (EasyAcceptException e) {
+            e.printStackTrace();
+        }
+        try {
+            EasyAccept.executeEasyAccept(new String[]{"com.psquiza.FacadePsquiza", "tests/accept-tests/use_case_12CARREGAR.txt"});
+        } catch (EasyAcceptException e) {
+            e.printStackTrace();
+        }
     }
 
     public FacadePsquiza() {

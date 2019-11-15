@@ -9,6 +9,8 @@ import java.io.Serializable;
  *  Representa um Pesquisador no Sistema.
  */
 public class Pesquisador implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     /**
      *  Representacao em String da funcao de um pesquisador.
      */
@@ -163,7 +165,6 @@ public class Pesquisador implements Serializable {
             return String.format("%s (%s) - %s - %s - %s", this.nome, this.funcao, this.bio, this.email, this.foto);
         }else{
             return String.format("%s (%s) - %s - %s - %s - %s", this.nome, this.funcao, this.bio, this.email, this.foto, this.especialidade.toString());
-            //return (nome + " (" + funcao + ")" +  " - " + bio + " - " + email + " - " + foto + " - " + especialidade.toString());//+ especialidade.toString()
         }
     }
 

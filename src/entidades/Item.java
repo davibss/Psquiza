@@ -9,6 +9,8 @@ import java.util.Objects;
  * @author davibss - 119111034
  */
 public class Item implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     /** Representação em String do nome do item */
     private String nome;
     /** Representação em boolean do status do item */
