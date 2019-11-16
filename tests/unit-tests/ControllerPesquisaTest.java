@@ -1,6 +1,8 @@
 package com.tests;
 
+import com.psquiza.controllers.ControllerAtividade;
 import com.psquiza.controllers.ControllerPesquisa;
+import com.psquiza.entidades.Atividade;
 import com.psquiza.entidades.Pesquisador;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ControllerPesquisaTest {
 
     private ControllerPesquisa controllerPesquisa;
+    private ControllerAtividade controllerAtividade;
 
     private String verificaExcecao(Runnable runnable){
         try{
@@ -23,6 +26,11 @@ class ControllerPesquisaTest {
     @BeforeEach
     void criarController(){
         controllerPesquisa = new ControllerPesquisa();
+        controllerAtividade = new ControllerAtividade();
+        controllerAtividade.cadastrarAtividades("Monitoramento de chats dos alunos de computacao do primeiro periodo.",
+                                                "ALTO","Por se tratar de apenas um monitoramento, o risco nao e elevado.");
+        controllerAtividade.cadastrarAtividades("Degustacao de uma nova remeca de cervejas, criadas a partir de um novo processo de fermentacao.",
+                                                "MEDIO", "Degustadores podem sofrer com problemas de saude nessa atividade, tal como ser alergico a algum ingrediente da cerveja.");
     }
 
     // Testes para o caso de uso 1
@@ -135,7 +143,7 @@ class ControllerPesquisaTest {
         assertFalse(controllerPesquisa.pesquisAtiva("AST1"));
     }
 
-    // Testes para o caso de uso 6
+    // Testes para o caso de uso 6 (DAVI)
 
     @Test
     void associaPesquisadorInvalido(){
@@ -175,6 +183,8 @@ class ControllerPesquisaTest {
         assertFalse(controllerPesquisa.desassociaPesquisadores("AST1","email@email"));
     }
 
+    // TESTES PARA O CASO DE USO 5 (HENRIQUE)
+
     @Test
     void associaProblemaInvalido(){
         cadastrarPesquisa();
@@ -184,7 +194,6 @@ class ControllerPesquisaTest {
     @Test
     void associaProblema(){
         cadastrarPesquisa();
-
     }
 
     @Test
@@ -215,5 +224,52 @@ class ControllerPesquisaTest {
     @Test
     void desassociaObjetivo(){
 
+    }
+
+    // TESTES PARA O CASO DE USO 7 (DAVI - AJUDANDO)
+    @Test
+    void associaAtividadeInvalido(){
+        assertEquals("Campo codigoPesquisa nao pode ser nulo ou vazio.",
+                verificaExcecao(() -> controllerPesquisa.associaAtividade("","A1",
+                        controllerAtividade.getAtividade("A1"))));
+        assertEquals("Campo codigoAtividade nao pode ser nulo ou vazio.",
+                verificaExcecao(() -> controllerPesquisa.associaAtividade("COM1","",
+                        controllerAtividade.getAtividade("A1"))));
+        assertEquals("Pesquisa nao encontrada.",
+                verificaExcecao(() -> controllerPesquisa.associaAtividade("COM5","A1",
+                        controllerAtividade.getAtividade("A1"))));
+        encerrarPesquisa();
+        assertEquals("Pesquisa desativada.",
+                verificaExcecao(() -> controllerPesquisa.associaAtividade("AST1","A1",
+                        controllerAtividade.getAtividade("A1"))));
+    }
+
+    @Test
+    void associaAtividade(){
+        cadastrarPesquisa();
+        assertTrue(controllerPesquisa.associaAtividade
+                ("AST1", "A1", controllerAtividade.getAtividade("A1")));
+        assertFalse(controllerPesquisa.associaAtividade
+                ("AST1", "A1", controllerAtividade.getAtividade("A1")));
+    }
+
+    @Test
+    void desassociaAtividadeInvalido(){
+        assertEquals("Campo codigoPesquisa nao pode ser nulo ou vazio.",
+                verificaExcecao(() -> controllerPesquisa.desassociaAtividade("","A1")));
+        assertEquals("Campo codigoAtividade nao pode ser nulo ou vazio.",
+                verificaExcecao(() -> controllerPesquisa.desassociaAtividade("COM1","")));
+        assertEquals("Pesquisa nao encontrada.",
+                verificaExcecao(() -> controllerPesquisa.desassociaAtividade("COM5","A1")));
+        encerrarPesquisa();
+        assertEquals("Pesquisa desativada.",
+                verificaExcecao(() -> controllerPesquisa.desassociaAtividade("AST1","A1")));
+    }
+
+    @Test
+    void desassociaAtividade(){
+        associaAtividade();
+        assertTrue(controllerPesquisa.desassociaAtividade("AST1", "A1"));
+        assertFalse(controllerPesquisa.desassociaAtividade("AST1", "A1"));
     }
 }

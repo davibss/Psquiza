@@ -113,4 +113,91 @@ class ControllerAtividadeTest {
         assertEquals(0, controller.contaItensRealizados("A1"));
         assertEquals(0, controller.contaItensRealizados("A2"));
     }
+
+    // TESTES DO CASO DE USO 7 (DAVI-AJUDANDO)
+
+    @Test
+    void executaAtividadeInvalido() {
+        cadastrarAtividades();
+        assertEquals("Item nao pode ser nulo ou negativo.",
+                verificaExcecao(() -> controller.executaAtividade("A1", -1, 3)));
+        assertEquals("Duracao nao pode ser nula ou negativa.",
+                verificaExcecao(() -> controller.executaAtividade("A1", 1, -1)));
+        assertEquals("Atividade nao encontrada",
+                verificaExcecao(() -> controller.executaAtividade("A99", 1, 1)));
+        assertEquals("Item nao encontrado.",
+                verificaExcecao(() -> controller.executaAtividade("A1", 50, 1)));
+        controller.executaAtividade("A1",1, 3);
+        assertEquals("Item ja executado.",
+                verificaExcecao(() -> controller.executaAtividade("A1", 1, 1)));
+    }
+
+    @Test
+    void executaAtividade() {
+        controller.executaAtividade("A1",1, 3);
+    }
+
+    @Test
+    void cadastraResultadoInvalido() {
+        assertEquals("Campo codigoAtividade nao pode ser nulo ou vazio.",
+                verificaExcecao(() -> controller.cadastraResultado("", "Analise nao foi possivel.")));
+        assertEquals("Resultado nao pode ser nulo ou vazio.",
+                verificaExcecao(() -> controller.cadastraResultado("A1", "")));
+        assertEquals("Atividade nao encontrada",
+                verificaExcecao(() -> controller.cadastraResultado("A50", "Analise nao foi possivel.")));
+    }
+
+    @Test
+    void cadastraResultado() {
+        cadastrarAtividades();
+        assertEquals(1,controller.cadastraResultado("A1", "Ocorreu sem problemas."));
+    }
+
+    @Test
+    void removeResultadoInvalido() {
+        cadastraResultado();
+        assertEquals("Campo codigoAtividade nao pode ser nulo ou vazio.",
+                verificaExcecao(() -> controller.removeResultado("", 3)));
+        assertEquals("Atividade nao encontrada",
+                verificaExcecao(() -> controller.removeResultado("A99", 3)));
+        assertEquals("numeroResultado nao pode ser nulo ou negativo.",
+                verificaExcecao(() -> controller.removeResultado("A1", -3)));
+        assertEquals("Resultado nao encontrado.",
+                verificaExcecao(() -> controller.removeResultado("A1", 3)));
+    }
+
+    @Test
+    void removeResultado() {
+        cadastraResultado();
+        assertTrue(controller.removeResultado("A1", 1));
+    }
+
+    @Test
+    void listaResultadosInvalido() {
+        assertEquals("Campo codigoAtividade nao pode ser nulo ou vazio.",
+                verificaExcecao(() -> controller.listaResultados("")));
+        assertEquals("Atividade nao encontrada",
+                verificaExcecao(() -> controller.listaResultados("A55")));
+    }
+
+    @Test
+    void listaResultados() {
+        cadastraResultado();
+        assertEquals("Ocorreu sem problemas.", controller.listaResultados("A1"));
+        assertEquals("", controller.listaResultados("A2"));
+    }
+
+    @Test
+    void getDuracaoInvalido() {
+        assertEquals("Campo codigoAtividade nao pode ser nulo ou vazio.",
+                verificaExcecao(() -> controller.getDuracao("")));
+        assertEquals("Atividade nao encontrada",
+                verificaExcecao(() -> controller.listaResultados("A55")));
+    }
+
+    @Test
+    void getDuracao() {
+        executaAtividade();
+        assertEquals(3, controller.getDuracao("A1"));
+    }
 }

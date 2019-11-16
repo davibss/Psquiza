@@ -285,6 +285,8 @@ public class ControllerPesquisa {
     }
 
     public boolean associaAtividade(String codigoPesquisa, String codigoAtividade, Atividade atividade) {
+        Verificador.verificaVazioNulo(codigoPesquisa, "codigoPesquisa");
+        Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
         if(!this.pesquisas.containsKey(codigoPesquisa)) {
             throw new IllegalArgumentException("Pesquisa nao encontrada.");
         }
@@ -295,6 +297,8 @@ public class ControllerPesquisa {
     }
 
     public boolean desassociaAtividade(String codigoPesquisa, String codigoAtividade) {
+        Verificador.verificaVazioNulo(codigoPesquisa, "codigoPesquisa");
+        Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
         if(!this.pesquisas.containsKey(codigoPesquisa)) {
             throw new IllegalArgumentException("Pesquisa nao encontrada.");
         }
@@ -338,25 +342,22 @@ public class ControllerPesquisa {
         if (!new File("tests/accept-tests/easyaccept/").exists()){
             new File("tests/accept-tests/easyaccept").mkdir();
         }
-        File file = new File(".\\COM1.txt");
-        FileWriter writer = new FileWriter(file);
-        writer.write(resumoPesquisa);
-        writer.flush();
-        writer.close();
-//        try (FileOutputStream fos = new FileOutputStream(file)) {
-//            fos.write(resumoPesquisa.getBytes());
-//            fos.close();
-//            fos.flush();
-//        }
+        File file = new File("./"+codigoPesquisa+".txt");
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(file);
+            fos.write(resumoPesquisa.getBytes());
+        } finally {
+            fos.close();
+        }
     }
 
     public void gravarResultados(String codigoPesquisa) throws IOException{
-
-        File file = new File("./tests/COM1.txt");
+        File file = new File("./"+codigoPesquisa+"-Resultados.txt");
         FileOutputStream fos = null;
         try {
-            fos = new FileOutputStream(file.getAbsolutePath());
-            String resultados = "";
+            fos = new FileOutputStream(file);
+            String resultados = codigoPesquisa;
             fos.write(resultados.getBytes());
         } finally {
             fos.close();
