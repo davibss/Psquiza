@@ -12,7 +12,7 @@ public class Verificador {
      */
     public static void verificaVazioNulo(String atributo, String nomeAtributo) {
         StringJoiner joiner = new StringJoiner(" ");
-        if ((nomeAtributo.equals("Item") || nomeAtributo.equals("Codigo") || nomeAtributo.equals("Motivo"))) {
+        if ((nomeAtributo.equals("Item") || nomeAtributo.equals("Codigo") || nomeAtributo.equals("Motivo") || nomeAtributo.equals("Resultado"))) {
             joiner.add(nomeAtributo);
         }else{
             joiner.add("Campo").add(nomeAtributo);

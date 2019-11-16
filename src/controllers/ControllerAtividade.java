@@ -153,7 +153,6 @@ public class ControllerAtividade {
     }
     public List<String>  buscaAtividade(String termo){
         List<String> found = new ArrayList<>();
-
         atividades.entrySet().stream().sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).
         forEach(entry -> {
             if (entry.getValue().getDescricao().toLowerCase().contains(termo)){
@@ -174,6 +173,12 @@ public class ControllerAtividade {
     }
 
     public void executaAtividade(String codigoAtividade, int item, int duracao) {
+        if(item <= 0) {
+            throw new IllegalArgumentException("Item nao pode ser nulo ou negativo.");
+        }
+        if(duracao <= 0) {
+            throw new IllegalArgumentException("Duracao nao pode ser nula ou negativa.");
+        }
         if(!this.atividades.containsKey(codigoAtividade)) {
             throw new IllegalArgumentException("Atividade nao encontrada");
         }
@@ -181,6 +186,8 @@ public class ControllerAtividade {
     }
 
     public int cadastraResultado(String codigoAtividade, String resultado) {
+        Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
+        Verificador.verificaVazioNulo(resultado, "Resultado");
         if(!this.atividades.containsKey(codigoAtividade)) {
             throw new IllegalArgumentException("Atividade nao encontrada");
         }
@@ -188,13 +195,18 @@ public class ControllerAtividade {
     }
 
     public boolean removeResultado(String codigoAtividade, int numeroResultado) {
+        Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
         if(!this.atividades.containsKey(codigoAtividade)) {
             throw new IllegalArgumentException("Atividade nao encontrada");
+        }
+        if(numeroResultado <= 0) {
+            throw new IllegalArgumentException("numeroResultado nao pode ser nulo ou negativo.");
         }
         return this.atividades.get(codigoAtividade).removeResultado(numeroResultado);
     }
 
     public String listaResultados(String codigoAtividade) {
+        Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
         if(!this.atividades.containsKey(codigoAtividade)) {
             throw new IllegalArgumentException("Atividade nao encontrada");
         }
@@ -202,6 +214,7 @@ public class ControllerAtividade {
     }
 
     public int getDuracao(String codigoAtividade) {
+        Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
         if(!this.atividades.containsKey(codigoAtividade)) {
             throw new IllegalArgumentException("Atividade nao encontrada");
         }

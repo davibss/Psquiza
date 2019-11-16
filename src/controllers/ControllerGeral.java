@@ -240,6 +240,7 @@ public class ControllerGeral {
 
     public int cadastraResultado(String codigoAtividade, String resultado) {
         Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
+        Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
         if (resultado == null || resultado.equals("")){
             throw new IllegalArgumentException("Resultado nao pode ser nulo ou vazio.");
         }
@@ -258,13 +259,11 @@ public class ControllerGeral {
 
     public String listaResultados(String codigoAtividade) {
         Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
-
         return controllerAtividade.listaResultados(codigoAtividade);
     }
 
     public int getDuracao(String codigoAtividade) {
         Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
-
         return controllerAtividade.getDuracao(codigoAtividade);
     }
 

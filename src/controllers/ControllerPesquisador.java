@@ -77,7 +77,7 @@ public class ControllerPesquisador {
         }
 //        String lista = "";
 //        String separador = "";
-        Map<String, String> tipos = new HashMap<>(){{ put("EXTERNO","externo"); put("ALUNA","estudante"); put("PROFESSORA","professor"); }};
+        Map<String, String> tipos = new HashMap<String, String>(){{ put("EXTERNO","externo"); put("ALUNA","estudante"); put("PROFESSORA","professor"); }};
         StringJoiner joiner = new StringJoiner(" | ");
         this.pesquisadores.values().stream().filter(pesquisador -> pesquisador.getFuncao().equals(tipos.get(tipo))).
                                             forEach(pesquisador -> joiner.add(pesquisador.toString()));

@@ -204,7 +204,7 @@ public class Atividade implements Serializable {
 
     // MINHA SOLUÇÃO (DAVI), NÃO TESTEI AINDA, MAS É UMA IDEIA PARA FAZER ESSA FUNCIONALIDADE.
     private String pegaMaiorRiscoAtividadesRecursivo(Atividade maior) {
-        Map<String, Integer> mapaRiscos = new HashMap<>(){{ put("ALTO", 3); put("MEDIO", 2); put("BAIXO", 1);}};
+        Map<String, Integer> mapaRiscos = new HashMap<String, Integer>(){{ put("ALTO", 3); put("MEDIO", 2); put("BAIXO", 1);}};
         if (this.nextAtividade == null){
             return mapaRiscos.get(this.risco) > mapaRiscos.get(maior.risco) ? this.codigo: maior.codigo; // 1-LINE
 //            if (mapaRiscos.get(this.risco) > mapaRiscos.get(maior.risco)){

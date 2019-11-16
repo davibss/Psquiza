@@ -285,6 +285,8 @@ public class ControllerPesquisa {
     }
 
     public boolean associaAtividade(String codigoPesquisa, String codigoAtividade, Atividade atividade) {
+        Verificador.verificaVazioNulo(codigoPesquisa, "codigoPesquisa");
+        Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
         if(!this.pesquisas.containsKey(codigoPesquisa)) {
             throw new IllegalArgumentException("Pesquisa nao encontrada.");
         }
@@ -295,6 +297,8 @@ public class ControllerPesquisa {
     }
 
     public boolean desassociaAtividade(String codigoPesquisa, String codigoAtividade) {
+        Verificador.verificaVazioNulo(codigoPesquisa, "codigoPesquisa");
+        Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
         if(!this.pesquisas.containsKey(codigoPesquisa)) {
             throw new IllegalArgumentException("Pesquisa nao encontrada.");
         }
