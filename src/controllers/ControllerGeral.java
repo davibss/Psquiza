@@ -170,33 +170,15 @@ public class ControllerGeral {
         Verificador.verificaVazioNulo(formacao,"formacao");
         Verificador.verificaVazioNulo(unidade, "unidade");
         Verificador.verificaVazioNulo(data,"data");
-
-//        if(email == null || email.equals("")){
-//            throw new RuntimeException("Campo email nao pode ser nulo ou vazio.");
-//        }
-//
-//        if(formacao == null || formacao.equals("")){
-//            throw new RuntimeException("Campo formacao nao pode ser nulo ou vazio.");
-//        }
-//
-//        if(unidade == null || unidade.equals("")){
-//            throw new RuntimeException("Campo unidade nao pode ser nulo ou vazio.");
-//        }
-//
-//        if(data == null || data.equals("")){
-//            throw new RuntimeException("Campo data nao pode ser nulo ou vazio.");
-//        }
         controllerPesquisador.cadastraEspecialidadeProfessor(email, formacao, unidade, data);
     }
     public void cadastraEspecialidadeAluno(String email, int semestre, Double iea){
         if(email == null || email.equals("")){
             throw new RuntimeException("Campo email nao pode ser nulo ou vazio.");
         }
-
         if(semestre < 1){
             throw new RuntimeException("Atributo semestre com formato invalido.");
         }
-
         if(iea < 0 || iea > 10){
             throw new RuntimeException("Atributo IEA com formato invalido.");
         }
