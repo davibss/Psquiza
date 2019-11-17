@@ -243,4 +243,8 @@ public class ControllerAtividade {
     public String pegaProximo(String idPrecedente, int enesimaAtividade){
         return atividades.get(idPrecedente).pegaProximo(enesimaAtividade);
     }
+
+    public String pegaMaiorRiscoAtividades(String idAtividade) {
+        return atividades.get(idAtividade).pegaMaiorRiscoAtividades();
+    }
 }

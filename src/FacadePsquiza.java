@@ -226,6 +226,9 @@ public class FacadePsquiza {
         return controllerGeral.pegaProximo(idAtividade, enesimaAtividade);
     }
 
+    public String pegaMaiorRiscoAtividades(String idAtividade){
+        return controllerGeral.pegaMaiorRiscoAtividades(idAtividade);
+    }
     // Caso de Uso 10 (Henrique)
     public void configuraEstrategia(String estrategia) {
         controllerGeral.configuraEstrategia(estrategia);

@@ -183,11 +183,21 @@ public class Atividade implements Serializable {
         return (int) this.itens.stream().filter(Item::isRealizado).count();
     }
 
+    public boolean verificaProxima(String codigo){
+        if (this.nextAtividade == null){
+            return this.codigo.equals(codigo);
+        }
+        return this.nextAtividade.verificaProxima(codigo);
+    }
+
     public void defineProximaAtividade(Atividade proxima){
+        if (proxima.verificaProxima(codigo)){
+            throw new IllegalArgumentException("Criacao de loops negada.");
+        }
         if (nextAtividade == null){
             nextAtividade = proxima;
         }else{
-            throw new IllegalArgumentException("coloque o erro aqui");
+            throw new IllegalArgumentException("Atividade ja possui uma subsequente.");
         }
     }
     public void tiraProximaAtividade(){
@@ -219,7 +229,7 @@ public class Atividade implements Serializable {
     private String pegaMaiorRiscoAtividadesRecursivo(Atividade maior) {
         Map<String, Integer> mapaRiscos = new HashMap<String, Integer>(){{ put("ALTO", 3); put("MEDIO", 2); put("BAIXO", 1);}};
         if (this.nextAtividade == null){
-            return mapaRiscos.get(this.risco) > mapaRiscos.get(maior.risco) ? this.codigo: maior.codigo; // 1-LINE
+            return mapaRiscos.get(this.risco) >= mapaRiscos.get(maior.risco) ? this.codigo: maior.codigo; // 1-LINE
 //            if (mapaRiscos.get(this.risco) > mapaRiscos.get(maior.risco)){
 //                return this.codigo;
 //            }else{
@@ -227,7 +237,7 @@ public class Atividade implements Serializable {
 //            }
         }else{
             return this.nextAtividade.pegaMaiorRiscoAtividadesRecursivo(
-                    mapaRiscos.get(this.risco) > mapaRiscos.get(maior.risco) ? this : maior); // 1-LINE
+                    mapaRiscos.get(this.risco) >= mapaRiscos.get(maior.risco) ? this : maior); // 1-LINE
 //            if (mapaRiscos.get(this.risco) > mapaRiscos.get(maior.risco)){
 //                return this.nextAtividade.pegaMaiorRiscoAtividadesRecursivo(this);
 //            }else{

@@ -12,11 +12,16 @@ public class Verificador {
      */
     public static void verificaVazioNulo(String atributo, String nomeAtributo) {
         StringJoiner joiner = new StringJoiner(" ");
-        if ((nomeAtributo.equals("Item") || nomeAtributo.equals("Codigo") || nomeAtributo.equals("Motivo") || nomeAtributo.equals("Resultado"))) {
+        if (Character.isUpperCase(nomeAtributo.charAt(0)) && !nomeAtributo.equals("Descricao")){
             joiner.add(nomeAtributo);
         }else{
             joiner.add("Campo").add(nomeAtributo);
         }
+//        if ((nomeAtributo.equals("Item") || nomeAtributo.equals("Codigo") || nomeAtributo.equals("Motivo") || nomeAtributo.equals("Resultado"))) {
+//            joiner.add(nomeAtributo);
+//        }else{
+//            joiner.add("Campo").add(nomeAtributo);
+//        }
         joiner.add("nao pode ser nulo ou vazio.");
         if (atributo == null || atributo.equals("")){
             throw new IllegalArgumentException(joiner.toString());

@@ -338,14 +338,20 @@ public class ControllerGeral {
     public void defineProximaAtividade(String idPrecedente, String idSubsequente){
         controllerAtividade.defineProximaAtividade(idPrecedente, idSubsequente);
     }
+
     public void tiraProximaAtividade(String idPrecedente){
         controllerAtividade.tiraProximaAtividade(idPrecedente);
     }
+
     public int contaProximos(String idPrecedente){
         return controllerAtividade.contaProximos(idPrecedente);
     }
+
     public String pegaProximo(String idAtividade, int enesimaAtividade){
         return controllerAtividade.pegaProximo(idAtividade, enesimaAtividade);
     }
 
+    public String pegaMaiorRiscoAtividades(String idAtividade) {
+        return controllerAtividade.pegaMaiorRiscoAtividades(idAtividade);
+    }
 }
