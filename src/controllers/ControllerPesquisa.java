@@ -344,7 +344,7 @@ public class ControllerPesquisa {
         if (!new File("tests/accept-tests/easyaccept/").exists()){
             new File("tests/accept-tests/easyaccept").mkdir();
         }
-        File file = new File("./"+codigoPesquisa+".txt");
+        File file = new File("./_"+codigoPesquisa+".txt");
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(file);
