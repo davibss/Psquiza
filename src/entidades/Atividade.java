@@ -2,6 +2,7 @@ package com.psquiza.entidades;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Representação de uma atividade no sistema.
@@ -125,11 +126,20 @@ public class Atividade implements Serializable {
 
 
     public String toStringResumo() {
+        AtomicInteger numero = new AtomicInteger(1);
         StringJoiner joiner = new StringJoiner("\n" +
                 "               - ");
-        joiner.add(String.format("%s (%s - %s)",this.descricao, this.risco, this.descricaoRisco));
-        this.itens.forEach((r) -> joiner.add(r.toString()));
-        return joiner.toString();
+        joiner.add(String.format("          - %s (%s - %s)",this.descricao, this.risco, this.descricaoRisco));
+        this.itens.forEach((r) -> joiner.add(r.estadoItem() + " - " + "ITEM" + (numero.getAndIncrement())));
+        return joiner.toString() + "\"";
+    }
+    public String toStringResultado() {
+        AtomicInteger numero = new AtomicInteger(1);
+        StringJoiner joiner = new StringJoiner("\n" +
+                "               - ");
+        joiner.add(String.format("          - %s",this.descricao));
+        this.itens.forEach((r) -> joiner.add("ITEM" + numero.getAndIncrement() + " - " + getDuracao()));
+        return joiner.toString() + "\"";
     }
 
     /**

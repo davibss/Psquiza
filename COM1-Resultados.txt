@@ -1,1 +1,24 @@
-COM1
+"- Pesquisa: COM1 - Homofobia em mensagens online de alunos de computacao do primeiro periodo. - computacao, homofobia
+    - Resultados:
+          - Monitoramento de chats dos alunos de computacao do primeiro periodo.
+               - ITEM1 - 20
+               - ITEM2 - 20
+               - ITEM3 - 20
+               - ITEM4 - 20"
+            - ITEM1 - DURAÇÃO
+
+            - ITEM2 - DURAÇÃO
+
+            - DESCRIÇÃO_RESULTADO1
+
+            - DESCRIÇÃO_RESULTADO2
+
+        - DESCRIÇÃO
+
+            - ITEM1 - DURAÇÃO
+
+            - ITEM2 - DURAÇÃO
+
+            - DESCRIÇÃO_RESULTADO1
+
+            - DESCRIÇÃO_RESULTADO2

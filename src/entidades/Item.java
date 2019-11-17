@@ -78,4 +78,12 @@ public class Item implements Serializable {
     public int hashCode() {
         return Objects.hash(nome);
     }
+
+    public String estadoItem(){
+        String estadoItem = "PENDENTE";
+        if(isRealizado()){
+            estadoItem = "REALIZADO";
+        }
+        return estadoItem;
+    }
 }

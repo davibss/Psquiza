@@ -258,20 +258,29 @@ public class Pesquisa implements Serializable {
     }
 
     public String listaPesquisadores() {
-        return null;
+        StringJoiner joiner = new StringJoiner("\n");
+        this.pesquisadores.values().forEach(pesquisador -> joiner.add("        - " + pesquisador.toString()));
+        return joiner.toString();
     }
 
     public String getProblemaResumo() {
-        return null;
+        return problema.toString();
     }
 
     public String getObjetivosResumo() {
-        return null;
+        StringJoiner joiner = new StringJoiner("\n");
+        this.objetivos.values().forEach(objetivo -> joiner.add("        - " + objetivo.toString()));
+        return joiner.toString();
     }
 
     public String getAtividadesResumo(){
         StringJoiner joiner = new StringJoiner("\n");
         this.atividades.values().forEach(atividade -> joiner.add(atividade.toStringResumo()));
+        return joiner.toString();
+    }
+    public String getAtividadesResultado(){
+        StringJoiner joiner = new StringJoiner("\n");
+        this.atividades.values().forEach(atividade -> joiner.add(atividade.toStringResultado()));
         return joiner.toString();
     }
 }
