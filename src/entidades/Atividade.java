@@ -225,7 +225,7 @@ public class Atividade implements Serializable {
         return pegaMaiorRiscoAtividadesRecursivo(this);
     }
 
-    // MINHA SOLUÇÃO (DAVI), NÃO TESTEI AINDA, MAS É UMA IDEIA PARA FAZER ESSA FUNCIONALIDADE.
+    // MINHA SOLUÇÃO (DAVI), TESTEI, ESTA FUNCIONANDO, MAS SE TIVER UMA MELHOR SÓ COLOCAR.
     private String pegaMaiorRiscoAtividadesRecursivo(Atividade maior) {
         Map<String, Integer> mapaRiscos = new HashMap<String, Integer>(){{ put("ALTO", 3); put("MEDIO", 2); put("BAIXO", 1);}};
         if (this.nextAtividade == null){
