@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 /**
  *  Representa um Pesquisador no Sistema.
+ *  Um pesquisador possui função, biografia, nome, email, foto, estado de atividade(pode ser verdadeiro para ativo e falso para inativo) e especialidade.
  */
 public class Pesquisador implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -35,11 +36,13 @@ public class Pesquisador implements Serializable {
      *  Representacao em valor booleano da situacao de atividade de um pesquisador."
      */
     private boolean ativo;
-
+    /**
+     * Representação de especialidade, um objeto que pode ser professor ou aluno, caso não ocorra um cadastro de especialidades é um externo.
+     */
     private Especialidade especialidade;
 
     /**
-     *  Constroi um objeto Pesquisador a partir de informacoes de seu nome, funcao, biografia, email e foto. O pesquisador eh criado em estado ativo.
+     *  Constroi um Pesquisador a partir de informacoes de seu nome, funcao, biografia, email e foto. O pesquisador eh criado em estado ativo.
      *
      * @param nome String representando o nome de um(a) pesquisador(a).
      * @param funcao String representando a funcao de um(a) pesquisador(a).
@@ -57,6 +60,11 @@ public class Pesquisador implements Serializable {
         this.especialidade = null;
     }
 
+    /**
+     * Cadastra a especialidade aluno em um pesquisador, adicionando o seu semeste e IEA.
+     * @param semestre semestre do aluno.
+     * @param iea índice de eficiência acadêmica do aluno.
+     */
     public void adicionaEspecialidadeAluno(int semestre, Double iea){
         if(!funcao.equals("estudante")){
             throw new RuntimeException("Pesquisador nao compativel com a especialidade.");
@@ -64,12 +72,19 @@ public class Pesquisador implements Serializable {
         this.especialidade = new Aluno(semestre, iea);
     }
 
+    /**
+     * Cadastra a especialidade professor em um pesquisador, adicionando a sua formação, unidade e data de formação.
+     * @param formacao formação do pesquisador.
+     * @param unidade unidade do pesquisador.
+     * @param data data de formaçã do pesquisador.
+     */
     public void adicionaEspecialidadeProfessor(String formacao, String unidade, String data){
         if(!funcao.equals("professor")){
             throw new RuntimeException("Pesquisador nao compativel com a especialidade.");
         }
         this.especialidade = new Professor(formacao, unidade, data);
     }
+
     /**
      *  Metodo responsavel por verificar se um Pesquisador eh ativo, retornando true em caso afirmativo e false no contrario.
      *
@@ -78,14 +93,27 @@ public class Pesquisador implements Serializable {
     public boolean ehAtivo() {
         return ativo;
     }
-
+    /**
+     * Retorna a biografia do pesquisador.
+     * @return representação da biografia do pesquisador em String
+     */
     public String getBio() {
         return bio;
     }
 
+    /**
+     * Retorna a função do pesquisador.
+     * @return representação da função do pesquisador em String
+     */
     public String getFuncao() {
         return funcao;
     }
+
+     /**
+     * Altera um dos atributos de uma especialidade.
+     * @param nomeAtributo nome do atributo que será alterado.
+     * @param atributo atributo que substituirá o antigo.
+     */
 
     public void altera(String nomeAtributo, String atributo){
         if (this.funcao.equals("professor") && !(nomeAtributo.equals("FORMACAO") || nomeAtributo.equals("UNIDADE") || nomeAtributo.equals("DATA"))){

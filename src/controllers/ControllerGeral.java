@@ -4,20 +4,28 @@ import com.psquiza.entidades.Buscador;
 import com.psquiza.verificadores.Verificador;
 
 import java.io.*;
-
+/**
+ * Controller Geral, classe responsável por gerenciar todos os controllers e realizar a comunicação com a Facede.
+ *
+ */
 public class ControllerGeral {
 
     private static String diretorio = "data"+System.getProperty("file.separator")+"pzquiza.txt";
     private static File file = new File(diretorio);
 
     private ControllerAtividade controllerAtividade;
+    /**
+     * Controller de pesquisa, onde são realizadas todas as operações com pesquisa.
+     */
     private ControllerPesquisa controllerPesquisa;
     private ControllerProblema controllerProblema;
     private ControllerObjetivo controllerObjetivo;
     private ControllerPesquisador controllerPesquisador;
     private Buscador buscador;
 
-
+    /**
+     * Constrói o controller, inicializa todos os controllers junto com a classe buscador.
+     */
     public ControllerGeral() {
         controllerAtividade = new ControllerAtividade();
         controllerProblema = new ControllerProblema();
@@ -28,26 +36,55 @@ public class ControllerGeral {
     }
 
     //Caso de uso 1(José Nestor)
+
+    /**
+     * Cadastra uma pesquisa, cria um código que identifica pesquisas no mapa, lança exceções se necessário e retorna o código em forma de String.
+     * @param descricao representação em String da descrição da pesquisa.
+     * @param campoInteresse representação em String do campo de interesse da pesquisa.
+     * @return representação em String do código identificador de uma pesquisa.
+     */
     public String cadastrarPesquisa(String descricao, String campoInteresse){
         return controllerPesquisa.cadastrarPesquisa(descricao, campoInteresse);
     }
 
+    /**
+     * Altera o conteudo de pesquisa, podendo ser a descrição ou campo de interesse, o método lança exceções se necessário.
+     * @param codigo representação em String do código que identifica pesquisas.
+     * @param conteudoASerAlterado representação em String do conteúdo que será alterado, podendo ser descrição ou campo de interesse.
+     * @param novoConteudo representação em String do novo conteúdo.
+     */
     public void alterarPesquisa(String codigo, String conteudoASerAlterado, String novoConteudo){
         controllerPesquisa.alterarPesquisa(codigo, conteudoASerAlterado, novoConteudo);
     }
-
+    /**
+     * Encerra a pesquisa mudando seu estado para falso.
+     * @param codigo representação em String do código que identifica pesquisas.
+     * @param motivo representação em String do motivo para encerrar a pesquisa.
+     */
     public void encerrarPesquisa(String codigo, String motivo){
         controllerPesquisa.encerrarPesquisa(codigo, motivo);
     }
-
+    /**
+     * Ativa a pesquisa mudando seu estado para verdadeiro.
+     * @param codigo representação em String do código que identifica pesquisas.
+     */
     public void ativarPesquisa(String codigo){
         controllerPesquisa.ativarPesquisa(codigo);
     }
-
+    /**
+     * Retorna uma String que representa uma pesquisa.
+     * A representação segue o formato: "Código - descrição - campo de interesse".
+     * @param codigo representação em String do código que identifica pesquisas.
+     * @return A representação em String de uma pesquisa.
+     */
     public String exibirPesquisa(String codigo){
         return controllerPesquisa.exibirPesquisa(codigo);
     }
-
+    /**
+     * Retorna um valor boleano que representa o estado de ativação da pesquisa, sendo verdadeiro para ativa e falso para desativa.
+     * @param codigo representação em String do código que identifica pesquisas.
+     * @return A representação boleana do estado da pesquisa.
+     */
     public boolean pesquisAtiva(String codigo){
         return controllerPesquisa.pesquisAtiva(codigo);
     }
@@ -143,6 +180,14 @@ public class ControllerGeral {
     }
 
     //Caso de uso 6 (Nestor)
+
+    /**
+     * Retorna um valor booleano que informa se um pesquisador foi desassociado de uma pesquisa, sendo verdadeiro quando desassociado e falso caso não ocorra a desassociação.
+     *  O motivo de não desassociar acontece caso o pesquisado não esteja associado.
+     * @param idPesquisa Representação em String do código que identifica pesquisas.
+     * @param emailPesquisador email do pesquisador, no formato "nome@gmail.com".
+     * @return a representação booleana da associação dos pesquisador com a pesquisa.
+     */
     public boolean associaPesquisador(String idPesquisa, String emailPesquisador){
         if(idPesquisa == null || idPesquisa.equals("")){
             throw new RuntimeException("Campo idPesquisa nao pode ser nulo ou vazio.");
@@ -154,6 +199,13 @@ public class ControllerGeral {
         return controllerPesquisa.associaPesquisador(idPesquisa, emailPesquisador, controllerPesquisador.getPesquisador(emailPesquisador));
     }
 
+    /**
+     * Retorna um valor booleano que informa se um pesquisador foi desassociado de uma pesquisa, sendo verdadeiro quando desassociado e falso caso não ocorra a desassociação.
+     * O motivo de não desassociar acontece caso o pesquisado não esteja associado.
+     * @param idPesquisa Representação em String do código que identifica pesquisas.
+     * @param emailPesquisador email do pesquisador, no formato "nome@gmail.com".
+     * @return a representação booleana da desassociação dos pesquisador com a pesquisa.
+     */
     public boolean desassociaPesquisador(String idPesquisa, String emailPesquisador){
         if(idPesquisa == null || idPesquisa.equals("")) {
             throw new RuntimeException("Campo idPesquisa nao pode ser nulo ou vazio.");
@@ -165,6 +217,13 @@ public class ControllerGeral {
         return controllerPesquisa.desassociaPesquisadores(idPesquisa, emailPesquisador);
     }
 
+    /**
+     * Cadastra a especialidade professor em um pesquisador, adicionando a sua formação, unidade e data de formação.
+     * @param email email do pesquisador.
+     * @param formacao formação do pesquisador.
+     * @param unidade unidade do pesquisador.
+     * @param data data de formaçã do pesquisador.
+     */
     public void cadastraEspecialidadeProfessor(String email, String formacao, String unidade, String data){
         Verificador.verificaVazioNulo(email,"email");
         Verificador.verificaVazioNulo(formacao,"formacao");
@@ -172,6 +231,13 @@ public class ControllerGeral {
         Verificador.verificaVazioNulo(data,"data");
         controllerPesquisador.cadastraEspecialidadeProfessor(email, formacao, unidade, data);
     }
+
+    /**
+     * Cadastra a especialidade aluno em um pesquisador, adicionando o seu semeste e IEA.
+     * @param email email do pesquisador.
+     * @param semestre semestre do aluno.
+     * @param iea índice de eficiência acadêmica do aluno.
+     */
     public void cadastraEspecialidadeAluno(String email, int semestre, Double iea){
         if(email == null || email.equals("")){
             throw new RuntimeException("Campo email nao pode ser nulo ou vazio.");
@@ -185,6 +251,11 @@ public class ControllerGeral {
         controllerPesquisador.cadastraEspecialidadeAluno(email, semestre, iea);
     }
 
+    /**
+     * Lista os pesquisadores pelo tipo, podendo ser externo, aluna e professora.
+     * @param tipo tipo da especialidade do pesquisador.
+     * @return a representação em String da lista dos pesquisadores por tipo.
+     */
     public String listaPesquisadores(String tipo) {
         return controllerPesquisador.listaPesquisadores(tipo);
     }
@@ -278,10 +349,6 @@ public class ControllerGeral {
             throw new RuntimeException("Pesquisa nao pode ser nula ou vazia.");
         }
         controllerPesquisa.verificaPesquisa(codigoPesquisa);
-//        if (!controllerPesquisa.containsPesquisa(codigoPesquisa);){
-//            throw new RuntimeException("Pesquisa nao encontrada.");
-//        }
-
         controllerPesquisa.gravarResumo(codigoPesquisa);
     }
 

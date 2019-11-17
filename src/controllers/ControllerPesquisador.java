@@ -44,6 +44,15 @@ public class ControllerPesquisador {
         pesquisadores.put(email , new Pesquisador(nome, funcao, biografia, email, fotoURL));
     }
 
+
+
+    /**
+     * Cadastra a especialidade aluno em um pesquisador, adicionando o seu semeste e IEA.
+     * @param email email do pesquisador.
+     * @param semestre semestre do aluno.
+     * @param iea índice de eficiência acadêmica do aluno.
+     */
+
     public void cadastraEspecialidadeAluno(String email, int semestre, Double iea){
         Verificador.verificaVazioNulo(email, "email");
         if(semestre < 1) throw new RuntimeException("Atributo semestre com formato invalido.");
@@ -55,6 +64,13 @@ public class ControllerPesquisador {
         pesquisadores.get(email).adicionaEspecialidadeAluno(semestre, iea);
     }
 
+    /**
+     * Cadastra a especialidade professor em um pesquisador, adicionando a sua formação, unidade e data de formação.
+     * @param email email do pesquisador.
+     * @param formacao formação do pesquisador.
+     * @param unidade unidade do pesquisador.
+     * @param data data de formaçã do pesquisador.
+     */
     public void cadastraEspecialidadeProfessor(String email, String formacao, String unidade, String data){
         Verificador.verificaVazioNulo(email,"email");
         Verificador.verificaVazioNulo(formacao,"formacao");
@@ -68,6 +84,11 @@ public class ControllerPesquisador {
 
     }
 
+    /**
+     * Lista os pesquisadores pelo tipo, podendo ser externo, aluna e professora.
+     * @param tipo tipo da especialidade do pesquisador.
+     * @return a representação em String da lista dos pesquisadores por tipo.
+     */
     public String listaPesquisadores(String tipo) {
         if (tipo == null || tipo.equals("")) {
             throw new RuntimeException("Campo tipo nao pode ser nulo ou vazio.");
@@ -90,16 +111,7 @@ public class ControllerPesquisador {
         //return lista;
         return joiner.toString();
     }
-    public String listaPesquisadoresResumo() {
-        String lista = "";
-        String separador = "";
 
-        for (Pesquisador pesquisador : this.pesquisadores.values()){
-                lista += separador + pesquisador.toString();
-                separador = "       - ";
-        }
-        return lista;
-    }
    // public String listaPesquisadores(String tipo){}
     /**
      *  Verifica uma String representando um possivel email de um Pesquisador. Verifica se o email nao eh nulo ou vazioa, em seguida

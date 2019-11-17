@@ -7,33 +7,44 @@ import java.util.*;
 
 /**
  * Representação de uma pesquisa no sistema.
- * A pesquisa possui estado que informa se está ativa ou desativa, descrição, campo de interesse.
+ * A pesquisa possui um estado booleano que informa se está ativa ou desativa, descrição, campo de interesse, código de identificação, problema, objetivos, pesquisadores e atividades.
  * @author José Nestor - 119110608
  */
 public class Pesquisa implements Serializable {
     private static final long serialVersionUID = 1L;
-
+    /** Representação em String do código que identifica pesquisas. */
     private String codigo;
-    /** Representação boleana do estado da pesquisa, true para ativada e false para desativada*/
+    /** Representação boleana do estado da pesquisa, true para ativada e false para desativada. */
     private boolean estadoAtivacao;
-    /** Representação em String da descrição da pesquisa*/
+    /** Representação em String da descrição da pesquisa. */
     private String descricao;
-    /** Representação em String do campo de innteresse*/
+    /** Representação em String do campo de innteresse. */
     private String campoInteresse;
     //Nova implementação - caso de uso 5
+    /**
+     * Problema que está associado com a pesquisa.
+     */
     private Problema problema;
+    /**
+     * Mapa de objetivos que estão associados com a pesquisa.
+     */
     private Map<String, Objetivo> objetivos;
-
+    /**
+     * Mapa de pesquisadores que estão associados com a pesquisa.
+     */
     private Map<String, Pesquisador> pesquisadores;
-
+    /**
+     * Mapa de atividades que estão associadas com a pesquisa.
+     */
     private Map<String, Atividade> atividades;
 
 
     /**
-     * Constrói uma pesquisa através dos parâmetros
-     * @param estadoAtivacao representação boleana do estado da pesquisa
-     * @param descricao representação em String da descrição da pesquisa
-     * @param campoInteresse representação em String do campo de innteresse
+     * Constrói uma pesquisa através dos parâmetros. Inicializa o problema e suas listas de objetivos, pesquisadores e atividades.
+     * @param codigo Representação em String do código que identifica pesquisas.
+     * @param estadoAtivacao representação boleana do estado da pesquisa.
+     * @param descricao representação em String da descrição da pesquisa.
+     * @param campoInteresse representação em String do campo de innteresse.
      */
     public Pesquisa(String codigo, boolean estadoAtivacao, String descricao, String campoInteresse){
         this.codigo = codigo;
@@ -46,14 +57,28 @@ public class Pesquisa implements Serializable {
         this.atividades = new LinkedHashMap<>();
     }
 
+    /**
+     * Retorna um valor booleano que informa se um pesquisador foi associado a uma pesquisa, sendo verdadeiro quando associado e falso caso não seja associado.
+     * O motivo de não associar acontece caso o pesquisado já esteja associado.
+     * @param emailPesquisador email do pesquisador, no formato "nome@gmail.com".
+     * @param pesquisador pesquisador, objeto que representa um pesquisador.
+     * @return a representação booleana da associação dos pesquisador com a pesquisa.
+     */
     public boolean associaPesquisador(String emailPesquisador, Pesquisador pesquisador){
+        boolean retorno = true;
         if(pesquisadores.containsKey(emailPesquisador)){
-            return false;
+            retorno = false;
         }
         this.pesquisadores.put(emailPesquisador, pesquisador);
-        return true;
+        return retorno;
     }
 
+    /**
+     * Retorna um valor booleano que informa se um pesquisador foi desassociado de uma pesquisa, sendo verdadeiro quando desassociado e falso caso não ocorra a desassociação.
+     * O motivo de não desassociar acontece caso o pesquisado não esteja associado.
+     * @param emailPesquisador email do pesquisador, no formato "nome@gmail.com".
+     * @return a representação booleana da desassociação dos pesquisador com a pesquisa.
+     */
     public boolean desassociaPesquisador(String emailPesquisador){
         if(!pesquisadores.containsKey(emailPesquisador)){
             return false;
@@ -257,6 +282,10 @@ public class Pesquisa implements Serializable {
         return estadoAtivacao;
     }
 
+    /**
+     *
+     * @return
+     */
     public String listaPesquisadores() {
         StringJoiner joiner = new StringJoiner("\n");
         this.pesquisadores.values().forEach(pesquisador -> joiner.add("        - " + pesquisador.toString()));

@@ -22,7 +22,7 @@ public class ControllerPesquisa {
 
 
     /**
-     * Constrói um controller, inicializando um mapa.
+     * Constrói o controller, inicializando um mapa.
      * A estratégia de sugestão é definida por padrão como "MAIS_ANTIGA"
      */
     public ControllerPesquisa(){
@@ -34,7 +34,7 @@ public class ControllerPesquisa {
      * Cadastra uma pesquisa, cria um código que identifica pesquisas no mapa, lança exceções se necessário e retorna o código em forma de String.
      * @param descricao representação em String da descrição da pesquisa.
      * @param campoInteresse representação em String do campo de interesse da pesquisa.
-     * @return representação em String do código identificador de pesquisas.
+     * @return representação em String do código identificador de uma pesquisa.
      */
     public String cadastrarPesquisa(String descricao, String campoInteresse){
        if(descricao == null || descricao.equals("")){
@@ -70,7 +70,7 @@ public class ControllerPesquisa {
 
     /**
      * Altera o conteudo de pesquisa, podendo ser a descrição ou campo de interesse e lança exceções se necessário.
-     * @param codigo representação em String do código que identifica pesquisas
+     * @param codigo representação em String do código que identifica pesquisas.
      * @param conteudoASerAlterado representação em String do conteúdo que será alterado, podendo ser descrição ou campo de interesse.
      * @param novoConteudo representação em String do novo conteúdo.
      */
@@ -98,8 +98,8 @@ public class ControllerPesquisa {
 
     /**
      * Encerra a pesquisa mudando seu estado para falso.
-     * @param codigo representação em String do código que identifica pesquisas
-     * @param motivo representação em String do motivo de encerrar a pesquisa
+     * @param codigo representação em String do código que identifica pesquisas.
+     * @param motivo representação em String do motivo para encerrar a pesquisa.
      */
     public void encerrarPesquisa(String codigo, String motivo){
         Verificador.verificaVazioNulo(codigo,"Codigo");
@@ -116,7 +116,7 @@ public class ControllerPesquisa {
 
     /**
      * Ativa a pesquisa mudando seu estado para verdadeiro.
-     * @param codigo representação em String do código que identifica pesquisas
+     * @param codigo representação em String do código que identifica pesquisas.
      */
     public void ativarPesquisa(String codigo){
         Verificador.verificaVazioNulo(codigo,"Codigo");
@@ -131,11 +131,10 @@ public class ControllerPesquisa {
     }
 
     /**
-     * * Retorna uma String que representa uma pesquisa.
-     *      * A representação segue o formato: "Código - descrição - campo de interesse".
-     *
-     * @param codigo representação em String do código que identifica pesquisas
-     * @return A representação em String de uma pesquisa
+     * Retorna uma String que representa uma pesquisa.
+     * A representação segue o formato: "Código - descrição - campo de interesse".
+     * @param codigo representação em String do código que identifica pesquisas.
+     * @return A representação em String de uma pesquisa.
      */
     public String exibirPesquisa(String codigo){
         Verificador.verificaVazioNulo(codigo,"Codigo");
@@ -148,7 +147,7 @@ public class ControllerPesquisa {
 
     /**
      * Retorna um valor boleano que representa o estado de ativação da pesquisa, sendo verdadeiro para ativa e falso para desativa.
-     * @param codigo representação em String do código que identifica pesquisas
+     * @param codigo representação em String do código que identifica pesquisas.
      * @return A representação boleana do estado da pesquisa.
      */
     public boolean pesquisAtiva(String codigo){
@@ -168,6 +167,14 @@ public class ControllerPesquisa {
         }
     }
 
+    /**
+     * Retorna um valor booleano que informa se um pesquisador foi desassociado de uma pesquisa, sendo verdadeiro quando desassociado e falso caso não ocorra a desassociação.
+     *  O motivo de não desassociar acontece caso o pesquisado não esteja associado.
+     * @param idPesquisa Representação em String do código que identifica pesquisas.
+     * @param emailPesquisador email do pesquisador, no formato "nome@gmail.com".
+     * @param pesquisador pesquisador, objeto que representa um pesquisador.
+     * @return a representação booleana da associação dos pesquisador com a pesquisa.
+     */
     public  boolean associaPesquisador(String idPesquisa, String emailPesquisador, Pesquisador pesquisador){
         if(!pesquisas.containsKey(idPesquisa)){
             throw new RuntimeException("Pesquisa nao encontrada.");
@@ -179,6 +186,13 @@ public class ControllerPesquisa {
         return pesquisas.get(idPesquisa).associaPesquisador(emailPesquisador, pesquisador);
     }
 
+    /**
+     * Retorna um valor booleano que informa se um pesquisador foi desassociado de uma pesquisa, sendo verdadeiro quando desassociado e falso caso não ocorra a desassociação.
+     * O motivo de não desassociar acontece caso o pesquisado não esteja associado.
+     * @param idPesquisa Representação em String do código que identifica pesquisas.
+     * @param emailPesquisador email do pesquisador, no formato "nome@gmail.com".
+     * @return a representação booleana da desassociação dos pesquisador com a pesquisa.
+     */
     public boolean desassociaPesquisadores(String idPesquisa, String emailPesquisador){
         if(!pesquisas.containsKey(idPesquisa)){
             throw new RuntimeException("Pesquisa nao encontrada.");
@@ -360,24 +374,6 @@ public class ControllerPesquisa {
                 "\n" +
                 pesquisas.get(codigoPesquisa).getAtividadesResultado() +
                 "\""+"\n";
-//                +
-//                "            - ITEM1 - DURAÇÃO\n" +
-//                "\n" +
-//                "            - ITEM2 - DURAÇÃO\n" +
-//                "\n" +
-//                "            - DESCRIÇÃO_RESULTADO1\n" +
-//                "\n" +
-//                "            - DESCRIÇÃO_RESULTADO2\n" +
-//                "\n" +
-//                "        - DESCRIÇÃO\n" +
-//                "\n" +
-//                "            - ITEM1 - DURAÇÃO\n" +
-//                "\n" +
-//                "            - ITEM2 - DURAÇÃO\n" +
-//                "\n" +
-//                "            - DESCRIÇÃO_RESULTADO1\n" +
-//                "\n" +
-//                "            - DESCRIÇÃO_RESULTADO2";
         File file = new File("./"+codigoPesquisa+"-Resultados.txt");
         FileOutputStream fos = null;
         try {
