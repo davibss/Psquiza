@@ -161,6 +161,10 @@ public class ControllerPesquisa {
         return pesquisas.get(codigo).estadoAtivacao();
     }
 
+    /**
+     * Verifica se a pesquisa existe no mapa de presquisas, lança uma exceção caso não exista.
+     * @param codigo representação em String do código que identifica pesquisas.
+     */
     public void verificaPesquisa(String codigo){
         if (!pesquisas.containsKey(codigo)){
             throw new NullPointerException("Pesquisa nao encontrada.");
@@ -342,6 +346,11 @@ public class ControllerPesquisa {
         this.pesquisas = (Map<String, Pesquisa>) objectInputStream.readObject();
     }
 
+    /**
+     * Grava em um arquivo .txt o resumo da pesquisa.
+     * @param codigoPesquisa representação em String do código que identifica pesquisas.
+     * @throws IOException
+     */
     public void gravarResumo(String codigoPesquisa) throws IOException {
         String resumoPesquisa = "\"- Pesquisa: " + codigoPesquisa +" - "+ pesquisas.get(codigoPesquisa).getDescricao() + " - "+ pesquisas.get(codigoPesquisa).getCampoInteresse() + "\n" +
                 "    - Pesquisadores:\n" +
@@ -368,6 +377,11 @@ public class ControllerPesquisa {
         }
     }
 
+    /**
+     * Grava em um arquivo .txt o resultado da pesquisa
+     * @param codigoPesquisa representação em String do código que identifica pesquisas.
+     * @throws IOException
+     */
     public void gravarResultados(String codigoPesquisa) throws IOException{
         String resultadoPesquisa = "\"- Pesquisa: " + codigoPesquisa +" - "+ pesquisas.get(codigoPesquisa).getDescricao() + " - "+ pesquisas.get(codigoPesquisa).getCampoInteresse() + "\n" +
                 "    - Resultados:" +

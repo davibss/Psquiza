@@ -19,7 +19,10 @@ public class Objetivo implements Serializable {
         this.aderencia = aderencia;
         this.viabilidade = viabilidade;
     }
-
+    /**
+     ** Retorna a representação em String de um objetivo.
+     *  @return a representação em String de um objetivo.
+     */
     public String toString() {
         int valor = this.aderencia + this.viabilidade;
         //return this.tipo + " - " + this.descricao + " - " + valor;

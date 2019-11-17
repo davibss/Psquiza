@@ -21,7 +21,10 @@ public class Problema implements Serializable {
         this.descricao = descricao;
         this.viabilidade = viabilidade;
     }
-
+    /**
+     * Retorna a representação em String de um problema.
+     * @return a representação em String de um problema.
+     */
     public String toString() {
         return String.format("%s - %s - %d",this.codigo, this.descricao, this.viabilidade);
     }

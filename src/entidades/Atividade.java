@@ -124,7 +124,10 @@ public class Atividade implements Serializable {
         return joiner.toString();
     }
 
-
+    /**
+     ** Retorna a representação em String do resumo de uma atividade.
+     *  @return a representação em String do resumo de uma atividade.
+     */
     public String toStringResumo() {
         AtomicInteger numero = new AtomicInteger(1);
         StringJoiner joiner = new StringJoiner("\n" +
@@ -133,6 +136,10 @@ public class Atividade implements Serializable {
         this.itens.forEach((r) -> joiner.add(r.estadoItem() + " - " + "ITEM" + (numero.getAndIncrement())));
         return joiner.toString();
     }
+    /**
+     ** Retorna a representação em String do resultado de uma atividade
+     *  @return a representação em String do resultado de uma atividade.
+     */
     public String toStringResultado() {
         AtomicInteger numero = new AtomicInteger(1);
         StringJoiner joiner = new StringJoiner("\n            - ");

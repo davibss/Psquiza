@@ -344,6 +344,12 @@ public class ControllerGeral {
 
 
     // Caso de Uso 11 (Nestor)
+
+    /**
+     * Grava em um arquivo .txt o resumo da pesquisa.
+     * @param codigoPesquisa representação em String do código que identifica pesquisas.
+     * @throws IOException
+     */
     public void gravarResumo(String codigoPesquisa) throws IOException {
         if (codigoPesquisa == null ||codigoPesquisa.equals("")){
             throw new RuntimeException("Pesquisa nao pode ser nula ou vazia.");
@@ -352,17 +358,17 @@ public class ControllerGeral {
         controllerPesquisa.gravarResumo(codigoPesquisa);
     }
 
+    /**
+     * Grava em um arquivo .txt o resultado da pesquisa
+     * @param codigoPesquisa representação em String do código que identifica pesquisas.
+     * @throws IOException
+     */
     public void gravarResultados(String codigoPesquisa) throws IOException{
         if (codigoPesquisa == null || codigoPesquisa.equals("")){
             throw new RuntimeException("Pesquisa nao pode ser nula ou vazia.");
         }
         controllerPesquisa.verificaPesquisa(codigoPesquisa);
-//        if (!controllerPesquisa.containsPesquisa(codigoPesquisa)){
-//            throw new RuntimeException("Pesquisa nao encontrada.");
-//        }
-
         controllerPesquisa.gravarResultados(codigoPesquisa);
-
     }
 
     // Caso de Uso 12 (Davi)

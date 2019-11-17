@@ -82,6 +82,10 @@ public class Item implements Serializable {
         return Objects.hash(nome);
     }
 
+    /**
+     * Retorna a representação em String do estado de um item, podendo se "PENDENTE" OU "REALIZADO".
+     * @return a representação em String do estado de um item.
+     */
     public String estadoItem(){
         return this.realizado ? "REALIZADO" : "PENDENTE";
 //        String estadoItem = "PENDENTE";
@@ -91,6 +95,10 @@ public class Item implements Serializable {
 //        return estadoItem;
     }
 
+    /**
+     * Retorna a representação em númeto inteiro da duração de um item.
+     * @return a representação em númeto inteiro da duração de um item.
+     */
     public int getDuracao() {
         return this.duracao;
     }

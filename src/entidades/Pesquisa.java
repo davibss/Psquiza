@@ -209,14 +209,24 @@ public class Pesquisa implements Serializable {
         return this.atividades.containsKey(codigoAtividade);
     }
 
+    /**
+     * Retorna a representação da descrição de uma pesquisa em String.
+     * @return a representação da descrição de uma pesquisa em String.
+     */
     public String getDescricao() {
         return descricao;
     }
-
+    /**
+     * Retorna a representação do campo de interesse de uma pesquisa em String.
+     * @return a representação do campo de interesse de uma pesquisa em String.
+     */
     public String getCampoInteresse() {
         return campoInteresse;
     }
-
+    /**
+     * Retorna a representação do problema de uma pesquisa em String.
+     * @return a representação do problema de uma pesquisa em String.
+     */
     public String getProblema() {
         return this.problema.getIdProblema();
     }
@@ -283,8 +293,8 @@ public class Pesquisa implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Lista os pesquisadores associados a uma pesquisa.
+     * @return a representação em String da lista dos pesquisadores associados a uma pesquisa.
      */
     public String listaPesquisadores() {
         StringJoiner joiner = new StringJoiner("\n");
@@ -292,21 +302,36 @@ public class Pesquisa implements Serializable {
         return joiner.toString();
     }
 
+    /**
+     * Retorna a representação em String de um problema associado a pesquisa.
+     * @return a representação em String de um problema associado a pesquisa.
+     */
     public String getProblemaResumo() {
         return problema.toString();
     }
 
+    /**
+     ** Retorna a representação em String dos objetivos associados a pesquisa.
+     *  @return a representação em String dos obejetivos associados a pesquisa.
+     */
     public String getObjetivosResumo() {
         StringJoiner joiner = new StringJoiner("\n");
         this.objetivos.values().forEach(objetivo -> joiner.add("        - " + objetivo.toString()));
         return joiner.toString();
     }
-
+    /**
+     ** Retorna a representação em String do resumo das atividades associados a pesquisa.
+     *  @return a representação em String do resumo das atividades associados a pesquisa.
+     */
     public String getAtividadesResumo(){
         StringJoiner joiner = new StringJoiner("\n");
         this.atividades.values().forEach(atividade -> joiner.add(atividade.toStringResumo()));
         return joiner.toString();
     }
+    /**
+     ** Retorna a representação em String do resultado das atividades associados a pesquisa.
+     *  @return a representação em String do resultado das atividades associados a pesquisa.
+     */
     public String getAtividadesResultado(){
         StringJoiner joiner = new StringJoiner("\n");
         this.atividades.values().forEach(atividade -> joiner.add(atividade.toStringResultado()));
