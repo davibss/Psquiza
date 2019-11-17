@@ -15,6 +15,7 @@ public class Item implements Serializable {
     private String nome;
     /** Representação em boolean do status do item */
     private boolean realizado;
+    private int duracao;
 
     /**
      * Constrói o item, a partir do nome passado como parâmetro.
@@ -23,6 +24,7 @@ public class Item implements Serializable {
     public Item(String nome) {
         this.nome = nome;
         this.realizado = false;
+        this.duracao = 0;
     }
 
     /**
@@ -41,10 +43,11 @@ public class Item implements Serializable {
         return nome;
     }
 
-    public void executa() {
+    public void executa(int duracao) {
         if(this.realizado){
             throw new IllegalArgumentException("Item ja executado.");
         }
+        this.duracao = duracao;
         this.realizado = true;
     }
 
@@ -80,10 +83,15 @@ public class Item implements Serializable {
     }
 
     public String estadoItem(){
-        String estadoItem = "PENDENTE";
-        if(isRealizado()){
-            estadoItem = "REALIZADO";
-        }
-        return estadoItem;
+        return this.realizado ? "REALIZADO" : "PENDENTE";
+//        String estadoItem = "PENDENTE";
+//        if(isRealizado()){
+//            estadoItem = "REALIZADO";
+//        }
+//        return estadoItem;
+    }
+
+    public int getDuracao() {
+        return this.duracao;
     }
 }

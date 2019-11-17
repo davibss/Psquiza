@@ -23,7 +23,7 @@ public class Atividade implements Serializable {
     /** Representação em String da descrição do risco da atividade*/
     private String descricaoRisco;
 
-    private int duracao;
+    //private int duracao;
     private List<String> resultados;
     private Atividade nextAtividade;
 
@@ -42,7 +42,7 @@ public class Atividade implements Serializable {
         this.itens = new ArrayList<>();
         this.risco = risco;
         this.descricaoRisco = descricaoRisco;
-        this.duracao = 0;
+        //this.duracao = 0;
         this.resultados = new ArrayList<>();
         this.nextAtividade = null;
     }
@@ -77,8 +77,8 @@ public class Atividade implements Serializable {
         if(item > this.itens.size()){
             throw new IllegalArgumentException("Item nao encontrado.");
         }
-        this.itens.get(item - 1).executa();
-        this.duracao += duracao;
+        this.itens.get(item - 1).executa(duracao);
+        //this.duracao += duracao;
     }
 
     public int cadastraResultado(String resultado) {
@@ -108,7 +108,7 @@ public class Atividade implements Serializable {
     }
 
     public int getDuracao() {
-        return this.duracao;
+        return this.itens.stream().mapToInt(Item::getDuracao).sum();
     }
 
     /**
@@ -135,10 +135,9 @@ public class Atividade implements Serializable {
     }
     public String toStringResultado() {
         AtomicInteger numero = new AtomicInteger(1);
-        StringJoiner joiner = new StringJoiner("\n" +
-                "               - ");
+        StringJoiner joiner = new StringJoiner("\n               - ");
         joiner.add(String.format("          - %s",this.descricao));
-        this.itens.forEach((r) -> joiner.add("ITEM" + numero.getAndIncrement() + " - " + getDuracao()));
+        this.itens.forEach((r) -> joiner.add("ITEM" + numero.getAndIncrement() + " - " + r.getDuracao()));
         return joiner.toString() + "\"";
     }
 
