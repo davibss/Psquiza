@@ -38,9 +38,9 @@ class AtividadeTest {
         Atividade atividade5 =  new Atividade("A2", "Realizar um mapeamento da UFCG", "MEDIO", "Essa atividade requer a relaizacao de medicoes em terrenos ingrimes.");
         Atividade atividade6 =  new Atividade("A3", "Realizar o monitoramento de postes eletricos.", "ALTO", "Lidar com equipamentos eletricos de alta potencia pode levar a diversos acidentes.");
 
-        assertTrue(atividade1.equals(atividade4));
-        assertTrue(atividade2.equals(atividade5));
-        assertTrue(atividade3.equals(atividade6));
+        assertEquals(atividade1, atividade4);
+        assertEquals(atividade2, atividade5);
+        assertEquals(atividade3, atividade6);
     }
 
     @Test

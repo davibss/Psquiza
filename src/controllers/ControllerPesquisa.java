@@ -191,6 +191,7 @@ public class ControllerPesquisa {
     }
 
     public boolean associaProblema(String pesquisa, Problema problema) {
+        Verificador.verificaVazioNulo(pesquisa, "idPesquisa");
         verificaPesquisa(pesquisa);
         if (!pesquisAtiva(pesquisa)){
             throw new IllegalArgumentException("Pesquisa desativada.");
@@ -209,6 +210,7 @@ public class ControllerPesquisa {
 
 
     public boolean associaObjetivo(String pesquisa, Objetivo objetivo) {
+        Verificador.verificaVazioNulo(pesquisa, "idPesquisa");
         verificaPesquisa(pesquisa);
         if (!pesquisAtiva(pesquisa)){
             throw new IllegalArgumentException("Pesquisa desativada.");
@@ -250,6 +252,9 @@ public class ControllerPesquisa {
     }
     
     public String listaPesquisas(String ordem) {
+        if (ordem == null){
+            throw new IllegalArgumentException("Valor ordem nao pode ser nulo.");
+        }
         StringJoiner joiner = new StringJoiner(" | ");
         ArrayList<Pesquisa> lista = new ArrayList<>(this.pesquisas.values());
         switch (ordem){
@@ -262,8 +267,6 @@ public class ControllerPesquisa {
             case "PESQUISA":
                 lista.stream().sorted(Comparator.comparing(Pesquisa::getCodigo).reversed()).
                         forEach(pesquisa -> joiner.add(pesquisa.toString()));
-//                lista.sort((pesquisa1, pesquisa2) -> pesquisa1.getCodigo().compareTo(pesquisa2.getCodigo()) * -1);
-//                lista.forEach(pesquisa -> joiner.add(pesquisa.toString()));
                 break;
             default:
                 throw new IllegalArgumentException("Valor invalido da ordem");
