@@ -54,6 +54,7 @@ public class Buscador {
         return buscados.get(posicao-1);
     }
     public int contaResultados(String termo){
+        verificaTermo(termo);
         List<String> buscados = buscaGenerica(termo);
         if (buscados.size() == 0){
             throw new IllegalArgumentException("Nenhum resultado encontrado");

@@ -2,6 +2,7 @@ package com.psquiza.entidades;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Representação de uma atividade no sistema.
@@ -22,7 +23,7 @@ public class Atividade implements Serializable {
     /** Representação em String da descrição do risco da atividade*/
     private String descricaoRisco;
 
-    private int duracao;
+    //private int duracao;
     private List<String> resultados;
     private Atividade nextAtividade;
 
@@ -41,7 +42,7 @@ public class Atividade implements Serializable {
         this.itens = new ArrayList<>();
         this.risco = risco;
         this.descricaoRisco = descricaoRisco;
-        this.duracao = 0;
+        //this.duracao = 0;
         this.resultados = new ArrayList<>();
         this.nextAtividade = null;
     }
@@ -76,8 +77,8 @@ public class Atividade implements Serializable {
         if(item > this.itens.size()){
             throw new IllegalArgumentException("Item nao encontrado.");
         }
-        this.itens.get(item - 1).executa();
-        this.duracao += duracao;
+        this.itens.get(item - 1).executa(duracao);
+        //this.duracao += duracao;
     }
 
     public int cadastraResultado(String resultado) {
@@ -107,7 +108,7 @@ public class Atividade implements Serializable {
     }
 
     public int getDuracao() {
-        return this.duracao;
+        return this.itens.stream().mapToInt(Item::getDuracao).sum();
     }
 
     /**
@@ -125,11 +126,19 @@ public class Atividade implements Serializable {
 
 
     public String toStringResumo() {
+        AtomicInteger numero = new AtomicInteger(1);
         StringJoiner joiner = new StringJoiner("\n" +
                 "               - ");
-        joiner.add(String.format("%s (%s - %s)",this.descricao, this.risco, this.descricaoRisco));
-        this.itens.forEach((r) -> joiner.add(r.toString()));
-        return joiner.toString();
+        joiner.add(String.format("          - %s (%s - %s)",this.descricao, this.risco, this.descricaoRisco));
+        this.itens.forEach((r) -> joiner.add(r.estadoItem() + " - " + "ITEM" + (numero.getAndIncrement())));
+        return joiner.toString() + "\"";
+    }
+    public String toStringResultado() {
+        AtomicInteger numero = new AtomicInteger(1);
+        StringJoiner joiner = new StringJoiner("\n               - ");
+        joiner.add(String.format("          - %s",this.descricao));
+        this.itens.forEach((r) -> joiner.add("ITEM" + numero.getAndIncrement() + " - " + r.getDuracao()));
+        return joiner.toString() + "\"";
     }
 
     /**
@@ -204,7 +213,7 @@ public class Atividade implements Serializable {
 
     // MINHA SOLUÇÃO (DAVI), NÃO TESTEI AINDA, MAS É UMA IDEIA PARA FAZER ESSA FUNCIONALIDADE.
     private String pegaMaiorRiscoAtividadesRecursivo(Atividade maior) {
-        Map<String, Integer> mapaRiscos = new HashMap<>(){{ put("ALTO", 3); put("MEDIO", 2); put("BAIXO", 1);}};
+        Map<String, Integer> mapaRiscos = new HashMap<String, Integer>(){{ put("ALTO", 3); put("MEDIO", 2); put("BAIXO", 1);}};
         if (this.nextAtividade == null){
             return mapaRiscos.get(this.risco) > mapaRiscos.get(maior.risco) ? this.codigo: maior.codigo; // 1-LINE
 //            if (mapaRiscos.get(this.risco) > mapaRiscos.get(maior.risco)){

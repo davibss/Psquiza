@@ -191,6 +191,7 @@ public class ControllerPesquisa {
     }
 
     public boolean associaProblema(String pesquisa, Problema problema) {
+        Verificador.verificaVazioNulo(pesquisa, "idPesquisa");
         verificaPesquisa(pesquisa);
         if (!pesquisAtiva(pesquisa)){
             throw new IllegalArgumentException("Pesquisa desativada.");
@@ -209,6 +210,7 @@ public class ControllerPesquisa {
 
 
     public boolean associaObjetivo(String pesquisa, Objetivo objetivo) {
+        Verificador.verificaVazioNulo(pesquisa, "idPesquisa");
         verificaPesquisa(pesquisa);
         if (!pesquisAtiva(pesquisa)){
             throw new IllegalArgumentException("Pesquisa desativada.");
@@ -250,6 +252,9 @@ public class ControllerPesquisa {
     }
     
     public String listaPesquisas(String ordem) {
+        if (ordem == null){
+            throw new IllegalArgumentException("Valor ordem nao pode ser nulo.");
+        }
         StringJoiner joiner = new StringJoiner(" | ");
         ArrayList<Pesquisa> lista = new ArrayList<>(this.pesquisas.values());
         switch (ordem){
@@ -262,8 +267,6 @@ public class ControllerPesquisa {
             case "PESQUISA":
                 lista.stream().sorted(Comparator.comparing(Pesquisa::getCodigo).reversed()).
                         forEach(pesquisa -> joiner.add(pesquisa.toString()));
-//                lista.sort((pesquisa1, pesquisa2) -> pesquisa1.getCodigo().compareTo(pesquisa2.getCodigo()) * -1);
-//                lista.forEach(pesquisa -> joiner.add(pesquisa.toString()));
                 break;
             default:
                 throw new IllegalArgumentException("Valor invalido da ordem");
@@ -326,23 +329,22 @@ public class ControllerPesquisa {
     }
 
     public void gravarResumo(String codigoPesquisa) throws IOException {
-        String resumoPesquisa = "- Pesquisa: %s - %s - %s%n" +
-                "\n" +
+        String resumoPesquisa = "\"- Pesquisa: " + codigoPesquisa +" - "+ pesquisas.get(codigoPesquisa).getDescricao() + " - "+ pesquisas.get(codigoPesquisa).getCampoInteresse() + "\n" +
                 "    - Pesquisadores:\n" +
                 pesquisas.get(codigoPesquisa).listaPesquisadores() +
                 "\n" +
                 "    - Problema:\n" +
-                "       - " + pesquisas.get(codigoPesquisa).getProblemaResumo() +
+                "        - " + pesquisas.get(codigoPesquisa).getProblemaResumo() +
                 "\n" +
-                "    - Objetivos:\n" +
-                "       - " + pesquisas.get(codigoPesquisa).getObjetivosResumo() +
+                "    - Objetivo:\n" +
+                pesquisas.get(codigoPesquisa).getObjetivosResumo() +
                 "\n" +
                 "    - Atividades:\n" +
-                "       - " + pesquisas.get(codigoPesquisa).getAtividadesResumo();
+                pesquisas.get(codigoPesquisa).getAtividadesResumo();
         if (!new File("tests/accept-tests/easyaccept/").exists()){
             new File("tests/accept-tests/easyaccept").mkdir();
         }
-        File file = new File("./"+codigoPesquisa+".txt");
+        File file = new File("./_"+codigoPesquisa+".txt");
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(file);
@@ -353,11 +355,33 @@ public class ControllerPesquisa {
     }
 
     public void gravarResultados(String codigoPesquisa) throws IOException{
+        String resultadoPesquisa = "\"- Pesquisa: " + codigoPesquisa +" - "+ pesquisas.get(codigoPesquisa).getDescricao() + " - "+ pesquisas.get(codigoPesquisa).getCampoInteresse() + "\n" +
+                "    - Resultados:" +
+                "\n" +
+                pesquisas.get(codigoPesquisa).getAtividadesResultado() +
+                "\n" +
+                "            - ITEM1 - DURAÇÃO\n" +
+                "\n" +
+                "            - ITEM2 - DURAÇÃO\n" +
+                "\n" +
+                "            - DESCRIÇÃO_RESULTADO1\n" +
+                "\n" +
+                "            - DESCRIÇÃO_RESULTADO2\n" +
+                "\n" +
+                "        - DESCRIÇÃO\n" +
+                "\n" +
+                "            - ITEM1 - DURAÇÃO\n" +
+                "\n" +
+                "            - ITEM2 - DURAÇÃO\n" +
+                "\n" +
+                "            - DESCRIÇÃO_RESULTADO1\n" +
+                "\n" +
+                "            - DESCRIÇÃO_RESULTADO2";
         File file = new File("./"+codigoPesquisa+"-Resultados.txt");
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(file);
-            String resultados = codigoPesquisa;
+            String resultados = resultadoPesquisa;
             fos.write(resultados.getBytes());
         } finally {
             fos.close();

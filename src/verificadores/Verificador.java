@@ -34,6 +34,14 @@ public class Verificador {
 
     public static boolean verificaFoto(String foto){
         return foto.matches("http[s]?://\\S*");
+    }
 
+    public static String verificaExcecao(Runnable runnable){
+        try{
+            runnable.run();
+        } catch (RuntimeException e){
+            return e.getMessage();
+        }
+        return null;
     }
 }

@@ -153,7 +153,6 @@ public class ControllerAtividade {
     }
     public List<String>  buscaAtividade(String termo){
         List<String> found = new ArrayList<>();
-
         atividades.entrySet().stream().sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).
         forEach(entry -> {
             if (entry.getValue().getDescricao().toLowerCase().contains(termo)){

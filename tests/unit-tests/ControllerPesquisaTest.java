@@ -1,9 +1,12 @@
 package com.tests;
 
 import com.psquiza.controllers.ControllerAtividade;
+import com.psquiza.controllers.ControllerObjetivo;
 import com.psquiza.controllers.ControllerPesquisa;
+import com.psquiza.controllers.ControllerProblema;
 import com.psquiza.entidades.Atividade;
 import com.psquiza.entidades.Pesquisador;
+import com.psquiza.verificadores.Verificador;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +16,8 @@ class ControllerPesquisaTest {
 
     private ControllerPesquisa controllerPesquisa;
     private ControllerAtividade controllerAtividade;
+    private ControllerObjetivo controllerObjetivo;
+    private ControllerProblema controllerProblema;
 
     private String verificaExcecao(Runnable runnable){
         try{
@@ -27,10 +32,26 @@ class ControllerPesquisaTest {
     void criarController(){
         controllerPesquisa = new ControllerPesquisa();
         controllerAtividade = new ControllerAtividade();
+        controllerObjetivo = new ControllerObjetivo();
+        controllerProblema = new ControllerProblema();
         controllerAtividade.cadastrarAtividades("Monitoramento de chats dos alunos de computacao do primeiro periodo.",
                                                 "ALTO","Por se tratar de apenas um monitoramento, o risco nao e elevado.");
         controllerAtividade.cadastrarAtividades("Degustacao de uma nova remeca de cervejas, criadas a partir de um novo processo de fermentacao.",
                                                 "MEDIO", "Degustadores podem sofrer com problemas de saude nessa atividade, tal como ser alergico a algum ingrediente da cerveja.");
+        cadastrarObjetivos();
+        cadastrarProblemas();
+    }
+
+    private void cadastrarObjetivos() {
+        controllerObjetivo.cadastraObjetivo("ESPECIFICO", "Obter a preferencia de filmes e series de um usuario.", 2, 3);
+        controllerObjetivo.cadastraObjetivo("GERAL", "Saber qual epoca do ano eh melhor para criacao de frutos do mar.", 1,1);
+        controllerObjetivo.cadastraObjetivo("ESPECIFICO", "Testar os conhecimentos dos alunos de P2 em OO.", 3,4);
+    }
+
+    private void cadastrarProblemas() {
+        controllerProblema.cadastraProblema("Dificuldade no aprendizado de OO no 2 periodo.", 2);
+        controllerProblema.cadastraProblema("Problema em manter area de conservacao das especies marinhas.", 1);
+        controllerProblema.cadastraProblema("Dificuldade no aprendizado de OO no 2 periodo.", 2);
     }
 
     // Testes para o caso de uso 1
@@ -187,43 +208,108 @@ class ControllerPesquisaTest {
 
     @Test
     void associaProblemaInvalido(){
-        cadastrarPesquisa();
+        assertEquals("Campo idPesquisa nao pode ser nulo ou vazio.",
+                Verificador.verificaExcecao(() -> controllerPesquisa.associaProblema("", controllerProblema.getProblema("P1"))));
+        assertEquals("Pesquisa nao encontrada.",
+                Verificador.verificaExcecao(() -> controllerPesquisa.associaProblema("COM77", controllerProblema.getProblema("P1"))));
+        encerrarPesquisa();
+        assertEquals("Pesquisa desativada.",
+                Verificador.verificaExcecao(() -> controllerPesquisa.associaProblema("AST1", controllerProblema.getProblema("P1"))));
 
     }
 
     @Test
     void associaProblema(){
         cadastrarPesquisa();
+        assertTrue(controllerPesquisa.associaProblema("AST1", controllerProblema.getProblema("P1")));
+        assertFalse(controllerPesquisa.associaProblema("AST1", controllerProblema.getProblema("P1")));
     }
 
     @Test
     void desassociaProblemaInvalido(){
-
+        assertEquals("Campo idPesquisa nao pode ser nulo ou vazio.",
+                Verificador.verificaExcecao(() -> controllerPesquisa.desassociaProblema("")));
+        assertEquals("Pesquisa nao encontrada.",
+                Verificador.verificaExcecao(() -> controllerPesquisa.desassociaProblema("COM77")));
+        encerrarPesquisa();
+        assertEquals("Pesquisa desativada.",
+                Verificador.verificaExcecao(() -> controllerPesquisa.desassociaProblema("AST1")));
     }
 
     @Test
     void desassociaProblema(){
-
+        associaProblema();
+        assertTrue(controllerPesquisa.desassociaProblema("AST1"));
+        assertFalse(controllerPesquisa.desassociaProblema("AST1"));
     }
 
     @Test
     void associaObjetivoInvalido(){
-
+        assertEquals("Campo idPesquisa nao pode ser nulo ou vazio.",
+                Verificador.verificaExcecao(() -> controllerPesquisa.associaObjetivo("", controllerObjetivo.getObjetivo("O1"))));
+        assertEquals("Pesquisa nao encontrada.",
+                Verificador.verificaExcecao(() -> controllerPesquisa.associaObjetivo("COM88", controllerObjetivo.getObjetivo("O1"))));
+        encerrarPesquisa();
+        assertEquals("Pesquisa desativada.",
+                Verificador.verificaExcecao(() -> controllerPesquisa.associaObjetivo("AST1", controllerObjetivo.getObjetivo("O1"))));
+        controllerPesquisa.ativarPesquisa("AST1");
+        controllerPesquisa.associaObjetivo("PSI1", controllerObjetivo.getObjetivo("O1"));
+        assertEquals("Objetivo ja associado a uma pesquisa.",
+                Verificador.verificaExcecao(() -> controllerPesquisa.associaObjetivo("AST1", controllerObjetivo.getObjetivo("O1"))));
     }
 
     @Test
     void associaObjetivo(){
-
+        cadastrarPesquisa();
+        assertTrue(controllerPesquisa.associaObjetivo("AST1", controllerObjetivo.getObjetivo("O1")));
+        assertFalse(controllerPesquisa.associaObjetivo("AST1", controllerObjetivo.getObjetivo("O1")));
     }
 
     @Test
     void desassociaObjetivoInvalido(){
-
+        assertEquals("Campo idPesquisa nao pode ser nulo ou vazio.",
+                Verificador.verificaExcecao(() -> controllerPesquisa.desassociaObjetivo("", "O1")));
+        assertEquals("Campo idObjetivo nao pode ser nulo ou vazio.",
+                Verificador.verificaExcecao(() -> controllerPesquisa.desassociaObjetivo("AST1", "")));
+        assertEquals("Pesquisa nao encontrada.",
+                Verificador.verificaExcecao(() -> controllerPesquisa.desassociaObjetivo("COM16", "O1")));
+        encerrarPesquisa();
+        assertEquals("Pesquisa desativada.",
+                Verificador.verificaExcecao(() -> controllerPesquisa.desassociaObjetivo("AST1", "O1")));
     }
 
     @Test
     void desassociaObjetivo(){
+        associaObjetivo();
+        assertFalse(controllerPesquisa.desassociaObjetivo("AST1", "O55"));
+        assertTrue(controllerPesquisa.desassociaObjetivo("AST1", "O1"));
+        assertFalse(controllerPesquisa.desassociaObjetivo("AST1", "O1"));
 
+    }
+
+    @Test
+    void listaPesquisasInvalido(){
+        assertEquals("Valor invalido da ordem",
+                Verificador.verificaExcecao(() -> controllerPesquisa.listaPesquisas("")));
+        assertEquals("Valor ordem nao pode ser nulo.",
+                Verificador.verificaExcecao(() -> controllerPesquisa.listaPesquisas(null)));
+        assertEquals("Valor invalido da ordem",
+                Verificador.verificaExcecao(() -> controllerPesquisa.listaPesquisas("DATA")));
+    }
+
+    @Test
+    void listaPesquisas(){
+        controllerPesquisa.cadastrarPesquisa("Identificacao de buracos negros com uso de programacao", "astronomia, computacao");
+        controllerPesquisa.cadastrarPesquisa("Alienacao Parental e o Sistema de Justica Brasileiro.", "psicologia, sistema juridico, alienacao parental, brasil");
+        controllerPesquisa.associaProblema("AST1", controllerProblema.getProblema("P1"));
+        controllerPesquisa.associaObjetivo("AST1", controllerObjetivo.getObjetivo("O1"));
+
+        assertEquals("PSI1 - Alienacao Parental e o Sistema de Justica Brasileiro. - psicologia, sistema juridico, alienacao parental, brasil | " +
+                "AST1 - Identificacao de buracos negros com uso de programacao - astronomia, computacao", controllerPesquisa.listaPesquisas("PESQUISA"));
+        assertEquals("AST1 - Identificacao de buracos negros com uso de programacao - astronomia, computacao | " +
+                "PSI1 - Alienacao Parental e o Sistema de Justica Brasileiro. - psicologia, sistema juridico, alienacao parental, brasil", controllerPesquisa.listaPesquisas("PROBLEMA"));
+        assertEquals("AST1 - Identificacao de buracos negros com uso de programacao - astronomia, computacao | " +
+                "PSI1 - Alienacao Parental e o Sistema de Justica Brasileiro. - psicologia, sistema juridico, alienacao parental, brasil", controllerPesquisa.listaPesquisas("OBJETIVOS"));
     }
 
     // TESTES PARA O CASO DE USO 7 (DAVI - AJUDANDO)
