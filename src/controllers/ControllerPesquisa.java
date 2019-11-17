@@ -336,11 +336,11 @@ public class ControllerPesquisa {
                 "    - Problema:\n" +
                 "        - " + pesquisas.get(codigoPesquisa).getProblemaResumo() +
                 "\n" +
-                "    - Objetivo:\n" +
+                "    - Objetivos:\n" +
                 pesquisas.get(codigoPesquisa).getObjetivosResumo() +
                 "\n" +
                 "    - Atividades:\n" +
-                pesquisas.get(codigoPesquisa).getAtividadesResumo();
+                pesquisas.get(codigoPesquisa).getAtividadesResumo()+"\"\n";
         if (!new File("tests/accept-tests/easyaccept/").exists()){
             new File("tests/accept-tests/easyaccept").mkdir();
         }
@@ -359,24 +359,25 @@ public class ControllerPesquisa {
                 "    - Resultados:" +
                 "\n" +
                 pesquisas.get(codigoPesquisa).getAtividadesResultado() +
-                "\n" +
-                "            - ITEM1 - DURAÇÃO\n" +
-                "\n" +
-                "            - ITEM2 - DURAÇÃO\n" +
-                "\n" +
-                "            - DESCRIÇÃO_RESULTADO1\n" +
-                "\n" +
-                "            - DESCRIÇÃO_RESULTADO2\n" +
-                "\n" +
-                "        - DESCRIÇÃO\n" +
-                "\n" +
-                "            - ITEM1 - DURAÇÃO\n" +
-                "\n" +
-                "            - ITEM2 - DURAÇÃO\n" +
-                "\n" +
-                "            - DESCRIÇÃO_RESULTADO1\n" +
-                "\n" +
-                "            - DESCRIÇÃO_RESULTADO2";
+                "\""+"\n";
+//                +
+//                "            - ITEM1 - DURAÇÃO\n" +
+//                "\n" +
+//                "            - ITEM2 - DURAÇÃO\n" +
+//                "\n" +
+//                "            - DESCRIÇÃO_RESULTADO1\n" +
+//                "\n" +
+//                "            - DESCRIÇÃO_RESULTADO2\n" +
+//                "\n" +
+//                "        - DESCRIÇÃO\n" +
+//                "\n" +
+//                "            - ITEM1 - DURAÇÃO\n" +
+//                "\n" +
+//                "            - ITEM2 - DURAÇÃO\n" +
+//                "\n" +
+//                "            - DESCRIÇÃO_RESULTADO1\n" +
+//                "\n" +
+//                "            - DESCRIÇÃO_RESULTADO2";
         File file = new File("./"+codigoPesquisa+"-Resultados.txt");
         FileOutputStream fos = null;
         try {

@@ -128,17 +128,21 @@ public class Atividade implements Serializable {
     public String toStringResumo() {
         AtomicInteger numero = new AtomicInteger(1);
         StringJoiner joiner = new StringJoiner("\n" +
-                "               - ");
-        joiner.add(String.format("          - %s (%s - %s)",this.descricao, this.risco, this.descricaoRisco));
+                "            - ");
+        joiner.add(String.format("        - %s (%s - %s)",this.descricao, this.risco, this.descricaoRisco));
         this.itens.forEach((r) -> joiner.add(r.estadoItem() + " - " + "ITEM" + (numero.getAndIncrement())));
-        return joiner.toString() + "\"";
+        return joiner.toString();
     }
     public String toStringResultado() {
         AtomicInteger numero = new AtomicInteger(1);
-        StringJoiner joiner = new StringJoiner("\n               - ");
-        joiner.add(String.format("          - %s",this.descricao));
-        this.itens.forEach((r) -> joiner.add("ITEM" + numero.getAndIncrement() + " - " + r.getDuracao()));
-        return joiner.toString() + "\"";
+        StringJoiner joiner = new StringJoiner("\n            - ");
+        joiner.add(String.format("        - %s",this.descricao));
+        this.itens.stream().filter(item -> item.getDuracao()>0).
+                forEach((r) -> joiner.add("ITEM" + numero.getAndIncrement() + " - " + r.getDuracao()));
+        //this.itens.forEach((r) -> joiner.add("ITEM" + numero.getAndIncrement() + " - " + r.getDuracao()));
+        this.resultados.stream().filter(s -> !s.equals("")).forEach(joiner::add);
+        //return joiner.toString() + "\"";
+        return joiner.toString();
     }
 
     /**
