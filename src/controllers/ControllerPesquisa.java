@@ -415,7 +415,7 @@ public class ControllerPesquisa {
      * @throws IOException
      */
     public void gravarResumo(String codigoPesquisa) throws IOException {
-        String resumoPesquisa = "\"- Pesquisa: " + codigoPesquisa +" - "+ pesquisas.get(codigoPesquisa).getDescricao() + " - "+ pesquisas.get(codigoPesquisa).getCampoInteresse() + "\n" +
+        String resumoPesquisa = "- Pesquisa: " + codigoPesquisa +" - "+ pesquisas.get(codigoPesquisa).getDescricao() + " - "+ pesquisas.get(codigoPesquisa).getCampoInteresse() + "\n" +
                 "    - Pesquisadores:\n" +
                 pesquisas.get(codigoPesquisa).listaPesquisadores() +
                 "\n" +
@@ -426,7 +426,7 @@ public class ControllerPesquisa {
                 pesquisas.get(codigoPesquisa).getObjetivosResumo() +
                 "\n" +
                 "    - Atividades:\n" +
-                pesquisas.get(codigoPesquisa).getAtividadesResumo()+"\"\n";
+                pesquisas.get(codigoPesquisa).getAtividadesResumo()+"\n";
         if (!new File("tests/accept-tests/easyaccept/").exists()){
             new File("tests/accept-tests/easyaccept").mkdir();
         }
