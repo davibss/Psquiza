@@ -245,20 +245,40 @@ public class ControllerAtividade {
         this.atividadesCriadas = (int) objectInputStream.readObject();
     }
 
+    private void verificaAtividade(String id){
+        if (id == null){
+            throw new NullPointerException("Atividade nao pode ser nulo ou vazio.");
+        } else if (id.trim().equals("")){
+            throw new IllegalArgumentException("Atividade nao pode ser nulo ou vazio.");
+        }
+        if (!atividades.containsKey(id)){
+            throw new IllegalArgumentException("Atividade nao encontrada.");
+        }
+    }
+
     public void defineProximaAtividade(String idPrecedente, String idSubsequente){
+        verificaAtividade(idPrecedente);
+        verificaAtividade(idSubsequente);
         atividades.get(idPrecedente).defineProximaAtividade(atividades.get(idSubsequente));
     }
     public void tiraProximaAtividade(String idPrecedente){
+        verificaAtividade(idPrecedente);
         atividades.get(idPrecedente).tiraProximaAtividade();
     }
     public int contaProximos(String idPrecedente){
+        verificaAtividade(idPrecedente);
         return atividades.get(idPrecedente).contaProximos();
     }
     public String pegaProximo(String idPrecedente, int enesimaAtividade){
+        verificaAtividade(idPrecedente);
+        if (enesimaAtividade <= 0){
+            throw new IllegalArgumentException("EnesimaAtividade nao pode ser negativa ou zero.");
+        }
         return atividades.get(idPrecedente).pegaProximo(enesimaAtividade);
     }
 
     public String pegaMaiorRiscoAtividades(String idAtividade) {
+        verificaAtividade(idAtividade);
         return atividades.get(idAtividade).pegaMaiorRiscoAtividades();
     }
 }

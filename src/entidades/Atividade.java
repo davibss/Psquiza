@@ -221,6 +221,9 @@ public class Atividade implements Serializable {
     }
 
     public String pegaProximo(int numero){
+        if (this.contaProximos() < numero){
+            throw new IllegalArgumentException("Atividade inexistente.");
+        }
         if (numero == 0){
             return this.codigo;
         }
@@ -229,6 +232,9 @@ public class Atividade implements Serializable {
 
     // MINHA SOLUÇÃO (DAVI), se arranjar uma forma melhor, só colocar aqui, o máximo que pensei foi isso, por enquanto.
     public String pegaMaiorRiscoAtividades(){
+        if (nextAtividade == null){
+            throw new NullPointerException("Nao existe proxima atividade.");
+        }
         return pegaMaiorRiscoAtividadesRecursivo(this);
     }
 
