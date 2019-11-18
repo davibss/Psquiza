@@ -155,26 +155,61 @@ public class ControllerGeral {
     }
 
     //Caso de uso 5 (Davi)
+
+    /**
+     * Associa um problema a uma pesquisa a partir dos IDs de cada uma.
+     * @param idPesquisa representação em String do ID da pesquisa.
+     * @param idProblema representação em String do ID do problema.
+     * Verifica se os IDs são nulos ou vazios.
+     * Verifica se o problema existe.
+     * @return true se a operação foi realizada com sucesso, se não, retorna false.
+     */
     public boolean associaProblema(String idPesquisa, String idProblema){
         Verificador.verificaVazioNulo(idPesquisa, "idPesquisa");
         Verificador.verificaVazioNulo(idProblema, "idProblema");
+        controllerProblema.verificaProblema(idProblema);
         return controllerPesquisa.associaProblema(idPesquisa, controllerProblema.getProblema(idProblema));
     }
 
+    /**
+     * Desassocia o problema de uma pesquisa.
+     * @param idPesquisa representação em String do ID da pesquisa.
+     * @return true se a operação foi realizada com sucesso, se não, retorna false.
+     */
     public boolean desassociaProblema(String idPesquisa){
         return controllerPesquisa.desassociaProblema(idPesquisa);
     }
 
+    /**
+     * Associa um objetivo a uma pesquisa a partir dos IDs de cada.
+     * Verifica se os IDs são nulos ou vazios.
+     * Verifica se o objetivo existe.
+     * @param idPesquisa representação em String do ID de pesquisa.
+     * @param idObjetivo representação em String do ID de objetivo.
+     * @return true se a operação foi realizada com sucesso, se não, retorna false.
+     */
     public boolean associaObjetivo(String idPesquisa, String idObjetivo){
         Verificador.verificaVazioNulo(idPesquisa,"idPesquisa");
         Verificador.verificaVazioNulo(idObjetivo,"idObjetivo");
+        controllerObjetivo.verificaObjetivo(idObjetivo);
         return controllerPesquisa.associaObjetivo(idPesquisa, controllerObjetivo.getObjetivo(idObjetivo));
     }
 
+    /**
+     * Desassocia um objetivo de uma pesquisa a partir dos parâmetros passados.
+     * @param idPesquisa representação em String do ID de pesquisa.
+     * @param idObjetivo representação em String do ID de objetivo.
+     * @return true se a operação foi realizada com sucesso, se não, retorna false.
+     */
     public boolean desassociaObjetivo(String idPesquisa, String idObjetivo){
         return controllerPesquisa.desassociaObjetivo(idPesquisa, idObjetivo);
     }
 
+    /**
+     * Lista todas as pesquisas a partir de uma ordem dada.
+     * @param ordem representação em String da ordem que a lista terá.
+     * @return uma String contendo todas as pesquisas ordenadas.
+     */
     public String listaPesquisas(String ordem) {
         return controllerPesquisa.listaPesquisas(ordem);
     }
@@ -348,7 +383,7 @@ public class ControllerGeral {
     /**
      * Grava em um arquivo .txt o resumo da pesquisa.
      * @param codigoPesquisa representação em String do código que identifica pesquisas.
-     * @throws IOException
+     * @throws IOException Exceção lançada caso a escrita de arquivo falhe.
      */
     public void gravarResumo(String codigoPesquisa) throws IOException {
         if (codigoPesquisa == null ||codigoPesquisa.equals("")){
@@ -361,7 +396,7 @@ public class ControllerGeral {
     /**
      * Grava em um arquivo .txt o resultado da pesquisa
      * @param codigoPesquisa representação em String do código que identifica pesquisas.
-     * @throws IOException
+     * @throws IOException Exceção lançada caso a escrita de arquivo falhe.
      */
     public void gravarResultados(String codigoPesquisa) throws IOException{
         if (codigoPesquisa == null || codigoPesquisa.equals("")){
@@ -372,6 +407,10 @@ public class ControllerGeral {
     }
 
     // Caso de Uso 12 (Davi)
+
+    /**
+     * Salva todos os mapas e seus contadores em um arquivo txt.
+     */
     public void salva() {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(file);
@@ -390,6 +429,9 @@ public class ControllerGeral {
         }
     }
 
+    /**
+     * Carrega todos os mapas e seus contadores a partir de um arquivo txt.
+     */
     public void carrega() {
         if (file.exists() && file.length() > 0){
             try {
@@ -407,6 +449,8 @@ public class ControllerGeral {
             }
         }
     }
+
+    //Caso de uso 9 (Anderson)
 
     public void defineProximaAtividade(String idPrecedente, String idSubsequente){
         controllerAtividade.defineProximaAtividade(idPrecedente, idSubsequente);

@@ -1,5 +1,6 @@
 package com.psquiza.controllers;
 
+import com.psquiza.comparators.CompararStringNumero;
 import com.psquiza.entidades.Problema;
 import com.psquiza.verificadores.Verificador;
 
@@ -108,6 +109,11 @@ public class ControllerProblema {
         }
     }
 
+    /**
+     * 
+     * @param problema
+     * @return
+     */
     public Problema getProblema(String problema) {
         return this.problemas.get(problema);
     }
@@ -116,7 +122,8 @@ public class ControllerProblema {
         List<String> found = new ArrayList<>();
 
         problemas.entrySet().stream().filter(entry -> entry.getValue().getDescricao().toLowerCase().contains(termo)).
-                sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).
+                //sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).
+                sorted(Map.Entry.comparingByKey(new CompararStringNumero(-1))).
                 forEach(entry -> found.add(entry.getKey() + ": " + entry.getValue().getDescricao()));
 
 //        for (Map.Entry<String, Problema> entry : problemas.entrySet()){
@@ -128,11 +135,23 @@ public class ControllerProblema {
         return found;
     }
 
+    /**
+     * Grava o mapa de problemas e a contagem de problemas.
+     * a partir de um objeto do tipo ObjectOutputStream passado como parâmetro.
+     * @param objectOutputStream variável que permite escrever objetos em um arquivo.
+     * @throws IOException Exceção lançada caso a escrita de arquivo falhe.
+     */
     public void grava(ObjectOutputStream objectOutputStream) throws IOException {
         objectOutputStream.writeObject(this.problemas);
         objectOutputStream.writeObject(this.idProblema);
     }
 
+    /**
+     * Carrega um objeto no mapa de problemas e no atributo idProblema.
+     * @param objectInputStream variável que lê um objetos de um arquivo.
+     * @throws IOException Exceção lançada caso a escrita de arquivo falhe.
+     * @throws ClassNotFoundException Exceção lançada caso a escrita de arquivo falhe.
+     */
     public void carrega(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
         this.problemas = (Map<String, Problema>) objectInputStream.readObject();
         this.idProblema = (int) objectInputStream.readObject();

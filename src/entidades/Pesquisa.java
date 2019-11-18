@@ -1,6 +1,7 @@
 package com.psquiza.entidades;
 
 import com.psquiza.comparators.AtividadeMaisAntiga;
+import com.psquiza.comparators.CompararStringNumero;
 
 import java.io.Serializable;
 import java.util.*;
@@ -11,6 +12,7 @@ import java.util.*;
  * @author José Nestor - 119110608
  */
 public class Pesquisa implements Serializable {
+    /** Atributo usado pelo serializable */
     private static final long serialVersionUID = 1L;
     /** Representação em String do código que identifica pesquisas. */
     private String codigo;
@@ -20,7 +22,6 @@ public class Pesquisa implements Serializable {
     private String descricao;
     /** Representação em String do campo de innteresse. */
     private String campoInteresse;
-    //Nova implementação - caso de uso 5
     /**
      * Problema que está associado com a pesquisa.
      */
@@ -51,7 +52,8 @@ public class Pesquisa implements Serializable {
         this.estadoAtivacao = estadoAtivacao;
         this.descricao = descricao;
         this.campoInteresse = campoInteresse;
-        this.problema = new Problema();
+        //this.problema = new Problema();
+        this.problema = null;
         this.objetivos = new LinkedHashMap<>();
         this.pesquisadores = new LinkedHashMap<>();
         this.atividades = new LinkedHashMap<>();
@@ -87,28 +89,45 @@ public class Pesquisa implements Serializable {
         return true;
     }
 
+    /**
+     * Associa um problema a esta pesquisa a partir de um objeto do tipo Problema.
+     * Verifica se já existe um problema associado a esta pesquisa, se sim, lança exceção.
+     * @param problema representação do problema no tipo Problema
+     * @return true se a operação for realizada com sucesso, e false se não.
+     */
     public boolean associaProblema(Problema problema) {
-        if (this.problema.equals(problema)){
-            return false;
-        }
-        if (!(this.problema.equals(new Problema()))){
+        if (this.problema != null){
+            if (this.problema.equals(problema)){
+                return false;
+            }
             throw new IllegalArgumentException("Pesquisa ja associada a um problema.");
         }
         this.problema = problema;
         return true;
     }
 
+    /**
+     * Desassocia um problema de uma pesquisa.
+     * Se não houver nenhum problema associado, retorna false.
+     * @return true se a operação foi realizada com sucesso, se não, false.
+     */
     public boolean desassociaProblema(){
-        if (this.problema.getIdProblema() == null){
+        if (this.problema == null){
             return false;
         }
 //        else if (!this.problema.getIdProblema().equals(problema)){
 //            return false;
 //        }
-        this.problema = new Problema();
+        this.problema = null;
         return true;
     }
 
+    /**
+     * Associa um objetivo a esta pesquisa através de um atributo do tipo Objetivo.
+     * Verifica se já existe este objetivo dentro desta pesquisa, se houver, retorna false.
+     * @param objetivo representação do objetivo a ser cadastrado, do tipo Objetivo.
+     * @return true se a operação foi realizada com sucesso, se não, false.
+     */
     public boolean asssociaObjetivo(Objetivo objetivo){
         if (this.objetivos.containsValue(objetivo)){
             return false;
@@ -117,6 +136,12 @@ public class Pesquisa implements Serializable {
         return true;
     }
 
+    /**
+     * Desassocia um objetivo desta pesquisa, através da identificação única do objetivo.
+     * Se este objetivo não estiver dentro desta pesquisa, retorna false.
+     * @param idObjetivo representação em String do id do objetivo.
+     * @return true se a operação foi realizada com sucesso, se não, false.
+     */
     public boolean desassociaObjetivo(String idObjetivo){
         if (!this.objetivos.containsKey(idObjetivo)){
             return false;
@@ -125,15 +150,29 @@ public class Pesquisa implements Serializable {
         return true;
     }
 
+    /**
+     * Retorna a quantidade total de objetivos desta pesquisa.
+     * @return uma representação em inteiro do total de objetivos cadastrados.
+     */
     public int getObjetivos(){
         return this.objetivos.size();
     }
 
+    /**
+     * Retorna o id do maior objetivo.
+     * @return uma String do maior objetivo dentro da pesquisa.
+     */
     public String maiorObjetivo(){
         //return Collections.max(this.objetivos, (chave1, chave2) -> chave1.compareTo(chave2) * -1);
-        return Collections.max(this.objetivos.keySet(), (chave1, chave2) -> chave1.compareTo(chave2) * -1);
+        //return Collections.max(this.objetivos.keySet(), (chave1, chave2) -> chave1.compareTo(chave2) * -1);
+        return Collections.max(this.objetivos.keySet(), new CompararStringNumero(-1));
     }
 
+    /**
+     * Verifica se um objetivo está contido na lista de objetivos.
+     * @param objetivo representação do tipo Objetivo do objetivo a ser verificado.
+     * @return true se o objetivo estiver dentro da lista, se não, retorna false.
+     */
     public boolean contemObjetivo(Objetivo objetivo){
         //return this.objetivos.contains(objetivo);
         return this.objetivos.containsValue(objetivo);
@@ -224,11 +263,11 @@ public class Pesquisa implements Serializable {
         return campoInteresse;
     }
     /**
-     * Retorna a representação do problema de uma pesquisa em String.
-     * @return a representação do problema de uma pesquisa em String.
+     * Retorna um problema.
+     * @return a representação do problema de uma pesquisa no tipo Problema.
      */
-    public String getProblema() {
-        return this.problema.getIdProblema();
+    public Problema getProblema() {
+        return this.problema;
     }
 
     /**

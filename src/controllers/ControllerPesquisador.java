@@ -1,5 +1,6 @@
 package com.psquiza.controllers;
 
+import com.psquiza.comparators.CompararStringNumero;
 import com.psquiza.entidades.Pesquisador;
 import com.psquiza.verificadores.Verificador;
 
@@ -353,7 +354,8 @@ public class ControllerPesquisador {
         List<String> found = new ArrayList<>();
 
         pesquisadores.entrySet().stream().filter(entry -> entry.getValue().getBio().toLowerCase().contains(termo)).
-                sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).
+                //sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).
+                sorted(Map.Entry.comparingByKey(new CompararStringNumero(-1))).
                 forEach(entry -> found.add(entry.getKey() + ": " + entry.getValue().getBio()));
 
 //        for (Map.Entry<String, Pesquisador> entry : pesquisadores.entrySet()) {
@@ -366,10 +368,21 @@ public class ControllerPesquisador {
         return found;
     }
 
+    /**
+     * Grava o mapa de pesquisadores a partir de um objeto do tipo ObjectOutputStream passado como parâmetro.
+     * @param objectOutputStream variável que permite escrever objetos em um arquivo.
+     * @throws IOException Exceção lançada caso a escrita de arquivo falhe.
+     */
     public void grava(ObjectOutputStream objectOutputStream) throws IOException {
         objectOutputStream.writeObject(this.pesquisadores);
     }
 
+    /**
+     * Carrega um objeto no mapa de pesquisadores.
+     * @param objectInputStream variável que lê um objetos de um arquivo.
+     * @throws IOException Exceção lançada caso a escrita de arquivo falhe.
+     * @throws ClassNotFoundException Exceção lançada caso a escrita de arquivo falhe.
+     */
     public void carrega(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
         this.pesquisadores = (Map<String, Pesquisador>) objectInputStream.readObject();
     }

@@ -9,6 +9,7 @@ import java.util.Locale;
  * @author José Nestor - 119110608
  */
 public class Aluno implements Especialidade, Serializable {
+    /** Atributo usado pelo serializable */
     private static final long serialVersionUID = 1L;
     /**
      * Represnetação em número inteiro do semestre do aluno.

@@ -150,7 +150,6 @@ public class FacadePsquiza {
     }
 
     public String listaPesquisas(String ordem) {
-        //return controllerGeral.listaPesquisa(ordem);
         return controllerGeral.listaPesquisas(ordem);
     }
 

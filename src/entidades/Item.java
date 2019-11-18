@@ -9,12 +9,13 @@ import java.util.Objects;
  * @author davibss - 119111034
  */
 public class Item implements Serializable {
+    /** Atributo usado pelo serializable */
     private static final long serialVersionUID = 1L;
-
     /** Representação em String do nome do item */
     private String nome;
     /** Representação em boolean do status do item */
     private boolean realizado;
+    /** Representação em inteiro da duração do item ao ser executado */
     private int duracao;
 
     /**
@@ -43,6 +44,11 @@ public class Item implements Serializable {
         return nome;
     }
 
+    /**
+     * Executa o item a partir da duração passada como parâmetro.
+     * Se o atributo realizado for true, lança exceção.
+     * @param duracao representação em inteiro da duração do item.
+     */
     public void executa(int duracao) {
         if(this.realizado){
             throw new IllegalArgumentException("Item ja executado.");
@@ -88,11 +94,6 @@ public class Item implements Serializable {
      */
     public String estadoItem(){
         return this.realizado ? "REALIZADO" : "PENDENTE";
-//        String estadoItem = "PENDENTE";
-//        if(isRealizado()){
-//            estadoItem = "REALIZADO";
-//        }
-//        return estadoItem;
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.psquiza.controllers;
 
+import com.psquiza.comparators.CompararStringNumero;
 import com.psquiza.entidades.Atividade;
 import com.psquiza.verificadores.Verificador;
 
@@ -122,11 +123,11 @@ public class ControllerAtividade {
         return this.atividades.get(codigo).toString();
     }
 
-    public String exibeAtividadeResumo(String codigo) {
-        Verificador.verificaVazioNulo(codigo,"codigo");
-        verificaExistenciaAtividade(codigo);
-        return this.atividades.get(codigo).toStringResumo();
-    }
+//    public String exibeAtividadeResumo(String codigo) {
+//        Verificador.verificaVazioNulo(codigo,"codigo");
+//        verificaExistenciaAtividade(codigo);
+//        return this.atividades.get(codigo).toStringResumo();
+//    }
 
     /**
      * Conta todos os itens pendentes de uma atividade a partir do código.
@@ -153,7 +154,8 @@ public class ControllerAtividade {
     }
     public List<String>  buscaAtividade(String termo){
         List<String> found = new ArrayList<>();
-        atividades.entrySet().stream().sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).
+        //atividades.entrySet().stream().sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).
+        atividades.entrySet().stream().sorted(Map.Entry.comparingByKey(new CompararStringNumero(-1))).
         forEach(entry -> {
             if (entry.getValue().getDescricao().toLowerCase().contains(termo)){
                 found.add(entry.getKey() + ": " + entry.getValue().getDescricao());
@@ -221,11 +223,23 @@ public class ControllerAtividade {
         return this.atividades.get(codigoAtividade).getDuracao();
     }
 
+    /**
+     * Grava o mapa de atividades e a contagem de atividades.
+     * a partir de um objeto do tipo ObjectOutputStream passado como parâmetro.
+     * @param objectOutputStream variável que permite escrever objetos em um arquivo.
+     * @throws IOException Exceção lançada caso a escrita de arquivo falhe.
+     */
     public void grava(ObjectOutputStream objectOutputStream) throws IOException {
         objectOutputStream.writeObject(this.atividades);
         objectOutputStream.writeObject(this.atividadesCriadas);
     }
 
+    /**
+     * Carrega um objeto no mapa de atividades e no atributo atividadesCriadas.
+     * @param objectInputStream variável que lê um objetos de um arquivo.
+     * @throws IOException Exceção lançada caso a escrita de arquivo falhe.
+     * @throws ClassNotFoundException Exceção lançada caso a escrita de arquivo falhe.
+     */
     public void carrega(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
         this.atividades = (Map<String, Atividade>) objectInputStream.readObject();
         this.atividadesCriadas = (int) objectInputStream.readObject();

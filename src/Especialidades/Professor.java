@@ -10,6 +10,7 @@ import java.io.Serializable;
  * @author José Nestor - 119110608
  */
 public class Professor implements Especialidade, Serializable {
+    /** Atributo usado pelo serializable */
     private static final long serialVersionUID = 1L;
     /**
      * Representação em String da formação do professor.
@@ -45,7 +46,6 @@ public class Professor implements Especialidade, Serializable {
      */
     @Override
     public String toString() {
-
         return (formacao + " - " + unidade + " - " + data);
     }
 

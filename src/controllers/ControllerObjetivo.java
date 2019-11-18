@@ -1,5 +1,6 @@
 package com.psquiza.controllers;
 
+import com.psquiza.comparators.CompararStringNumero;
 import com.psquiza.entidades.Objetivo;
 import com.psquiza.verificadores.Verificador;
 
@@ -98,6 +99,12 @@ public class ControllerObjetivo {
         return this.objetivos.get(codigo).toString();
     }
 
+    public void verificaObjetivo(String idObjetivo) {
+        if(!this.objetivos.containsKey(idObjetivo)) {
+            throw new IllegalArgumentException("Objetivo nao encontrado");
+        }
+    }
+
     public Objetivo getObjetivo(String idObjetivo) {
         return this.objetivos.get(idObjetivo);
     }
@@ -105,16 +112,29 @@ public class ControllerObjetivo {
     public List<String> buscaObjetivo(String termo){
         List<String> found = new ArrayList<>();
         objetivos.entrySet().stream().filter(entry -> entry.getValue().getDescricao().contains(termo)).
-                sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).
+                //sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).
+                sorted(Map.Entry.comparingByKey(new CompararStringNumero(-1))).
                 forEach(entry -> found.add(entry.getKey() + ": " + entry.getValue().getDescricao()));
         return found;
     }
 
+    /**
+     * Grava o mapa de objetivos e a contagem de objetivos.
+     * a partir de um objeto do tipo ObjectOutputStream passado como parâmetro.
+     * @param objectOutputStream variável que permite escrever objetos em um arquivo.
+     * @throws IOException Exceção lançada caso a escrita de arquivo falhe.
+     */
     public void grava(ObjectOutputStream objectOutputStream) throws IOException {
         objectOutputStream.writeObject(this.objetivos);
         objectOutputStream.writeObject(this.idObjetivo);
     }
 
+    /**
+     * Carrega um objeto no mapa de pesquisadores e no atributo idObjetivo.
+     * @param objectInputStream variável que lê um objetos de um arquivo.
+     * @throws IOException Exceção lançada caso a escrita de arquivo falhe.
+     * @throws ClassNotFoundException Exceção lançada caso a escrita de arquivo falhe.
+     */
     public void carrega(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
         this.objetivos = (Map<String, Objetivo>) objectInputStream.readObject();
         this.idObjetivo = (int) objectInputStream.readObject();

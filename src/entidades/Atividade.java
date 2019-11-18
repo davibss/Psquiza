@@ -10,8 +10,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author davibss - 119111034
  */
 public class Atividade implements Serializable {
+    /** Atributo usado pelo serializable */
     private static final long serialVersionUID = 1L;
-
     /** Representação em String do código da atividade, no formato: A[número]*/
     private String codigo;
     /** Representação em String da descrição da atividade*/

@@ -1,8 +1,10 @@
 package com.psquiza.controllers;
 
 
+import com.psquiza.comparators.CompararStringNumero;
 import com.psquiza.comparators.OrdenaPorIDProblema;
 import com.psquiza.comparators.OrdenaPorObjetivo;
+import com.psquiza.comparators.OrdenarPesquisa;
 import com.psquiza.entidades.*;
 import com.psquiza.verificadores.Verificador;
 
@@ -208,6 +210,13 @@ public class ControllerPesquisa {
         return pesquisas.get(idPesquisa).desassociaPesquisador(emailPesquisador);
     }
 
+    /**
+     * Associa um problema a uma pesquisa, passando o nome da pesquisa e o problema.
+     * Verifica se o id da pesquisa é nulo ou vazio e se a pesquisa existe e está ativada.
+     * @param pesquisa representação em String da pesquisa.
+     * @param problema representação do tipo Problema do problema.
+     * @return true se a operação foi realizada com sucesso, se não, false.
+     */
     public boolean associaProblema(String pesquisa, Problema problema) {
         Verificador.verificaVazioNulo(pesquisa, "idPesquisa");
         verificaPesquisa(pesquisa);
@@ -217,6 +226,12 @@ public class ControllerPesquisa {
         return pesquisas.get(pesquisa).associaProblema(problema);
     }
 
+    /**
+     * Desassocia um problema de uma pesquisa.
+     * Verifica se o ID da pesquisa é nulo ou vazio, se a pesquisa existe e se ela está desativada.
+     * @param pesquisa representação em String da pesquisa.
+     * @return true se a operação foi realizada com sucesso, se não, false.
+     */
     public boolean desassociaProblema(String pesquisa) {
         Verificador.verificaVazioNulo(pesquisa, "idPesquisa");
         verificaPesquisa(pesquisa);
@@ -227,6 +242,14 @@ public class ControllerPesquisa {
     }
 
 
+    /**
+     * Associa um objetivo a uma pesquisa, através dos parâmetros passados.
+     * Verifica se o ID da pesquisa é nulo ou vazio, se a pesquisa existe e se está desativada.
+     * Verifica se outras pesquisas possuem este objetivo.
+     * @param pesquisa representação em String da pesquisa.
+     * @param objetivo representação do tipo Objetivo do objetivo.
+     * @return true se a operação foi realizada com sucesso, se não, false.
+     */
     public boolean associaObjetivo(String pesquisa, Objetivo objetivo) {
         Verificador.verificaVazioNulo(pesquisa, "idPesquisa");
         verificaPesquisa(pesquisa);
@@ -241,6 +264,13 @@ public class ControllerPesquisa {
         return pesquisas.get(pesquisa).asssociaObjetivo(objetivo);
     }
 
+    /**
+     * Desassocia um objetivo de uma pesquisa, através dos parâmetros passados.
+     * Verifica se o ID de pesquisa e objetivo são nulos ou vazios, se a pesquisa existe e se está desativada.
+     * @param pesquisa representação em String da pesquisa.
+     * @param objetivo representação em String do objetivo.
+     * @return true se a operação foi realizada com sucesso, se não, false.
+     */
     public boolean desassociaObjetivo(String pesquisa, String objetivo) {
         Verificador.verificaVazioNulo(pesquisa,"idPesquisa");
         Verificador.verificaVazioNulo(objetivo,"idObjetivo");
@@ -251,24 +281,42 @@ public class ControllerPesquisa {
         return pesquisas.get(pesquisa).desassociaObjetivo(objetivo);
     }
 
+    /**
+     * Ordena todas as pesquisas pelo problema, do problema de maior nome, até o de menor,
+     * caso pesquisa não tenha problemas, é feita uma ordenação de pesquisas pelo código delas, de trás pra frente.
+     * @return uma lista de strings com as representações completas das pesquisas.
+     */
     private List<String> ordenaPorIDProblema(){
         ArrayList<String> lista = new ArrayList<>();
         this.pesquisas.entrySet().stream().filter(stringPesquisaEntry -> stringPesquisaEntry.getValue().getProblema() != null).
                 sorted(Map.Entry.comparingByValue(new OrdenaPorIDProblema())).forEach(a -> lista.add(a.getKey()));
         this.pesquisas.keySet().stream().filter(k -> !lista.contains(k)).
-                sorted((chave1, chave2) -> chave1.compareTo(chave2) * -1).forEach(lista::add);
+                //sorted((chave1, chave2) -> chave1.compareTo(chave2) * -1).forEach(lista::add);
+                sorted(new CompararStringNumero(-1)).forEach(lista::add);
         return lista;
     }
 
+    /**
+     * Ordena todas as pesquisas pela quantidade de objetivos, primeiro as que tem mais objetivos, depois as que tem menos,
+     * caso a pesquisa não tenha objetivos, é feita uma ordenação com os códigos das pesquisas, de trás pra frente.
+     * @return uma lista de strings com as representações completas das pesquisas.
+     */
     private List<String> ordenaPorObjetivos(){
         ArrayList<String> lista = new ArrayList<>();
-        pesquisas.entrySet().stream().filter(stringPesquisaEntry -> stringPesquisaEntry.getValue().getObjetivos() > 0).
+        this.pesquisas.entrySet().stream().filter(stringPesquisaEntry -> stringPesquisaEntry.getValue().getObjetivos() > 0).
                sorted(Map.Entry.comparingByValue(new OrdenaPorObjetivo())).forEach(a -> lista.add(a.getKey()));
         this.pesquisas.keySet().stream().filter(k -> !lista.contains(k)).
-                sorted((chave1, chave2) -> chave1.compareTo(chave2) * -1).forEach(lista::add);
+                //sorted((chave1, chave2) -> chave1.compareTo(chave2) * -1).forEach(lista::add);
+                sorted(new CompararStringNumero(-1)).forEach(lista::add);
         return lista;
     }
-    
+
+    /**
+     * Lista todas as pesquisas a partir de uma ordem passada por parâmetro.
+     * A ordem só poderá ser: PROBLEMA, OBJETIVOS e PESQUISA, se não for uma destas, lança exceção.
+     * @param ordem representação da ordem a ser utilizada.
+     * @return uma String com todas as pesquisas concatenadas.
+     */
     public String listaPesquisas(String ordem) {
         if (ordem == null){
             throw new IllegalArgumentException("Valor ordem nao pode ser nulo.");
@@ -283,7 +331,8 @@ public class ControllerPesquisa {
                 ordenaPorObjetivos().forEach(c -> joiner.add(exibirPesquisa(c)));
                 break;
             case "PESQUISA":
-                lista.stream().sorted(Comparator.comparing(Pesquisa::getCodigo).reversed()).
+                //lista.stream().sorted(Comparator.comparing(Pesquisa::getCodigo).reversed()).
+                lista.stream().sorted(new OrdenarPesquisa()).
                         forEach(pesquisa -> joiner.add(pesquisa.toString()));
                 break;
             default:
@@ -293,7 +342,8 @@ public class ControllerPesquisa {
     }
     public List<String> buscaPesquisa(String termo){
         List<String> found = new ArrayList<String>();
-        pesquisas.entrySet().stream().sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).
+        //pesquisas.entrySet().stream().sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).
+        pesquisas.entrySet().stream().sorted(Map.Entry.comparingByKey(new CompararStringNumero(-1))).
                 forEach(entry -> {
                     if (entry.getValue().getDescricao().toLowerCase().contains(termo)){
                         found.add(entry.getKey() + ": " + entry.getValue().getDescricao());
@@ -330,18 +380,24 @@ public class ControllerPesquisa {
     }
 
     public boolean associacao(String codigoAtividade) {
-        //boolean saida = false;
         return this.pesquisas.values().stream().anyMatch(pesquisa -> pesquisa.hasAtividade(codigoAtividade));
-//        for(Pesquisa pesquisa : this.pesquisas.values()) {
-//            if(pesquisa.hasAtividade(codigoAtividade)){saida = true;}
-//        }
-//        return saida;
     }
 
+    /**
+     * Grava o mapa de pesquisas a partir de um objeto do tipo ObjectOutputStream passado como parâmetro.
+     * @param objectOutputStream variável que permite escrever objetos em um arquivo.
+     * @throws IOException Exceção lançada caso a escrita de arquivo falhe.
+     */
     public void grava(ObjectOutputStream objectOutputStream) throws IOException {
         objectOutputStream.writeObject(this.pesquisas);
     }
 
+    /**
+     * Carrega um objeto no mapa de pesquisas.
+     * @param objectInputStream variável que lê um objetos de um arquivo.
+     * @throws IOException Exceção lançada caso a escrita de arquivo falhe.
+     * @throws ClassNotFoundException Exceção lançada caso a escrita de arquivo falhe.
+     */
     public void carrega(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
         this.pesquisas = (Map<String, Pesquisa>) objectInputStream.readObject();
     }

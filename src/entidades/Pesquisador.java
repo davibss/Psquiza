@@ -10,6 +10,7 @@ import java.io.Serializable;
  *  Um pesquisador possui função, biografia, nome, email, foto, estado de atividade(pode ser verdadeiro para ativo e falso para inativo) e especialidade.
  */
 public class Pesquisador implements Serializable {
+    /** Atributo usado pelo serializable */
     private static final long serialVersionUID = 1L;
 
     /**
