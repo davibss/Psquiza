@@ -340,6 +340,13 @@ public class ControllerPesquisa {
         }
         return joiner.toString();
     }
+    /**
+     *  Faz uma busca por um termo em forma de String nos atributos Descricao e Campo de Interesse das Pesquisas. Retornando
+     *  uma lista contendo os atributos onde o termo for encontrado.
+     *
+     * @param termo String representando um termo a ser buscado no Sistema Psquiza.
+     * @return Lista de resultados da busca pelo termo, contendo atributos de Pesquisas onde o termo foi encontrado.
+     */
     public List<String> buscaPesquisa(String termo){
         List<String> found = new ArrayList<String>();
         //pesquisas.entrySet().stream().sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).

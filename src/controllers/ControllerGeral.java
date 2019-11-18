@@ -356,14 +356,39 @@ public class ControllerGeral {
     }
 
     // caso de uso 8 - Anderson
+
+    /**
+     *  Realiza uma busca por um termo no Sistema Psquiza. A busca eh feita nos controllers de Pesquisa, Pesquisador, Problema, Objetivo
+     *  e Atividade, seguindo esta ordem.
+     *
+     * @param termo String representando um termo a ser buscado no Sistema Psquiza.
+     * @return String representando todos os resultados da busca do termo.
+     */
     public String busca(String termo){
         return buscador.buscaGeral(termo);
     }
 
+    /**
+     *  Realiza uma busca por um termo no Sistema Psquiza para obter um resultado em uma posicao especifica.
+     *  A busca eh feita nos controllers de Pesquisa, Pesquisador, Problema, Objetivo e Atividade, em seguida eh
+     *  buscado um resultado em uma determinada posicao dentre os resultados gerais obtidos.
+     *
+     * @param termo String representando um termo a ser buscado no Sistema Psquiza.
+     * @param posicao Inteiro representando uma posicao a ser acessado um resultado na lista de resultados.
+     * @return String representando o resultado de determinada posicao na busca.
+     */
     public String buscaPorNumero(String termo, int posicao){
         return buscador.buscaPorNumero(termo, posicao);
     }
 
+    /**
+     * Realiza uma busca por um termo no Sistema Psquiza para obter o numero de resultados encontrados.
+     * A busca eh feita nos controllers de Pesquisa, Pesquisador, Problema, Objetivo e Atividade, em seguida eh
+     * feita uma contagem do numero de resultados encontrados na busca daquele termo.
+     *
+     * @param termo String representando um termo a ser buscado no Sistema Psquiza.
+     * @return Inteiro representando o numero de resultados encontrados pela busca do termo.
+     */
     public int contaResultadosBusca(String termo){
         return buscador.contaResultados(termo);
     }

@@ -152,6 +152,14 @@ public class ControllerAtividade {
         verificaExistenciaAtividade(codigo);
         return (this.atividades.get(codigo).contaItensRealizados());
     }
+
+    /**
+     *  Faz uma busca por um termo em forma de String nos atributos Descricao e Descricao de risco das atividades. Retornando
+     *  uma lista contendo os atributos onde o termo for encontrado.
+     *
+     * @param termo String representando um termo a ser buscado no Sistema Psquiza.
+     * @return Lista de resultados da busca pelo termo, contendo atributos de Atividades onde o temro foi encontrado.
+     */
     public List<String>  buscaAtividade(String termo){
         List<String> found = new ArrayList<>();
         //atividades.entrySet().stream().sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).

@@ -117,7 +117,13 @@ public class ControllerProblema {
     public Problema getProblema(String problema) {
         return this.problemas.get(problema);
     }
-
+    /**
+     *  Faz uma busca por um termo em forma de String nos atributos Descricao de Problemas. Retornando
+     *  uma lista contendo os atributos onde o termo for encontrado.
+     *
+     * @param termo String representando um termo a ser buscado no Sistema Psquiza.
+     * @return Lista de resultados da busca pelo termo, contendo atributos de Problemas onde o termo foi encontrado.
+     */
     public List<String> buscaProblema(String termo){
         List<String> found = new ArrayList<>();
 

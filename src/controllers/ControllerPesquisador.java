@@ -350,6 +350,13 @@ public class ControllerPesquisador {
         return this.pesquisadores.get(email);
     }
 
+    /**
+     *  Faz uma busca por um termo em forma de String nos atributos Biografia de Pesquisadores. Retornando
+     *  uma lista contendo os atributos onde o termo for encontrado.
+     *
+     * @param termo String representando um termo a ser buscado no Sistema Psquiza.
+     * @return Lista de resultados da busca pelo termo, contendo atributos de Pesquisadores onde o temro foi encontrado.
+     */
     public List<String> buscaPesquisador(String termo){
         List<String> found = new ArrayList<>();
 

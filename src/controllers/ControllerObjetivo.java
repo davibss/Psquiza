@@ -109,6 +109,13 @@ public class ControllerObjetivo {
         return this.objetivos.get(idObjetivo);
     }
 
+    /**
+     *  Faz uma busca por um termo em forma de String nos atributos Descricao dos Objetivos. Retornando
+     *  uma lista contendo os atributos onde o termo for encontrado.
+     *
+     * @param termo String representando um termo a ser buscado no Sistema Psquiza.
+     * @return Lista de resultados da busca pelo termo, contendo atributos de Objetivos onde o termo foi encontrado.
+     */
     public List<String> buscaObjetivo(String termo){
         List<String> found = new ArrayList<>();
         objetivos.entrySet().stream().filter(entry -> entry.getValue().getDescricao().contains(termo)).
