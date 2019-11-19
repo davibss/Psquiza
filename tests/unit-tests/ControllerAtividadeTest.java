@@ -27,6 +27,7 @@ class ControllerAtividadeTest {
         controller.cadastraItem("A1", "Entrevistas com alunos de Engenharia Eletrica");
     }
 
+
     @Test
     void cadastrarAtividades() {
         controller.cadastrarAtividades("Realizar um mapeamento da UFCG", "MEDIO", "Essa atividade requer a relaizacao de medicoes em terrenos ingrimes.");
@@ -199,5 +200,54 @@ class ControllerAtividadeTest {
     void getDuracao() {
         executaAtividade();
         assertEquals(3, controller.getDuracao("A1"));
+    }
+
+    @Test
+    void definedefineProximaAtividade(){
+
+    }
+
+    @Test
+    void contaProximos(){
+        controller.cadastrarAtividades("Realizar o transporte de alimentos até a creche.", "MEDIO", "O risco de acidentes durante o transporte.");
+        controller.defineProximaAtividade("A2","A1");
+        controller.defineProximaAtividade("A3","A2");
+
+
+
+
+        assertEquals(1, controller.contaProximos("A2"));
+        assertEquals(2, controller.contaProximos("A3"));
+        assertEquals(0, controller.contaProximos("A1"));
+    }
+
+    @Test
+    void criandoLoop(){
+        boolean erro = false;
+
+        controller.cadastrarAtividades("Realizar o transporte de alimentos até a creche.", "MEDIO", "O risco de acidentes durante o transporte.");
+        controller.defineProximaAtividade("A2","A1");
+        controller.defineProximaAtividade("A3","A2");
+
+
+        try{
+            controller.defineProximaAtividade("A1","A3");
+
+        }
+        catch (Exception e){
+            erro = true;
+        }
+        assertEquals(true, erro);
+    }
+
+    @Test
+    void pegaProximo(){
+        controller.cadastrarAtividades("Realizar o transporte de alimentos até a creche.", "MEDIO", "O risco de acidentes durante o transporte.");
+        controller.defineProximaAtividade("A2","A1");
+        controller.defineProximaAtividade("A3","A2");
+
+        assertEquals("A1", controller.pegaProximo("A2", 1));
+        assertEquals("A2", controller.pegaProximo("A3", 1));
+
     }
 }
