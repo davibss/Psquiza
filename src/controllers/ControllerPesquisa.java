@@ -450,11 +450,14 @@ public class ControllerPesquisa {
      * @throws IOException
      */
     public void gravarResultados(String codigoPesquisa) throws IOException{
-        String resultadoPesquisa = "\"- Pesquisa: " + codigoPesquisa +" - "+ pesquisas.get(codigoPesquisa).getDescricao() + " - "+ pesquisas.get(codigoPesquisa).getCampoInteresse() + "\n" +
+        if (codigoPesquisa == null ||codigoPesquisa.equals("")){
+            throw new RuntimeException("Pesquisa nao pode ser nula ou vazia.");
+        }
+        verificaPesquisa(codigoPesquisa);
+        String resultadoPesquisa = "- Pesquisa: " + codigoPesquisa +" - "+ pesquisas.get(codigoPesquisa).getDescricao() + " - "+ pesquisas.get(codigoPesquisa).getCampoInteresse() + "\n" +
                 "    - Resultados:" +
                 "\n" +
-                pesquisas.get(codigoPesquisa).getAtividadesResultado() +
-                "\""+"\n";
+                pesquisas.get(codigoPesquisa).getAtividadesResultado() + "\n";
         File file = new File("./"+codigoPesquisa+"-Resultados.txt");
         FileOutputStream fos = null;
         try {
@@ -465,10 +468,6 @@ public class ControllerPesquisa {
             fos.close();
         }
     }
-
-//    public boolean containsPesquisa(String codigoPesquisa){
-//        return pesquisas.containsKey(codigoPesquisa);
-//    }
 
     public void configuraEstrategia(String estrategia) {
         this.estrategia = estrategia;

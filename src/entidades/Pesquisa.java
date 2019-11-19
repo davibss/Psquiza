@@ -216,7 +216,6 @@ public class Pesquisa implements Serializable {
         conferePendencias();
         String proxima = "";
         switch (estrategia) {
-
             case "MAIS_ANTIGA":
                 //sugestao
                 proxima = this.atividades.entrySet().stream().filter(entry ->  entry.getValue().contaItensPendentes() > 0)
@@ -231,6 +230,10 @@ public class Pesquisa implements Serializable {
                 break;
 
             case "MENOS_PENDENCIAS":
+                //SOLUÇÃO EM "1 LINHA"
+//                return this.atividades.entrySet().stream().filter(entry -> entry.getValue().contaItensPendentes() != 0).
+//                        sorted(Comparator.comparingInt(stringAtividadeEntry -> stringAtividadeEntry.getValue().contaItensPendentes())).
+//                        map(Map.Entry::getKey).findFirst().get();
                 Iterator<String> itr1 = this.atividades.keySet().iterator();
                 proxima = itr1.next();
                 int pendencias = this.atividades.get(proxima).contaItensPendentes();
@@ -246,19 +249,30 @@ public class Pesquisa implements Serializable {
                 break;
 
             case "MAIOR_RISCO":
+                //SOLUÇÃO EM "1 LINHA"
+//                return this.atividades.entrySet().stream().filter(entry -> entry.getValue().contaItensPendentes()!=0).
+//                        sorted((stringAtividadeEntry, t1) -> {
+//                            Map<String, Integer> mapaRiscos = new HashMap<String, Integer>(){{ put("ALTO", 3); put("MEDIO", 2); put("BAIXO", 1);}};
+//                            return mapaRiscos.get((stringAtividadeEntry.getValue().getRisco())).compareTo(mapaRiscos.get(t1.getValue().getRisco())) * -1;
+//                        }).map(Map.Entry::getKey).findFirst().get();
                 Iterator<String> itr2 = this.atividades.keySet().iterator();
                 proxima = itr2.next();
                 int risco = riscoParaInt(this.atividades.get(proxima).getRisco());
                 while (itr2.hasNext()) {
                     String codigoAtividade = itr2.next();
-                    if(riscoParaInt(this.atividades.get(codigoAtividade).getRisco()) > risco && this.atividades.get(codigoAtividade).contaItensPendentes() != 0) {
+                    if((riscoParaInt(this.atividades.get(codigoAtividade).getRisco())) > risco && this.atividades.get(codigoAtividade).contaItensPendentes() != 0) {
                         proxima = codigoAtividade;
-                        risco = this.atividades.get(codigoAtividade).getDuracao();
+                        //risco = this.atividades.get(codigoAtividade).getDuracao();
+                        risco = riscoParaInt(this.atividades.get(proxima).getRisco());
                     }
                 }
                 break;
 
             case "MAIOR_DURACAO":
+                //SOLUÇÃO EM "1 LINHA"
+//                return this.atividades.entrySet().stream().filter(entry -> entry.getValue().contaItensPendentes() != 0).
+//                        max(Comparator.comparingInt(stringAtividadeEntry -> stringAtividadeEntry.getValue().getDuracao())).
+//                        map(Map.Entry::getKey).get();
                 Iterator<String> itr3 = this.atividades.keySet().iterator();
                 proxima = itr3.next();
                 int duracao = this.atividades.get(proxima).getDuracao();

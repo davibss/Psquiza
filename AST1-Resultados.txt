@@ -1,0 +1,5 @@
+- Pesquisa: AST1 - Identificacao de buracos negros com uso de programacao - astronomia, computacao
+    - Resultados:
+        - Monitoramento de chats dos alunos de computacao do primeiro periodo.
+            - ITEM1 - 3
+            - Analise nao foi possivel.

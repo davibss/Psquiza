@@ -6,8 +6,7 @@ import com.psquiza.verificadores.Verificador;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.StringJoiner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -56,6 +55,7 @@ public class ResultadosTest {
         controllerAtividade.cadastraItem("A1", "Monitoramento discord");
         controllerAtividade.cadastraItem("A1", "Monitoramento whatsapp");
         controllerAtividade.executaAtividade("A1", 1, 3);
+        controllerAtividade.cadastraResultado("A1", "Analise nao foi possivel.");
     }
 
     private void cadastrarObjetivos() {
@@ -67,7 +67,6 @@ public class ResultadosTest {
     private void cadastrarProblemas() {
         controllerProblema.cadastraProblema("Dificuldade no aprendizado de OO no 2 periodo.", 2);
         controllerProblema.cadastraProblema("Problema em manter area de conservacao das especies marinhas.", 1);
-        //controllerProblema.cadastraProblema("Dificuldade no aprendizado de OO no 2 periodo.", 2);
     }
 
     private void cadastrarPesquisadores(){
@@ -82,32 +81,29 @@ public class ResultadosTest {
 
     @Test
     void associaPesquisador(){
-        controllerPesquisa.associaPesquisador("AST1","email@email",
+        controllerPesquisa.associaPesquisador("AST1","hunterxhunter@1998",
                 controllerPesquisador.getPesquisador("hunterxhunter@1998"));
-        controllerPesquisa.associaPesquisador("AST1","email@email",
+        controllerPesquisa.associaPesquisador("AST1","breakingbad@2008",
                 controllerPesquisador.getPesquisador("breakingbad@2008"));
-        controllerPesquisa.associaPesquisador("AST1","maria@email",
+        controllerPesquisa.associaPesquisador("AST1","theoa@2016",
                 controllerPesquisador.getPesquisador("theoa@2016"));
+        controllerPesquisador.cadastraEspecialidadeProfessor("breakingbad@2008", "Doutorado", "LSD", "31/05/2000");
     }
 
     @Test
     void associaProblema(){
         controllerPesquisa.associaProblema("AST1", controllerProblema.getProblema("P1"));
-        //assertFalse(controllerPesquisa.associaProblema("AST1", controllerProblema.getProblema("P1")));
     }
 
     @Test
     void associaObjetivo(){
         controllerPesquisa.associaObjetivo("AST1", controllerObjetivo.getObjetivo("O1"));
-        //assertFalse(controllerPesquisa.associaObjetivo("AST1", controllerObjetivo.getObjetivo("O1")));
     }
 
     @Test
     void associaAtividade(){
         controllerPesquisa.associaAtividade
                 ("AST1", "A1", controllerAtividade.getAtividade("A1"));
-//        assertFalse(controllerPesquisa.associaAtividade
-//                ("AST1", "A1", controllerAtividade.getAtividade("A1")));
     }
 
     @Test
@@ -126,6 +122,30 @@ public class ResultadosTest {
                 }));
     }
 
+    private String resumoAST1(){
+        StringJoiner joiner = new StringJoiner("\n");
+        joiner.add("- Pesquisa: AST1 - Identificacao de buracos negros com uso de programacao - astronomia, computacao");
+        joiner.add(String.format("%4s%s", "","- Pesquisadores:"));
+        joiner.add(String.format("%8s%s (%s) - %s - %s - %s","", "- killua zoldyck", "estudante", "Interessado em eletricidade, o terceiro de cinco filhos da famosa familia Zaoldyeck.",
+                "hunterxhunter@1998", "https://godspeed"));
+        joiner.add(String.format("%8s%s (%s) - %s - %s - %s - %s","", "- heisenberg", "professor", "Interessado nos efeitos da metafetamina e no estudo sobre o cancer. Pesquisador principal da pesquisa de radigrafia a fotons, peca fundamental na pesquisa que ganhou um premio nobel.",
+                "breakingbad@2008", "https://iamthedanger", "Doutorado - LSD - 31/05/2000"));
+        joiner.add(String.format("%8s%s (%s) - %s - %s - %s","", "- Prairie Johnson", "externo", "Interessada no estudo de multiplas dimensoes e no estudo dos sentidos humanos.",
+                "theoa@2016", "https://notblind"));
+        joiner.add(String.format("%4s%s","", "- Problema:"));
+        joiner.add(String.format("%8s%s - %s - %d","", "- P1", "Dificuldade no aprendizado de OO no 2 periodo.", 2));
+        joiner.add(String.format("%4s%s","", "- Objetivos:"));
+        joiner.add(String.format("%8s%s - %s - %s - %d","", "- O1", "ESPECIFICO", "Obter a preferencia de filmes e series de um usuario.", 5));
+        joiner.add(String.format("%4s%s","", "- Atividades:"));
+        joiner.add(String.format("%8s%s (%s - %s)","", "- Monitoramento de chats dos alunos de computacao do primeiro periodo.", "ALTO", "Por se tratar de apenas um monitoramento, o risco nao e elevado."));
+        joiner.add(String.format("%12s%s - %s","", "- REALIZADO", "ITEM1"));
+        joiner.add(String.format("%12s%s - %s","", "- PENDENTE", "ITEM2"));
+        joiner.add(String.format("%12s%s - %s","", "- PENDENTE", "ITEM3"));
+        joiner.add(String.format("%12s%s - %s","", "- PENDENTE", "ITEM4"));
+        joiner.add("");
+        return joiner.toString();
+    }
+
     @Test
     void gravarResumo(){
         associaAtividade();
@@ -137,37 +157,70 @@ public class ResultadosTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //("Identificacao de buracos negros com uso de programacao", "astronomia, computacao"));
-        //"killua zoldyck", "estudante", "Interessado em eletricidade, o terceiro de cinco filhos da famosa familia Zaoldyeck.",
-        //        "hunterxhunter@1998","https://godspeed");
-        //"heisenberg", "professor", "Interessado nos efeitos da metafetamina e no estudo sobre o cancer. Pesquisador principal da pesquisa de radigrafia a fotons, peca fundamental na pesquisa que ganhou um premio nobel.",
-        //        "breakingbad@2008","https://iamthedanger");
-        //"Prairie Johnson", "externo", "Interessada no estudo de multiplas dimensoes e no estudo dos sentidos humanos.",
-        //        "theoa@2016","https://notblind");
-        //"Joel","externo","Interessado em fungos.","thelastofus@2013","https://Cordyceps");
+        try {
+            File ast1 = new File("./_AST1.txt");
+            FileReader fileReader = new FileReader(ast1);
+            int i;
+            StringBuilder stringfinal = new StringBuilder();
+            while ((i=fileReader.read()) != -1){
+                stringfinal.append((char) i);
+            }
+            assertEquals(resumoAST1(), stringfinal.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void gravarResultadosInvalido(){
+        assertEquals("Pesquisa nao pode ser nula ou vazia.",
+                Verificador.verificaExcecao(() -> {
+                    try { controllerPesquisa.gravarResultados(""); } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }));
+        assertEquals("Pesquisa nao encontrada.",
+                Verificador.verificaExcecao(() -> {
+                    try { controllerPesquisa.gravarResultados("COM8000"); } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }));
+    }
+
+    private String resultadosAST1(){
         StringJoiner joiner = new StringJoiner("\n");
         joiner.add("- Pesquisa: AST1 - Identificacao de buracos negros com uso de programacao - astronomia, computacao");
-        joiner.add(String.format("%19s", "- Pesquisadores:"));
-        joiner.add(String.format("%23s (%s) - %s - %s - %s", "- killua zoldyck", "estudante", "Interessado em eletricidade, o terceiro de cinco filhos da famosa familia Zaoldyeck.",
-                "hunterxhunter@1998", "https://godspeed"));
-        joiner.add(String.format("%23s (%s) - %s - %s - %s", "- heisenberg", "professor", "Interessado nos efeitos da metafetamina e no estudo sobre o cancer. Pesquisador principal da pesquisa de radigrafia a fotons, peca fundamental na pesquisa que ganhou um premio nobel.",
-                "breakingbad@2008", "https://iamthedanger"));
-        joiner.add(String.format("%23s (%s) - %s - %s - %s", "- Prairie Johnson", "externo", "Interessada no estudo de multiplas dimensoes e no estudo dos sentidos humanos.",
-                "theoa@2016", "https://notblind"));
-        joiner.add(String.format("%19s", "- Problema:"));
-        joiner.add(String.format("%23s - %s - %d", "- P1", "Dificuldade no aprendizado de OO no 2 periodo.", 2));
-        joiner.add(String.format("%19s", "- Objetivos:"));
-        //("ESPECIFICO", "Obter a preferencia de filmes e series de um usuario.", 2, 3);
-        joiner.add(String.format("%23s - %s - %s - %d", "- O1", "ESPECIFICO", "Obter a preferencia de filmes e series de um usuario.", 5));
-        joiner.add(String.format("%19s", "- Atividades:"));
-        //"Monitoramento de chats dos alunos de computacao do primeiro periodo.", "ALTO","Por se tratar de apenas um monitoramento, o risco nao e elevado.");
-        joiner.add(String.format("%23s (%s - %s)", "- Monitoramento de chats dos alunos de computacao do primeiro periodo.", "ALTO", "Por se tratar de apenas um monitoramento, o risco nao e elevado."));
-        joiner.add(String.format("%27s - %s", "- REALIZADO", "ITEM1"));
-        joiner.add(String.format("%27s - %s", "- PENDENTE", "ITEM2"));
-        joiner.add(String.format("%27s - %s", "- PENDENTE", "ITEM3"));
-        joiner.add(String.format("%27s - %s", "- PENDENTE", "ITEM4"));
-        // IMPLEMENTAR ARQUIVO
-        System.out.println(joiner.toString());
+        joiner.add(String.format("%4s%s", "","- Resultados:"));
+        joiner.add(String.format("%8s%s","", "- Monitoramento de chats dos alunos de computacao do primeiro periodo."));
+        joiner.add(String.format("%12s%s - %d","", "- ITEM1", 3));
+        joiner.add(String.format("%12s%s","", "- Analise nao foi possivel."));
+        joiner.add("");
+        return joiner.toString();
+    }
+
+    @Test
+    void gravarResultados(){
+        associaAtividade();
+        associaObjetivo();
+        associaPesquisador();
+        associaProblema();
+        try {
+            controllerPesquisa.gravarResultados("AST1");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            File ast1 = new File("./AST1-Resultados.txt");
+            FileReader fileReader = new FileReader(ast1);
+            int i;
+            StringBuilder stringfinal = new StringBuilder();
+            while ((i=fileReader.read()) != -1){
+                stringfinal.append((char) i);
+            }
+            assertEquals(resultadosAST1(), stringfinal.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

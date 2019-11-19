@@ -235,27 +235,19 @@ public class Atividade implements Serializable {
         if (nextAtividade == null){
             throw new NullPointerException("Nao existe proxima atividade.");
         }
-        return pegaMaiorRiscoAtividadesRecursivo(this);
+        //return pegaMaiorRiscoAtividadesRecursivo(this);
+        return this.nextAtividade.pegaMaiorRiscoAtividadesRecursivo(this.nextAtividade);
     }
 
     // MINHA SOLUÇÃO (DAVI), TESTEI, ESTA FUNCIONANDO, MAS SE TIVER UMA MELHOR SÓ COLOCAR.
     private String pegaMaiorRiscoAtividadesRecursivo(Atividade maior) {
         Map<String, Integer> mapaRiscos = new HashMap<String, Integer>(){{ put("ALTO", 3); put("MEDIO", 2); put("BAIXO", 1);}};
         if (this.nextAtividade == null){
-            return mapaRiscos.get(this.risco) >= mapaRiscos.get(maior.risco) ? this.codigo: maior.codigo; // 1-LINE
-//            if (mapaRiscos.get(this.risco) > mapaRiscos.get(maior.risco)){
-//                return this.codigo;
-//            }else{
-//                return maior.codigo;
-//            }
+            //return mapaRiscos.get(this.risco) >= mapaRiscos.get(maior.risco) ? this.codigo: maior.codigo; // 1-LINE
+            return maior.codigo; // 1-LINE
         }else{
             return this.nextAtividade.pegaMaiorRiscoAtividadesRecursivo(
                     mapaRiscos.get(this.risco) >= mapaRiscos.get(maior.risco) ? this : maior); // 1-LINE
-//            if (mapaRiscos.get(this.risco) > mapaRiscos.get(maior.risco)){
-//                return this.nextAtividade.pegaMaiorRiscoAtividadesRecursivo(this);
-//            }else{
-//                return this.nextAtividade.pegaMaiorRiscoAtividadesRecursivo(maior);
-//            }
         }
     }
 

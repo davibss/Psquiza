@@ -1,6 +1,6 @@
 package com.psquiza;
 
-import com.psquiza.controllers.*;
+import com.psquiza.controllers.ControllerGeral;
 import easyaccept.EasyAccept;
 import easyaccept.EasyAcceptException;
 

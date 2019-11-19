@@ -1,6 +1,7 @@
 - Pesquisa: AST1 - Identificacao de buracos negros com uso de programacao - astronomia, computacao
     - Pesquisadores:
-        - heisenberg (professor) - Interessado nos efeitos da metafetamina e no estudo sobre o cancer. Pesquisador principal da pesquisa de radigrafia a fotons, peca fundamental na pesquisa que ganhou um premio nobel. - breakingbad@2008 - https://iamthedanger
+        - killua zoldyck (estudante) - Interessado em eletricidade, o terceiro de cinco filhos da famosa familia Zaoldyeck. - hunterxhunter@1998 - https://godspeed
+        - heisenberg (professor) - Interessado nos efeitos da metafetamina e no estudo sobre o cancer. Pesquisador principal da pesquisa de radigrafia a fotons, peca fundamental na pesquisa que ganhou um premio nobel. - breakingbad@2008 - https://iamthedanger - Doutorado - LSD - 31/05/2000
         - Prairie Johnson (externo) - Interessada no estudo de multiplas dimensoes e no estudo dos sentidos humanos. - theoa@2016 - https://notblind
     - Problema:
         - P1 - Dificuldade no aprendizado de OO no 2 periodo. - 2
