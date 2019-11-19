@@ -415,6 +415,10 @@ public class ControllerPesquisa {
      * @throws IOException
      */
     public void gravarResumo(String codigoPesquisa) throws IOException {
+        if (codigoPesquisa == null ||codigoPesquisa.equals("")){
+            throw new RuntimeException("Pesquisa nao pode ser nula ou vazia.");
+        }
+        verificaPesquisa(codigoPesquisa);
         String resumoPesquisa = "- Pesquisa: " + codigoPesquisa +" - "+ pesquisas.get(codigoPesquisa).getDescricao() + " - "+ pesquisas.get(codigoPesquisa).getCampoInteresse() + "\n" +
                 "    - Pesquisadores:\n" +
                 pesquisas.get(codigoPesquisa).listaPesquisadores() +
