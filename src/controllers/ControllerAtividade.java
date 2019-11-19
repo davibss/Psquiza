@@ -7,7 +7,6 @@ import com.psquiza.verificadores.Verificador;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -122,12 +121,6 @@ public class ControllerAtividade {
         verificaExistenciaAtividade(codigo);
         return this.atividades.get(codigo).toString();
     }
-
-//    public String exibeAtividadeResumo(String codigo) {
-//        Verificador.verificaVazioNulo(codigo,"codigo");
-//        verificaExistenciaAtividade(codigo);
-//        return this.atividades.get(codigo).toStringResumo();
-//    }
 
     /**
      * Conta todos os itens pendentes de uma atividade a partir do código.

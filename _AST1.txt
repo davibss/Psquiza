@@ -1,0 +1,14 @@
+- Pesquisa: AST1 - Identificacao de buracos negros com uso de programacao - astronomia, computacao
+    - Pesquisadores:
+        - heisenberg (professor) - Interessado nos efeitos da metafetamina e no estudo sobre o cancer. Pesquisador principal da pesquisa de radigrafia a fotons, peca fundamental na pesquisa que ganhou um premio nobel. - breakingbad@2008 - https://iamthedanger
+        - Prairie Johnson (externo) - Interessada no estudo de multiplas dimensoes e no estudo dos sentidos humanos. - theoa@2016 - https://notblind
+    - Problema:
+        - P1 - Dificuldade no aprendizado de OO no 2 periodo. - 2
+    - Objetivos:
+        - O1 - ESPECIFICO - Obter a preferencia de filmes e series de um usuario. - 5
+    - Atividades:
+        - Monitoramento de chats dos alunos de computacao do primeiro periodo. (ALTO - Por se tratar de apenas um monitoramento, o risco nao e elevado.)
+            - REALIZADO - ITEM1
+            - PENDENTE - ITEM2
+            - PENDENTE - ITEM3
+            - PENDENTE - ITEM4

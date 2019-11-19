@@ -130,26 +130,56 @@ public class ControllerGeral {
 
 //Caso de uso 4 (Davi)
 
+    /**
+     * Cadastra atividades a partir dos parâmetros passados.
+     * @param descricao representação em String da descrição da atividade.
+     * @param risco representação em String do risco da atividade [ALTO, MEDIO, BAIXO]
+     * @param descricaoRisco representação em String da descrição do risco da atividade.
+     */
     public void cadastrarAtividade(String descricao,  String risco, String descricaoRisco){
         controllerAtividade.cadastrarAtividades(descricao, risco, descricaoRisco);
     }
 
+    /**
+     * Apaga a atividade a partir do parâmetro passado.
+     * @param codigo representação do código da atividade a ser apagada.
+     */
     public void apagarAtividade(String codigo){
         controllerAtividade.apagarAtividade(codigo);
     }
 
+    /**
+     * Cadastra um item em uma atividade a partir dos parâmetros passados.
+     * @param codigo representação em String do código da atividade.
+     * @param nomeItem representação em String do nome do item.
+     */
     public void cadastraItem(String codigo, String nomeItem){
         controllerAtividade.cadastraItem(codigo, nomeItem);
     }
 
+    /**
+     * Exibe as informações da atividade, no formato: "descriçãoAtividade (risco - descriçãoRisco)"
+     * @param codigo representação em String do código da atividade a ser exibida.
+     * @return uma String com a representação textual da atividade.
+     */
     public String exibeAtividade(String codigo){
         return controllerAtividade.exibeAtividade(codigo);
     }
 
+    /**
+     * Conta todos os itens que não foram realizados em uma atividade.
+     * @param codigo representação em String do código da atividade.
+     * @return um inteiro representando a quantidade de itens pendentes.
+     */
     public int contaItensPendentes(String codigo){
         return controllerAtividade.contaItensPendentes(codigo);
     }
 
+    /**
+     * Conta todos os itens que foram realizados em uma atividade.
+     * @param codigo representação em String do código da atividade.
+     * @return um inteiro representando a quantidade de itens realizados.
+     */
     public int contaItensRealizados(String codigo){
         return controllerAtividade.contaItensRealizados(codigo);
     }
