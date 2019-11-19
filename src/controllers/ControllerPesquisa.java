@@ -471,6 +471,9 @@ public class ControllerPesquisa {
     }
 
     public String proximaAtividade(String codigoPesquisa) {
+        if(!pesquisas.get(codigoPesquisa).estadoAtivacao()){
+            throw new RuntimeException("Pesquisa desativada.");
+        }
         return this.pesquisas.get(codigoPesquisa).proximaAtividade(this.estrategia);
     }
 }
