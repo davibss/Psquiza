@@ -471,6 +471,9 @@ public class ControllerPesquisa {
     }
 
     public String proximaAtividade(String codigoPesquisa) {
+        if(!this.pesquisas.containsKey(codigoPesquisa)) {
+            throw new IllegalArgumentException("Pesquisa nao encontrada.");
+        }
         if(!pesquisas.get(codigoPesquisa).estadoAtivacao()){
             throw new RuntimeException("Pesquisa desativada.");
         }

@@ -395,10 +395,19 @@ public class ControllerGeral {
 
     //Caso de Uso 10 (Henrique)
     public void configuraEstrategia(String estrategia) {
+        if (estrategia == null || estrategia.equals("")){
+            throw new IllegalArgumentException("Estrategia nao pode ser nula ou vazia.");
+        }
+        if (!(estrategia.equals("MAIS_ANTIGA") || estrategia.equals("MENOS_PENDENCIAS") || estrategia.equals("MAIOR_RISCO") || estrategia.equals("MAIOR_DURACAO"))){
+            throw new IllegalArgumentException("Valor invalido da estrategia");
+        }
         controllerPesquisa.configuraEstrategia(estrategia);
     }
 
     public String proximaAtividade(String codigoPesquisa) {
+        if (codigoPesquisa == null || codigoPesquisa.equals("")){
+            throw new IllegalArgumentException("Pesquisa nao pode ser nula ou vazia.");
+        }
         return controllerPesquisa.proximaAtividade(codigoPesquisa);
     }
 

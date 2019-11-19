@@ -194,21 +194,40 @@ public class Pesquisa implements Serializable {
         return true;
     }
 
+    private int riscoParaInt(String risco) {
+        if(risco.equals("BAIXO")){ return 1; }
+        if(risco.equals("MEDIO")){ return 2; }
+        return 3;
+    }
+
+    private void conferePendencias(){
+        boolean a = true;
+        for(Atividade atividade : this.atividades.values()){
+            if(atividade.contaItensPendentes() > 0) {
+                a = false;
+            }
+        }
+        if(a) {
+            throw new IllegalArgumentException("Pesquisa sem atividades com pendencias.");
+        }
+    }
+
     public String proximaAtividade(String estrategia) {
+        conferePendencias();
         String proxima = "";
         switch (estrategia) {
+
             case "MAIS_ANTIGA":
                 //sugestao
-//                proxima = this.atividades.entrySet().stream().filter(entry ->  entry.getValue().contaItensPendentes() > 0)
-//                        .findFirst().get().getKey();
-                List<String> lista = new ArrayList<>();
-                lista.addAll(this.atividades.keySet());
-                Collections.sort(lista, new AtividadeMaisAntiga());
-                for(String codigoAtividade : lista){
-                    if(this.atividades.get(codigoAtividade).contaItensPendentes() != 0) {
+                proxima = this.atividades.entrySet().stream().filter(entry ->  entry.getValue().contaItensPendentes() > 0)
+                        .findFirst().get().getKey();
+                /*Iterator<String> itr0 = this.atividades.keySet().iterator();
+                while (itr0.hasNext()) {
+                    String codigoAtividade = itr0.next();
+                    if(this.atividades.get(codigoAtividade).contaItensPendentes() > 0) {
                         proxima = codigoAtividade;
                     }
-                }
+                }*/
                 break;
 
             case "MENOS_PENDENCIAS":
@@ -227,13 +246,24 @@ public class Pesquisa implements Serializable {
                 break;
 
             case "MAIOR_RISCO":
-                break;
-            case "MAIOR_DURACAO":
                 Iterator<String> itr2 = this.atividades.keySet().iterator();
                 proxima = itr2.next();
-                int duracao = this.atividades.get(proxima).getDuracao();
+                int risco = riscoParaInt(this.atividades.get(proxima).getRisco());
                 while (itr2.hasNext()) {
                     String codigoAtividade = itr2.next();
+                    if(riscoParaInt(this.atividades.get(codigoAtividade).getRisco()) > risco && this.atividades.get(codigoAtividade).contaItensPendentes() != 0) {
+                        proxima = codigoAtividade;
+                        risco = this.atividades.get(codigoAtividade).getDuracao();
+                    }
+                }
+                break;
+
+            case "MAIOR_DURACAO":
+                Iterator<String> itr3 = this.atividades.keySet().iterator();
+                proxima = itr3.next();
+                int duracao = this.atividades.get(proxima).getDuracao();
+                while (itr3.hasNext()) {
+                    String codigoAtividade = itr3.next();
                     if(this.atividades.get(codigoAtividade).getDuracao() > duracao && this.atividades.get(codigoAtividade).contaItensPendentes() != 0) {
                         proxima = codigoAtividade;
                         duracao = this.atividades.get(codigoAtividade).getDuracao();
