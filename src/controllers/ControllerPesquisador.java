@@ -7,7 +7,6 @@ import com.psquiza.verificadores.Verificador;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -53,7 +52,6 @@ public class ControllerPesquisador {
      * @param semestre semestre do aluno.
      * @param iea índice de eficiência acadêmica do aluno.
      */
-
     public void cadastraEspecialidadeAluno(String email, int semestre, Double iea){
         Verificador.verificaVazioNulo(email, "email");
         if(semestre < 1) throw new RuntimeException("Atributo semestre com formato invalido.");
@@ -97,23 +95,13 @@ public class ControllerPesquisador {
         if (!(tipo.equals("EXTERNO") || tipo.equals("ALUNA") || tipo.equals("PROFESSORA"))) {
             throw new RuntimeException("Tipo " + tipo + " inexistente.");
         }
-//        String lista = "";
-//        String separador = "";
         Map<String, String> tipos = new HashMap<String, String>(){{ put("EXTERNO","externo"); put("ALUNA","estudante"); put("PROFESSORA","professor"); }};
         StringJoiner joiner = new StringJoiner(" | ");
         this.pesquisadores.values().stream().filter(pesquisador -> pesquisador.getFuncao().equals(tipos.get(tipo))).
                                             forEach(pesquisador -> joiner.add(pesquisador.toString()));
-//        for (Pesquisador pesquisador : this.pesquisadores.values()){
-//            if (pesquisador.getFuncao().equals(tipo.toLowerCase())) {
-//                lista += separador + pesquisador.toString();
-//                separador = " | ";
-//            }
-//        }
-        //return lista;
         return joiner.toString();
     }
 
-   // public String listaPesquisadores(String tipo){}
     /**
      *  Verifica uma String representando um possivel email de um Pesquisador. Verifica se o email nao eh nulo ou vazioa, em seguida
      *  se segue o formato adequado.
@@ -124,13 +112,9 @@ public class ControllerPesquisador {
      */
     private void verificaEmail(String email){
         Verificador.verificaVazioNulo(email, "email");
-        //Pattern padraoEmail = Pattern.compile("\\S+[@]\\S+");
         if (!Verificador.verificaEmail(email)){
             throw new IllegalArgumentException("Formato de email invalido.");
         }
-//        if (!padraoEmail.matcher(email).matches()){
-//            throw new IllegalArgumentException("Formato de email invalido.");
-//        }
     }
 
     /**
@@ -146,9 +130,6 @@ public class ControllerPesquisador {
         if (!Verificador.verificaFoto(foto)){
             throw new IllegalArgumentException("Formato de foto invalido.");
         }
-//        if (!(foto.matches("http[s]?://\\S*"))){
-//            throw new IllegalArgumentException("Formato de foto invalido.");
-//        }
     }
 
     /**
@@ -159,11 +140,6 @@ public class ControllerPesquisador {
      */
     private void verificaFuncao (String funcao){
         Verificador.verificaVazioNulo(funcao, "funcao");
-//        if (funcao == null){
-//            throw new NullPointerException("Campo funcao nao pode ser nulo ou vazio.");
-//        } else if (funcao.equals("")){
-//            throw new IllegalArgumentException("Campo funcao nao pode ser nulo ou vazio.");
-//        }
     }
     /**
      *  Verifica uma String representando o possivel nome de um Pesquisador. Avalia se a String eh nula ou vazia
@@ -173,11 +149,6 @@ public class ControllerPesquisador {
      */
     private void verificaNome(String nome){
         Verificador.verificaVazioNulo(nome, "nome");
-//        if (nome == null){
-//            throw new NullPointerException("Campo nome nao pode ser nulo ou vazio.");
-//        } else if (nome.equals("")){
-//            throw new IllegalArgumentException("Campo nome nao pode ser nulo ou vazio.");
-//        }
     }
     /**
      *  Verifica uma String representando a possivel biografia de um Pesquisador. Avalia se a String eh nula ou vazia
@@ -187,11 +158,6 @@ public class ControllerPesquisador {
      */
     private void verificaBio (String biografia){
         Verificador.verificaVazioNulo(biografia, "biografia");
-//        if (biografia == null){
-//            throw new NullPointerException("Campo biografia nao pode ser nulo ou vazio.");
-//        } else if (biografia.equals("")){
-//            throw new IllegalArgumentException("Campo biografia nao pode ser nulo ou vazio.");
-//        }
     }
 
     /**
@@ -270,9 +236,6 @@ public class ControllerPesquisador {
         if(email == null || email.trim().equals("")) {
             throw new NullPointerException("Email nao pode ser vazio ou nulo.");
         }
-//        } else if (email.trim().equals("")){
-//            throw new IllegalArgumentException("Email nao pode ser vazio ou nulo.");
-//        }
         if (!pesquisadores.containsKey(email)){
             throw new IllegalArgumentException("Pesquisador nao encontrado");
         }
@@ -331,21 +294,11 @@ public class ControllerPesquisador {
         return pesquisadores.get(email).toString();
     }
 
-//    /**
-//     * Verifica se o parâmetro passado é vazio ou nulo, se for, monta String
-//     * pra lançar uma exceção.
-//     * @param atributo representação em String do atributo a ser verificado.
-//     * @param nomeAtributo representação em String do nome do atributo.
-//     */
-//    private void verificaVazioNulo(String atributo, String nomeAtributo) {
-//        StringJoiner joiner = new StringJoiner(" ");
-//        joiner.add(nomeAtributo);
-//        joiner.add("nao pode ser nulo ou vazio.");
-//        if (atributo == null || atributo.equals("")){
-//            throw new IllegalArgumentException(joiner.toString());
-//        }
-//    }
-
+    /**
+     * Retorna um objeto do tipo Pesquisador passando o email do pesquisador como parâmetro.
+     * @param email representação em String do email do pesquisador a ser buscado.
+     * @return um objeto do tipo Pesquisador.
+     */
     public Pesquisador getPesquisador(String email){
         return this.pesquisadores.get(email);
     }
@@ -359,19 +312,9 @@ public class ControllerPesquisador {
      */
     public List<String> buscaPesquisador(String termo){
         List<String> found = new ArrayList<>();
-
         pesquisadores.entrySet().stream().filter(entry -> entry.getValue().getBio().toLowerCase().contains(termo)).
-                //sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).
                 sorted(Map.Entry.comparingByKey(new CompararStringNumero(-1))).
                 forEach(entry -> found.add(entry.getKey() + ": " + entry.getValue().getBio()));
-
-//        for (Map.Entry<String, Pesquisador> entry : pesquisadores.entrySet()) {
-//            String biografia = entry.getValue().getBio().toLowerCase();
-//            if (biografia.contains(termo)) {
-//                String pesquisador = entry.getKey() + ": " + entry.getValue().getBio();
-//                found.add(pesquisador);
-//            }
-//        }
         return found;
     }
 

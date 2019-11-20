@@ -7,7 +7,6 @@ import com.psquiza.verificadores.Verificador;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -95,7 +94,6 @@ public class ControllerObjetivo {
         if(!this.objetivos.containsKey(codigo)) {
             throw new IllegalArgumentException("Objetivo nao encontrado");
         }
-        //return codigo + " - " + this.objetivos.get(codigo).toString();
         return this.objetivos.get(codigo).toString();
     }
 
@@ -105,6 +103,12 @@ public class ControllerObjetivo {
         }
     }
 
+    /**
+     * Método que retorna um objeto do tipo Objetivo passando o id de objetivo como parâmetro.
+     * É usado no controller geral para associar um objetivo a uma pesquisa.
+     * @param idObjetivo representação em String do ID do objetivo.
+     * @return um objetivo do tipo Objetivo.
+     */
     public Objetivo getObjetivo(String idObjetivo) {
         return this.objetivos.get(idObjetivo);
     }
@@ -112,14 +116,12 @@ public class ControllerObjetivo {
     /**
      *  Faz uma busca por um termo em forma de String nos atributos Descricao dos Objetivos. Retornando
      *  uma lista contendo os atributos onde o termo for encontrado.
-     *
      * @param termo String representando um termo a ser buscado no Sistema Psquiza.
      * @return Lista de resultados da busca pelo termo, contendo atributos de Objetivos onde o termo foi encontrado.
      */
     public List<String> buscaObjetivo(String termo){
         List<String> found = new ArrayList<>();
         objetivos.entrySet().stream().filter(entry -> entry.getValue().getDescricao().contains(termo)).
-                //sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).
                 sorted(Map.Entry.comparingByKey(new CompararStringNumero(-1))).
                 forEach(entry -> found.add(entry.getKey() + ": " + entry.getValue().getDescricao()));
         return found;

@@ -1,5 +1,7 @@
 package com.psquiza.entidades;
 
+import com.psquiza.verificadores.Verificador;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -23,6 +25,7 @@ public class Item implements Serializable {
      * @param nome representação em String do nome do item.
      */
     public Item(String nome) {
+        Verificador.verificaVazioNulo(nome, "nomeItem");
         this.nome = nome;
         this.realizado = false;
         this.duracao = 0;
@@ -32,7 +35,7 @@ public class Item implements Serializable {
      * Retorna o status do item, true se estiver REALIZADO, se não, false.
      * @return boolean representando o status.
      */
-    boolean isRealizado() {
+    public boolean isRealizado() {
         return realizado;
     }
 
@@ -40,7 +43,7 @@ public class Item implements Serializable {
      * Retorna o nome do produto.
      * @return representação em String do nome do item.
      */
-    String getNome() {
+    public String getNome() {
         return nome;
     }
 
@@ -50,6 +53,9 @@ public class Item implements Serializable {
      * @param duracao representação em inteiro da duração do item.
      */
     public void executa(int duracao) {
+        if (duracao <= 0){
+            throw new IllegalArgumentException("Duracao nao pode ser nula ou negativa.");
+        }
         if(this.realizado){
             throw new IllegalArgumentException("Item ja executado.");
         }

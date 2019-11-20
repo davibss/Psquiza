@@ -1,6 +1,7 @@
 package com.psquiza.entidades;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Representação de um objetivo no sistema
@@ -42,7 +43,6 @@ public class Objetivo implements Serializable {
      */
     public String toString() {
         int valor = this.aderencia + this.viabilidade;
-        //return this.tipo + " - " + this.descricao + " - " + valor;
         return String.format("%s - %s - %s - %d", this.codigo, this.tipo, this.descricao, valor);
     }
 
@@ -60,5 +60,27 @@ public class Objetivo implements Serializable {
      */
     public String getDescricao() {
         return descricao;
+    }
+
+    /**
+     * Método que verifica se dois objetos são iguais.
+     * @param o objeto a ser verificado.
+     * @return true se os objetos forem iguais, false se não forem.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Objetivo objetivo = (Objetivo) o;
+        return Objects.equals(codigo, objetivo.codigo);
+    }
+
+    /**
+     * Gera um número único para o problema a partir de seu código.
+     * @return a representação em inteiro do código único de identificação.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(codigo);
     }
 }

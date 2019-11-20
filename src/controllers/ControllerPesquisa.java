@@ -10,7 +10,6 @@ import com.psquiza.verificadores.Verificador;
 
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Controller de pesquisa, classe responsável por cadastrar, alterar, ativar, encerrar e exibir pesquisa
@@ -66,7 +65,7 @@ public class ControllerPesquisa {
 //           }
 //       }
        String codigo = campos[0].trim().substring(0, 3).toUpperCase() + valorInt;
-       this.pesquisas.put(codigo, new Pesquisa(codigo,true, descricao, campoInteresse));
+       this.pesquisas.put(codigo, new Pesquisa(codigo, descricao, campoInteresse));
        return codigo;
     }
 
@@ -107,9 +106,6 @@ public class ControllerPesquisa {
         Verificador.verificaVazioNulo(codigo,"Codigo");
         Verificador.verificaVazioNulo(motivo,"Motivo");
         verificaPesquisa(codigo);
-//        if (!pesquisas.containsKey(codigo)){
-//            throw new NullPointerException("Pesquisa nao encontrada.");
-//        }
         if(!pesquisas.get(codigo).estadoAtivacao()){
               throw new RuntimeException("Pesquisa desativada.");
         }
@@ -123,9 +119,6 @@ public class ControllerPesquisa {
     public void ativarPesquisa(String codigo){
         Verificador.verificaVazioNulo(codigo,"Codigo");
         verificaPesquisa(codigo);
-//        if (!pesquisas.containsKey(codigo)){
-//            throw new NullPointerException("Pesquisa nao encontrada.");
-//        }
         if(pesquisas.get(codigo).estadoAtivacao()) {
             throw new RuntimeException("Pesquisa ja ativada.");
         }
@@ -143,7 +136,6 @@ public class ControllerPesquisa {
         if (!pesquisas.containsKey(codigo)){
             throw new NullPointerException("Pesquisa nao encontrada.");
         }
-        //return codigo + pesquisas.get(codigo).toString();
         return pesquisas.get(codigo).toString();
     }
 
@@ -157,9 +149,6 @@ public class ControllerPesquisa {
             throw new RuntimeException("Codigo nao pode ser nulo ou vazio.");
         }
         verificaPesquisa(codigo);
-//        else if (!pesquisas.containsKey(codigo)){
-//            throw new NullPointerException("Pesquisa nao encontrada.");
-//        }
         return pesquisas.get(codigo).estadoAtivacao();
     }
 
@@ -291,7 +280,6 @@ public class ControllerPesquisa {
         this.pesquisas.entrySet().stream().filter(stringPesquisaEntry -> stringPesquisaEntry.getValue().getProblema() != null).
                 sorted(Map.Entry.comparingByValue(new OrdenaPorIDProblema())).forEach(a -> lista.add(a.getKey()));
         this.pesquisas.keySet().stream().filter(k -> !lista.contains(k)).
-                //sorted((chave1, chave2) -> chave1.compareTo(chave2) * -1).forEach(lista::add);
                 sorted(new CompararStringNumero(-1)).forEach(lista::add);
         return lista;
     }
@@ -306,7 +294,6 @@ public class ControllerPesquisa {
         this.pesquisas.entrySet().stream().filter(stringPesquisaEntry -> stringPesquisaEntry.getValue().getObjetivos() > 0).
                sorted(Map.Entry.comparingByValue(new OrdenaPorObjetivo())).forEach(a -> lista.add(a.getKey()));
         this.pesquisas.keySet().stream().filter(k -> !lista.contains(k)).
-                //sorted((chave1, chave2) -> chave1.compareTo(chave2) * -1).forEach(lista::add);
                 sorted(new CompararStringNumero(-1)).forEach(lista::add);
         return lista;
     }
@@ -349,7 +336,6 @@ public class ControllerPesquisa {
      */
     public List<String> buscaPesquisa(String termo){
         List<String> found = new ArrayList<String>();
-        //pesquisas.entrySet().stream().sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).
         pesquisas.entrySet().stream().sorted(Map.Entry.comparingByKey(new CompararStringNumero(-1))).
                 forEach(entry -> {
                     if (entry.getValue().getDescricao().toLowerCase().contains(termo)){
@@ -412,7 +398,7 @@ public class ControllerPesquisa {
     /**
      * Grava em um arquivo .txt o resumo da pesquisa.
      * @param codigoPesquisa representação em String do código que identifica pesquisas.
-     * @throws IOException
+     * @throws IOException lança exceção caso a escrita no arquivo falhe.
      */
     public void gravarResumo(String codigoPesquisa) throws IOException {
         if (codigoPesquisa == null ||codigoPesquisa.equals("")){
@@ -447,7 +433,7 @@ public class ControllerPesquisa {
     /**
      * Grava em um arquivo .txt o resultado da pesquisa
      * @param codigoPesquisa representação em String do código que identifica pesquisas.
-     * @throws IOException
+     * @throws IOException lança exceção caso a escrita no arquivo falhe.
      */
     public void gravarResultados(String codigoPesquisa) throws IOException{
         if (codigoPesquisa == null ||codigoPesquisa.equals("")){

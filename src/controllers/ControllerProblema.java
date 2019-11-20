@@ -7,7 +7,6 @@ import com.psquiza.verificadores.Verificador;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -65,9 +64,6 @@ public class ControllerProblema {
     public void apagarProblema(String codigo) {
         Verificador.verificaVazioNulo(codigo, "codigo");
         verificaProblema(codigo);
-//        if(!this.problemas.containsKey(codigo)) {
-//            throw new IllegalArgumentException("Problema nao encontrado");
-//        }
         this.problemas.remove(codigo);
     }
 
@@ -81,27 +77,8 @@ public class ControllerProblema {
     public String exibeProblema(String codigo) {
         Verificador.verificaVazioNulo(codigo,"codigo");
         verificaProblema(codigo);
-//        if(!this.problemas.containsKey(codigo)) {
-//            throw new IllegalArgumentException("Problema nao encontrado");
-//        }
-        //return codigo + " - " + this.problemas.get(codigo).toString();
         return this.problemas.get(codigo).toString();
     }
-
-//    private void verificaVazioNulo(String atributo, String nomeAtributo) {
-//        StringJoiner joiner = new StringJoiner(" ");
-//
-//        if (!nomeAtributo.equals("item")) {
-//            joiner.add("Campo").add(nomeAtributo);
-//        }else{
-//            joiner.add("Item");
-//        }
-//
-//        joiner.add("nao pode ser nulo ou vazio.");
-//        if (atributo == null || atributo.equals("")) {
-//            throw new IllegalArgumentException(joiner.toString());
-//        }
-//    }
 
     public void verificaProblema(String codigo){
         if(!this.problemas.containsKey(codigo)) {
@@ -110,13 +87,14 @@ public class ControllerProblema {
     }
 
     /**
-     * 
-     * @param problema
-     * @return
+     * Retorna um objeto do tipo Problema passando o nome do problema como parâmetro.
+     * @param problema representação em String do nome do problema a ser buscado.
+     * @return um objeto do tipo Problema.
      */
     public Problema getProblema(String problema) {
         return this.problemas.get(problema);
     }
+
     /**
      *  Faz uma busca por um termo em forma de String nos atributos Descricao de Problemas. Retornando
      *  uma lista contendo os atributos onde o termo for encontrado.
@@ -126,18 +104,9 @@ public class ControllerProblema {
      */
     public List<String> buscaProblema(String termo){
         List<String> found = new ArrayList<>();
-
         problemas.entrySet().stream().filter(entry -> entry.getValue().getDescricao().toLowerCase().contains(termo)).
-                //sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).
                 sorted(Map.Entry.comparingByKey(new CompararStringNumero(-1))).
                 forEach(entry -> found.add(entry.getKey() + ": " + entry.getValue().getDescricao()));
-
-//        for (Map.Entry<String, Problema> entry : problemas.entrySet()){
-//            String descricao = entry.getValue().getDescricao();
-//            if (descricao.toLowerCase().contains(termo)){
-//                found.add(entry.getKey() + ": " + descricao);
-//            }
-//        }
         return found;
     }
 

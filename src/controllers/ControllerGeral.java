@@ -10,7 +10,7 @@ import java.io.*;
  */
 public class ControllerGeral {
 
-    private static String diretorio = "data"+System.getProperty("file.separator")+"pzquiza.txt";
+    private static String diretorio = "data"+System.getProperty("file.separator")+"psquiza.txt";
     private static File file = new File(diretorio);
 
     private ControllerAtividade controllerAtividade;

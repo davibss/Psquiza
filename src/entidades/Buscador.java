@@ -110,7 +110,6 @@ public class Buscador {
         if (posicao > buscados.size()){
             throw new IllegalArgumentException("Entidade nao encontrada.");
         }
-        //buscados.forEach(System.out::println);
         return buscados.get(posicao-1);
     }
 

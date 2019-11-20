@@ -22,9 +22,9 @@ public class Atividade implements Serializable {
     private String risco;
     /** Representação em String da descrição do risco da atividade*/
     private String descricaoRisco;
-
-    //private int duracao;
+    /** Representação em lista de todos os resultados da atividade. */
     private List<String> resultados;
+    /** Representação da atividade subsequente desta atividade. */
     private Atividade nextAtividade;
 
     /**
@@ -42,19 +42,30 @@ public class Atividade implements Serializable {
         this.itens = new ArrayList<>();
         this.risco = risco;
         this.descricaoRisco = descricaoRisco;
-        //this.duracao = 0;
         this.resultados = new ArrayList<>();
         this.nextAtividade = null;
     }
 
+    /**
+     * Retorna a descrição de atividade.
+     * @return uma String com a descrição da atividade.
+     */
     public String getDescricao() {
         return descricao;
     }
 
+    /**
+     * Retorna a descrição do risco da atividade.
+     * @return uma String com a descrição do risco da atividade.
+     */
     public String getDescricaoRisco() {
         return descricaoRisco;
     }
 
+    /**
+     * Retorna o risco da atividade, podendo ser [ALTO, MEDIO, BAIXO]
+     * @return uma String com o risco da atividade.
+     */
     public String getRisco() {
         return risco;
     }
@@ -78,7 +89,6 @@ public class Atividade implements Serializable {
             throw new IllegalArgumentException("Item nao encontrado.");
         }
         this.itens.get(item - 1).executa(duracao);
-        //this.duracao += duracao;
     }
 
     public int cadastraResultado(String resultado) {
@@ -107,6 +117,10 @@ public class Atividade implements Serializable {
         return joiner.toString();
     }
 
+    /**
+     * Retorna o somatório da duração de todos os itens cadastrados nesta atividade.
+     * @return um inteiro com a duração total.
+     */
     public int getDuracao() {
         return this.itens.stream().mapToInt(Item::getDuracao).sum();
     }
@@ -146,9 +160,7 @@ public class Atividade implements Serializable {
         joiner.add(String.format("        - %s",this.descricao));
         this.itens.stream().filter(item -> item.getDuracao()>0).
                 forEach((r) -> joiner.add("ITEM" + numero.getAndIncrement() + " - " + r.getDuracao()));
-        //this.itens.forEach((r) -> joiner.add("ITEM" + numero.getAndIncrement() + " - " + r.getDuracao()));
         this.resultados.stream().filter(s -> !s.equals("")).forEach(joiner::add);
-        //return joiner.toString() + "\"";
         return joiner.toString();
     }
 
@@ -230,24 +242,20 @@ public class Atividade implements Serializable {
         return nextAtividade.pegaProximo(numero - 1);
     }
 
-    // MINHA SOLUÇÃO (DAVI), se arranjar uma forma melhor, só colocar aqui, o máximo que pensei foi isso, por enquanto.
     public String pegaMaiorRiscoAtividades(){
         if (nextAtividade == null){
             throw new NullPointerException("Nao existe proxima atividade.");
         }
-        //return pegaMaiorRiscoAtividadesRecursivo(this);
         return this.nextAtividade.pegaMaiorRiscoAtividadesRecursivo(this.nextAtividade);
     }
 
-    // MINHA SOLUÇÃO (DAVI), TESTEI, ESTA FUNCIONANDO, MAS SE TIVER UMA MELHOR SÓ COLOCAR.
     private String pegaMaiorRiscoAtividadesRecursivo(Atividade maior) {
         Map<String, Integer> mapaRiscos = new HashMap<String, Integer>(){{ put("ALTO", 3); put("MEDIO", 2); put("BAIXO", 1);}};
         if (this.nextAtividade == null){
-            //return mapaRiscos.get(this.risco) >= mapaRiscos.get(maior.risco) ? this.codigo: maior.codigo; // 1-LINE
-            return maior.codigo; // 1-LINE
+            return maior.codigo;
         }else{
             return this.nextAtividade.pegaMaiorRiscoAtividadesRecursivo(
-                    mapaRiscos.get(this.risco) >= mapaRiscos.get(maior.risco) ? this : maior); // 1-LINE
+                    mapaRiscos.get(this.risco) >= mapaRiscos.get(maior.risco) ? this : maior);
         }
     }
 

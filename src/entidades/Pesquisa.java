@@ -1,7 +1,7 @@
 package com.psquiza.entidades;
 
-import com.psquiza.comparators.AtividadeMaisAntiga;
 import com.psquiza.comparators.CompararStringNumero;
+import com.psquiza.verificadores.Verificador;
 
 import java.io.Serializable;
 import java.util.*;
@@ -43,16 +43,17 @@ public class Pesquisa implements Serializable {
     /**
      * Constrói uma pesquisa através dos parâmetros. Inicializa o problema e suas listas de objetivos, pesquisadores e atividades.
      * @param codigo Representação em String do código que identifica pesquisas.
-     * @param estadoAtivacao representação boleana do estado da pesquisa.
      * @param descricao representação em String da descrição da pesquisa.
      * @param campoInteresse representação em String do campo de innteresse.
      */
-    public Pesquisa(String codigo, boolean estadoAtivacao, String descricao, String campoInteresse){
+    public Pesquisa(String codigo, String descricao, String campoInteresse){
+        Verificador.verificaVazioNulo(codigo, "codigo");
+        Verificador.verificaVazioNulo(descricao, "descricao");
+        Verificador.verificaVazioNulo(campoInteresse, "campoInteresse");
         this.codigo = codigo;
-        this.estadoAtivacao = estadoAtivacao;
+        this.estadoAtivacao = true;
         this.descricao = descricao;
         this.campoInteresse = campoInteresse;
-        //this.problema = new Problema();
         this.problema = null;
         this.objetivos = new LinkedHashMap<>();
         this.pesquisadores = new LinkedHashMap<>();
@@ -115,9 +116,6 @@ public class Pesquisa implements Serializable {
         if (this.problema == null){
             return false;
         }
-//        else if (!this.problema.getIdProblema().equals(problema)){
-//            return false;
-//        }
         this.problema = null;
         return true;
     }
@@ -163,9 +161,7 @@ public class Pesquisa implements Serializable {
      * @return uma String do maior objetivo dentro da pesquisa.
      */
     public String maiorObjetivo(){
-        //return Collections.max(this.objetivos, (chave1, chave2) -> chave1.compareTo(chave2) * -1);
-        //return Collections.max(this.objetivos.keySet(), (chave1, chave2) -> chave1.compareTo(chave2) * -1);
-        return Collections.max(this.objetivos.keySet(), new CompararStringNumero(-1));
+        return Collections.max(this.objetivos.keySet(), new CompararStringNumero(1));
     }
 
     /**
@@ -174,7 +170,6 @@ public class Pesquisa implements Serializable {
      * @return true se o objetivo estiver dentro da lista, se não, retorna false.
      */
     public boolean contemObjetivo(Objetivo objetivo){
-        //return this.objetivos.contains(objetivo);
         return this.objetivos.containsValue(objetivo);
     }
 
@@ -217,16 +212,8 @@ public class Pesquisa implements Serializable {
         String proxima = "";
         switch (estrategia) {
             case "MAIS_ANTIGA":
-                //sugestao
                 proxima = this.atividades.entrySet().stream().filter(entry ->  entry.getValue().contaItensPendentes() > 0)
                         .findFirst().get().getKey();
-                /*Iterator<String> itr0 = this.atividades.keySet().iterator();
-                while (itr0.hasNext()) {
-                    String codigoAtividade = itr0.next();
-                    if(this.atividades.get(codigoAtividade).contaItensPendentes() > 0) {
-                        proxima = codigoAtividade;
-                    }
-                }*/
                 break;
 
             case "MENOS_PENDENCIAS":
@@ -322,10 +309,15 @@ public class Pesquisa implements Serializable {
      */
     @Override
     public String toString() {
-        //return " - " + descricao + " - " +campoInteresse;
         return String.format("%s - %s - %s",this.codigo,this.descricao,this.campoInteresse);
     }
 
+    /**
+     * Compara um objeto do tipo desta classe com outro objeto.
+     * Se forem iguais, códigos iguais, retorna true.
+     * @param o objeto a ser comparado.
+     * @return true se for igual, se não, false.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -334,11 +326,19 @@ public class Pesquisa implements Serializable {
         return Objects.equals(codigo, pesquisa.codigo);
     }
 
+    /**
+     * Gera a representação única deste objeto a partir do código.
+     * @return representação única em inteiro.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(codigo);
     }
 
+    /**
+     * Retorna o código desta pesquisa.
+     * @return a identificação única da classe Pesquisa.
+     */
     public String getCodigo() {
         return this.codigo;
     }
