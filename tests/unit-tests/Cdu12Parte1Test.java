@@ -17,18 +17,18 @@ class Cdu12Parte1Test {
     private ControllerGeral controllerGeral;
     private ControllerPesquisa controllerPesquisa;
     private ControllerPesquisador controllerPesquisador;
-    private ControllerAtividade controllerAtividade;
     private ControllerObjetivo controllerObjetivo;
     private ControllerProblema controllerProblema;
+    private ControllerAtividade controllerAtividade;
 
     @BeforeEach
     void criaControllers() {
         ControllerGeral controllerGeral = new ControllerGeral();
         ControllerPesquisa controllerPesquisa =  new ControllerPesquisa();
         ControllerPesquisador controllerPesquisador = new ControllerPesquisador();
-        ControllerAtividade controllerAtividade = new ControllerAtividade();
         ControllerObjetivo controllerObjetivo = new ControllerObjetivo();
         ControllerProblema controllerProblema = new ControllerProblema();
+        ControllerAtividade controllerAtividade = new ControllerAtividade();
     }
 
     private void cadastrarPesquisas() {
@@ -52,7 +52,6 @@ class Cdu12Parte1Test {
     private void cadastrarProblemas() {
         controllerProblema.cadastraProblema("Dificuldade no aprendizado de OO no 2 periodo.", 2);
         controllerProblema.cadastraProblema("Problema em manter area de conservacao das especies marinhas.", 1);
-        controllerProblema.cadastraProblema("Dificuldade no aprendizado de OO no 2 periodo.", 2);
     }
 
     private void cadastraAtividades() {
