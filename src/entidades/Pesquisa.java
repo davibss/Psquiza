@@ -206,12 +206,9 @@ public class Pesquisa implements Serializable {
         return true;
     }
 
-    private int riscoParaInt(String risco) {
-        if(risco.equals("BAIXO")){ return 1; }
-        if(risco.equals("MEDIO")){ return 2; }
-        return 3;
-    }
-
+    /**
+     * Verifica se a pesquisa contém alguma atividade com pendencias e lança uma exceção caso ela não possua
+     */
     private void conferePendencias(){
         boolean a = true;
         for(Atividade atividade : this.atividades.values()){
@@ -224,6 +221,12 @@ public class Pesquisa implements Serializable {
         }
     }
 
+    /**
+     * Retrona o código da próxima atividade que deve ser executada de acordo com a estratégia utilizada
+     *
+     * @param estrategia Estratégia a ser utilizada na sugestão da próxima atividade
+     * @return O código da próxima atividade que deve ser executada nesta pesquisa.
+     */
     public String proximaAtividade(String estrategia) {
         conferePendencias();
         String proxima = "";
@@ -253,6 +256,12 @@ public class Pesquisa implements Serializable {
         return proxima;
     }
 
+    /**
+     * Retorna um valor booleano verdadeiro caso a pesquisa esteja associada à atividade com o código passado como parâmetro
+     *
+     * @param codigoAtividade Código da atividade sendo verificada
+     * @return Booleano que indica se a pesquisa está associada a esta atividade.
+     */
     public boolean hasAtividade(String codigoAtividade){
         return this.atividades.containsKey(codigoAtividade);
     }

@@ -97,11 +97,25 @@ public class Atividade implements Serializable {
         this.itens.get(item - 1).executa(duracao);
     }
 
+    /**
+     * Cadastra um resultado em uma lista de resultados
+     *
+     * @param resultado Representação em String do resultado sendo cadastrado
+     * @return O índice do resultado cadastrado
+     */
     public int cadastraResultado(String resultado) {
         this.resultados.add(resultado);
         return this.resultados.size();
     }
 
+    /**
+     * Remove um resultado desta atividade
+     * Retorna um valor booleano falso caso o resultado com o índice
+     * passado como parâmetro já tenha sido removido e verdadeiro caso contrário
+     *
+     * @param numeroResultado Íncice do resultado sendo removido
+     * @return Um booleano que indica se o resultado pode ser removido ou se ele já foi remvido anteriormente
+     */
     public boolean removeResultado(int numeroResultado) {
         if(numeroResultado > this.resultados.size()) {
             throw new IllegalArgumentException("Resultado nao encontrado.");
@@ -113,6 +127,11 @@ public class Atividade implements Serializable {
         return true;
     }
 
+    /**
+     * Retorna uma String que representa uma lista com todos os resultados desta atividade
+     *
+     * @return String que representa uma lista com todos os resultados da atividade
+     */
     public String listaResultados() {
         StringJoiner joiner = new StringJoiner(" | ");
         for(String resultado : this.resultados) {

@@ -481,10 +481,20 @@ public class ControllerPesquisa {
         }
     }
 
+    /**
+     * Define o valor do atributo estratégia
+     * @param estrategia Novo valor do atributo estratégia.
+     */
     public void configuraEstrategia(String estrategia) {
         this.estrategia = estrategia;
     }
 
+    /**
+     * Retrona o código da próxima atividade que deve ser executada em uma pesquisa de acordo com o atributo estratégia
+     *
+     * @param codigoPesquisa Código da pesquisa que terá uma atividade retornada
+     * @return O código da próxima atividade que deve ser executada em uma pesquisa.
+     */
     public String proximaAtividade(String codigoPesquisa) {
         if(!this.pesquisas.containsKey(codigoPesquisa)) {
             throw new IllegalArgumentException("Pesquisa nao encontrada.");

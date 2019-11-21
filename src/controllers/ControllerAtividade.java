@@ -201,6 +201,13 @@ public class ControllerAtividade {
         this.atividades.get(codigoAtividade).executaAtividade(item, duracao);
     }
 
+    /**
+     * Cadastra um resultado em uma atividade e retorna o índice do resultado sendo cadastrado
+     *
+     * @param codigoAtividade Código da atividade que cadastra o resultado
+     * @param resultado Representação em String do resultado sendo cadastrado
+     * @return O índice do resultado cadastrado
+     */
     public int cadastraResultado(String codigoAtividade, String resultado) {
         Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
         Verificador.verificaVazioNulo(resultado, "Resultado");
@@ -210,6 +217,15 @@ public class ControllerAtividade {
         return this.atividades.get(codigoAtividade).cadastraResultado(resultado);
     }
 
+    /**
+     * Remove um resultado de uma atividade
+     * Retorna um valor booleano falso caso o resultado com o índice
+     * passado como parâmetro já tenha sido removido e verdadeiro caso contrário
+     *
+     * @param codigoAtividade Código da atividade que terá um resutado removido
+     * @param numeroResultado Íncice do resultado sendo removido
+     * @return Um booleano que indica se o resultado pode ser removido ou se ele já foi remvido anteriormente
+     */
     public boolean removeResultado(String codigoAtividade, int numeroResultado) {
         Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
         if(!this.atividades.containsKey(codigoAtividade)) {
@@ -221,6 +237,12 @@ public class ControllerAtividade {
         return this.atividades.get(codigoAtividade).removeResultado(numeroResultado);
     }
 
+    /**
+     * Retorna uma String que representa uma lista com todos os resultados de uma atividade
+     *
+     * @param codigoAtividade Código da atividade tendo seus resultados listatados
+     * @return String que representa uma lista com todos os resultados da atividade com o código passado como parâmetro.
+     */
     public String listaResultados(String codigoAtividade) {
         Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
         if(!this.atividades.containsKey(codigoAtividade)) {
@@ -229,6 +251,12 @@ public class ControllerAtividade {
         return this.atividades.get(codigoAtividade).listaResultados();
     }
 
+    /**
+     * Retorna o somatório da duração de todos os itens cadastrados na atividade com o código passado como parâmetro
+     *
+     * @param codigoAtividade Código da atividade cuja duração será retornada
+     * @return Um inteiro com a duração total.
+     */
     public int getDuracao(String codigoAtividade) {
         Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
         if(!this.atividades.containsKey(codigoAtividade)) {
