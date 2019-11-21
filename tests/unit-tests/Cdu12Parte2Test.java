@@ -17,12 +17,12 @@ class Cdu12Parte2Test {
 
     @BeforeEach
     void criaControllers() {
-        ControllerGeral controllerGeral = new ControllerGeral();
-        ControllerPesquisa controllerPesquisa =  new ControllerPesquisa();
-        ControllerPesquisador controllerPesquisador = new ControllerPesquisador();
-        ControllerObjetivo controllerObjetivo = new ControllerObjetivo();
-        ControllerProblema controllerProblema = new ControllerProblema();
-        ControllerAtividade controllerAtividade = new ControllerAtividade();
+        controllerGeral = new ControllerGeral();
+        controllerPesquisa =  new ControllerPesquisa();
+        controllerPesquisador = new ControllerPesquisador();
+        controllerObjetivo = new ControllerObjetivo();
+        controllerProblema = new ControllerProblema();
+        controllerAtividade = new ControllerAtividade();
         controllerGeral.carrega();
     }
 
