@@ -358,4 +358,62 @@ class ControllerPesquisaTest {
         assertTrue(controllerPesquisa.desassociaAtividade("AST1", "A1"));
         assertFalse(controllerPesquisa.desassociaAtividade("AST1", "A1"));
     }
+
+    // Testes para o CDU 10
+
+    @Test
+    void proximaAtividadePesquisaNaoEncontrada(){
+        assertEquals("Pesquisa nao encontrada." , verificaExcecao(() ->controllerPesquisa.proximaAtividade("A420")));
+    }
+    @Test
+    void proximaAtividadePesquisaEncerrada(){
+        encerrarPesquisa();
+        assertEquals("Pesquisa desativada.", verificaExcecao(() -> controllerPesquisa.proximaAtividade("AST1")));
+    }
+    @Test
+    void proximaAtividadePesquisaSemAtividade(){
+        cadastrarPesquisa();
+        assertEquals("Pesquisa sem atividades com pendencias.", verificaExcecao(() -> controllerPesquisa.proximaAtividade("PSI1")));
+    }
+    @Test
+    void proximaAtividadeMaisAntiga(){
+        associaAtividade();
+        controllerPesquisa.associaAtividade("AST1", "A2", controllerAtividade.getAtividade("A2"));
+        controllerAtividade.cadastraItem("A1", "Monitoramento Slack");
+        controllerAtividade.cadastraItem("A2", "Degustacao");
+        assertEquals("A1", controllerPesquisa.proximaAtividade("AST1"));
+
+    }
+    @Test
+    void proximaAtividadeMenosPendencias(){
+        associaAtividade();
+        controllerPesquisa.associaAtividade("AST1", "A2", controllerAtividade.getAtividade("A2"));
+        controllerAtividade.cadastraItem("A1", "Monitoramento Slack");
+        controllerAtividade.cadastraItem("A2", "Degustacao a Temperatura Ambiente");
+        controllerAtividade.cadastraItem("A1", "Monitoramento Whatsapp");
+        controllerPesquisa.configuraEstrategia("MENOS_PENDENCIAS");
+        assertEquals("A2", controllerPesquisa.proximaAtividade("AST1"));
+    }
+    @Test
+    void proximaAtividadeMaiorRisco(){
+        associaAtividade();
+        controllerPesquisa.associaAtividade("AST1", "A2", controllerAtividade.getAtividade("A2"));
+        controllerAtividade.cadastraItem("A1", "Monitoramento Slack");
+        controllerAtividade.cadastraItem("A2", "Degustacao");
+        controllerPesquisa.configuraEstrategia("MAIOR_RISCO");
+        assertEquals("A1", controllerPesquisa.proximaAtividade("AST1"));
+    }
+    @Test
+    void proximaAtividadeMaiorDuracao(){
+        associaAtividade();
+        controllerPesquisa.associaAtividade("AST1", "A2", controllerAtividade.getAtividade("A2"));
+        controllerAtividade.cadastraItem("A1", "Monitoramento Slack");
+        controllerAtividade.cadastraItem("A1", "Monitoramento Whatsapp");
+        controllerAtividade.cadastraItem("A2", "Degustacao");
+        controllerAtividade.executaAtividade("A1", 1, 4);
+        controllerAtividade.executaAtividade("A2", 1, 2);
+        controllerPesquisa.configuraEstrategia("MAIOR_DURACAO");
+        assertEquals("A1", controllerPesquisa.proximaAtividade("AST1"));
+    }
+
 }
