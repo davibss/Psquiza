@@ -580,23 +580,50 @@ public class ControllerGeral {
     }
 
     //Caso de uso 9 (Anderson)
-
+    /**
+     * Define uma relação de ordem para duas Atividades, a Atividade de idSubsequente será
+     * definida como seguinte a Atividade de idPrecedente.
+     *
+     * @param idPrecedente String representando o código da Atividade a ser definida como precedente.
+     * @param idSubsequente String representando o código da Atividade a ser definida como subsequente.
+     */
     public void defineProximaAtividade(String idPrecedente, String idSubsequente){
         controllerAtividade.defineProximaAtividade(idPrecedente, idSubsequente);
     }
-
+    /**
+     * Remove a relação de ordem de uma Atividade, não possuindo mais
+     * Atividades subsequentes.
+     *
+     * @param idPrecedente String representando o código da Atividade a ter sua próxima Atividade removida.
+     */
     public void tiraProximaAtividade(String idPrecedente){
         controllerAtividade.tiraProximaAtividade(idPrecedente);
     }
-
+    /**
+     * Conta a quantidade de Atividades subsequentes a Atividade de idPrecedente.
+     *
+     * @param idPrecedente String representando o código da Atividade a ser realizada a contagem de subsequentes.
+     * @return Inteiro representando a quantidade de Atividades subsequentes.
+     */
     public int contaProximos(String idPrecedente){
         return controllerAtividade.contaProximos(idPrecedente);
     }
-
+    /**
+     * Retorna a enésima Atividade subsequente a Atividade de idPrecedente.
+     *
+     * @param idAtividade String representando o código da Atividade a ser iniciada a contagem
+     * @param enesimaAtividade Inteiro representando a posição da enésima Atividade subsequente a ser procurada.
+     * @return String representando o código da enésima Atividade subsequente.
+     */
     public String pegaProximo(String idAtividade, int enesimaAtividade){
         return controllerAtividade.pegaProximo(idAtividade, enesimaAtividade);
     }
-
+    /**Retorna a Atividade de Maior Risco dentre a Atividade de idAtividade e suas subsequentes.
+     *
+     *
+     * @param idAtividade String representando a Atividade a partir da qual será feita a busca.
+     * @return String representando o código da Atividade de maior risco na sequência de Atividades.
+     */
     public String pegaMaiorRiscoAtividades(String idAtividade) {
         return controllerAtividade.pegaMaiorRiscoAtividades(idAtividade);
     }
