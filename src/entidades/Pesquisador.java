@@ -69,7 +69,7 @@ public class Pesquisador implements Serializable {
     public void adicionaEspecialidadeAluno(int semestre, Double iea){
         if(!funcao.equals("estudante")){
             throw new RuntimeException("Pesquisador nao compativel com a especialidade.");
-        }
+            }
         this.especialidade = new Aluno(semestre, iea);
     }
 

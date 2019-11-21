@@ -202,13 +202,25 @@ public class Atividade implements Serializable {
         return (int) this.itens.stream().filter(Item::isRealizado).count();
     }
 
+    /**
+     *  Verifica se o codigo passsado como parametro é igual ao código desta Atividade ou de subsequentes, para
+     *  evitar a criacao de loops em defineProximaAtividade.
+     *
+     * @param codigo String representando o codigo da segunda atividade a ser comparada
+     * @return Valor Boolean representando se o código da Atividade é igual ao código passado.
+     */
     public boolean verificaProxima(String codigo){
         if (this.nextAtividade == null){
             return this.codigo.equals(codigo);
         }
         return this.nextAtividade.verificaProxima(codigo);
     }
-
+    /**
+     * Define a Atividade subsequente a esta. Lança exceções caso seja possível a criação de loops
+     * entre as Atividades e quando a Atividade já possui subsequente.
+     *
+     * @param proxima Atividade a ser definida como subsequente a esta.
+     */
     public void defineProximaAtividade(Atividade proxima){
         if (proxima.verificaProxima(codigo)){
             throw new IllegalArgumentException("Criacao de loops negada.");
@@ -219,10 +231,18 @@ public class Atividade implements Serializable {
             throw new IllegalArgumentException("Atividade ja possui uma subsequente.");
         }
     }
+    /**
+     *  Remove a associacao em relação a Atividade subsequente. A Atividade
+     *  passa a não ter mais subsequente.
+     */
     public void tiraProximaAtividade(){
         nextAtividade = null;
     }
-
+    /**
+     * Realiza a contagem de quantas atividades subsequentes a Atividade base existem.
+     *
+     * @return Inteiro representando a quantidade de Atividades subsequentes a esta Atividade.
+     */
     public int contaProximos(){
         // solução em 1 linha
         //return this.nextAtividade == null ? 0 : 1 + this.nextAtividade.contaProximos();
@@ -231,7 +251,12 @@ public class Atividade implements Serializable {
         }
         return 1 + this.nextAtividade.contaProximos();
     }
-
+    /**
+     * Pega o código da enésima Atividade subsequente a esta.
+     *
+     * @param numero Inteiro representando a posicao da Atividade sendo buscada em relação a esta.
+     * @return Código da Atividade na enésima posição buscada.
+     */
     public String pegaProximo(int numero){
         if (this.contaProximos() < numero){
             throw new IllegalArgumentException("Atividade inexistente.");
@@ -241,14 +266,25 @@ public class Atividade implements Serializable {
         }
         return nextAtividade.pegaProximo(numero - 1);
     }
-
+    /**
+     * Retorna a Atividade de Maior Risco a partir de uma Atividade e suas subsequentes. Lança exceção caso
+     * não exista próxima Atividade.
+     *
+     * @return String representando o código da Atividade de maior risco em uma sequência de Atividades.
+     */
     public String pegaMaiorRiscoAtividades(){
         if (nextAtividade == null){
             throw new NullPointerException("Nao existe proxima atividade.");
         }
         return this.nextAtividade.pegaMaiorRiscoAtividadesRecursivo(this.nextAtividade);
     }
-
+    /**
+     *  Retorna a Atividade de maior risco em uma sequência de atividades. Recursivamente compara o risco
+     *  da Atividade com o risco das Ativdades subsequentes, para encontrar o maior risco dentre as Atividades.
+     *
+     * @param maior Atividade que possui o maior risco encontrado até a iteração.
+     * @return Código representando a Atividade de Maior Risco na seqûencia.
+     */
     private String pegaMaiorRiscoAtividadesRecursivo(Atividade maior) {
         Map<String, Integer> mapaRiscos = new HashMap<String, Integer>(){{ put("ALTO", 3); put("MEDIO", 2); put("BAIXO", 1);}};
         if (this.nextAtividade == null){
