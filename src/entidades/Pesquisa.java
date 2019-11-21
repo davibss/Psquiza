@@ -173,6 +173,15 @@ public class Pesquisa implements Serializable {
         return this.objetivos.containsValue(objetivo);
     }
 
+    /**
+     * Armazena uma atividade em um mapa de atividades, sendo o código da atividade a chave e a atividade o valor
+     * Retorna um valor booleano verdadeiro caso o armazenamento seja bem sucedido
+     * ou falso caso o mapa já contenha aquela atividade
+     *
+     * @param codigoAtividade
+     * @param atividade
+     * @return  Um valor booleano que indica se o armazenamento foi bem sucedido
+     */
     public boolean associaAtividade(String codigoAtividade, Atividade atividade) {
         if(this.atividades.containsKey(codigoAtividade)) {
             return false;
@@ -181,6 +190,14 @@ public class Pesquisa implements Serializable {
         return true;
     }
 
+    /**
+     * Desassocia uma atividade que esteja associada a esta pesquisa
+     * Retorna um valor booleano verdadeiro caso a desassociação seja bem sucedida
+     * ou falso caso a atividade não esteja associada a esta pesquisa
+     *
+     * @param codigoAtividade Código da atividade sendo desassociada da pesquisa
+     * @return Um valor booleano que indica se a desassociação foi bem sucedida
+     */
     public boolean desassociaAtividade(String codigoAtividade) {
         if(!this.atividades.containsKey(codigoAtividade)) {
             return false;

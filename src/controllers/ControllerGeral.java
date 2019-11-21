@@ -326,6 +326,16 @@ public class ControllerGeral {
     }
 
     // Caso de uso 7 - Henrique
+
+    /**
+     * Associa uma atividade a uma certa pesquisa
+     * Retorna um valor booleano verdadeiro caso a associação seja bem sucedida
+     * ou falso caso a pesquisa já contenha aquela atividade
+     *
+     * @param codigoPesquisa Código da pesquisa a qual a atividade será associada
+     * @param codigoAtividade Código da atividade sendo associada
+     * @return Um valor booleano que indica se a associação foi bem sucedida
+     */
     public boolean associaAtividade(String codigoPesquisa, String codigoAtividade) {
         Verificador.verificaVazioNulo(codigoPesquisa, "codigoPesquisa");
         Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
@@ -333,6 +343,15 @@ public class ControllerGeral {
         return controllerPesquisa.associaAtividade(codigoPesquisa, codigoAtividade, controllerAtividade.getAtividade(codigoAtividade));
     }
 
+    /**
+     * Desassocia uma atividade que esteja associada a uma pesquisa
+     * Retorna um valor booleano verdadeiro caso a desassociação seja bem sucedida
+     * ou falso caso a atividade não esteja associada àquela pesquisa
+     *
+     * @param codigoPesquisa Código da pesquisa da qual a atividade será desassociada
+     * @param codigoAtividade Código da atividade sendo desassociada da pesquisa
+     * @return Um valor booleano que indica se a desassociação foi bem sucedida
+     */
     public boolean desassociaAtividade(String codigoPesquisa, String codigoAtividade) {
         Verificador.verificaVazioNulo(codigoPesquisa, "codigoPesquisa");
         Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
@@ -341,6 +360,13 @@ public class ControllerGeral {
         return controllerPesquisa.desassociaAtividade(codigoPesquisa, codigoAtividade);
     }
 
+    /**
+     * Executa um item de uma atividade caso ela esteja associada a alguma pesquisa
+     *
+     * @param codigoAtividade Código da atividade que possui o item sendo executado
+     * @param item Item a ser executado
+     * @param duracao Duração da execução do item
+     */
     public void executaAtividade(String codigoAtividade, int item, int duracao) {
         Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
         if(item <= 0) {
@@ -424,6 +450,11 @@ public class ControllerGeral {
     }
 
     //Caso de Uso 10 (Henrique)
+
+    /**
+     *
+     * @param estrategia
+     */
     public void configuraEstrategia(String estrategia) {
         if (estrategia == null || estrategia.equals("")){
             throw new IllegalArgumentException("Estrategia nao pode ser nula ou vazia.");
