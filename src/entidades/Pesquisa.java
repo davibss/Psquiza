@@ -178,8 +178,8 @@ public class Pesquisa implements Serializable {
      * Retorna um valor booleano verdadeiro caso o armazenamento seja bem sucedido
      * ou falso caso o mapa já contenha aquela atividade
      *
-     * @param codigoAtividade
-     * @param atividade
+     * @param codigoAtividade representaçao em String do código da atividade.
+     * @param atividade objeto atividade.
      * @return  Um valor booleano que indica se o armazenamento foi bem sucedido
      */
     public boolean associaAtividade(String codigoAtividade, Atividade atividade) {

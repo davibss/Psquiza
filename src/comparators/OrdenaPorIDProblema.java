@@ -5,7 +5,7 @@ import com.psquiza.entidades.Pesquisa;
 import java.util.Comparator;
 
 /**
- * Classe responsável por implementar uma interface Comparator<Pesquisa> e
+ * Classe responsável por implementar uma interface Comparator Pesquisa e
  * usar o método compare para ordenar as pesquisas por maior problema.
  */
 public class OrdenaPorIDProblema implements Comparator<Pesquisa> {

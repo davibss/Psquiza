@@ -1,3 +1,7 @@
 com.psquiza
+com.psquiza.Especialidades
+com.psquiza.comparators
 com.psquiza.controllers
 com.psquiza.entidades
+com.psquiza.verificadores
+com.tests
