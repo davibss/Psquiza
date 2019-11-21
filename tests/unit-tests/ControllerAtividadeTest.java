@@ -1,6 +1,7 @@
 package com.tests;
 
 import com.psquiza.controllers.ControllerAtividade;
+import com.psquiza.verificadores.Verificador;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -142,6 +143,8 @@ class ControllerAtividadeTest {
     void cadastraResultadoInvalido() {
         assertEquals("Campo codigoAtividade nao pode ser nulo ou vazio.",
                 verificaExcecao(() -> controller.cadastraResultado("", "Analise nao foi possivel.")));
+        assertEquals("Campo codigoAtividade nao pode ser nulo ou vazio.",
+                Verificador.verificaExcecao(() -> controller.cadastraResultado("", "Analise nao foi possivel.")));
         assertEquals("Resultado nao pode ser nulo ou vazio.",
                 verificaExcecao(() -> controller.cadastraResultado("A1", "")));
         assertEquals("Atividade nao encontrada",
@@ -159,6 +162,8 @@ class ControllerAtividadeTest {
         cadastraResultado();
         assertEquals("Campo codigoAtividade nao pode ser nulo ou vazio.",
                 verificaExcecao(() -> controller.removeResultado("", 3)));
+        assertEquals("Campo codigoAtividade nao pode ser nulo ou vazio.",
+                Verificador.verificaExcecao(() -> controller.removeResultado(null, 3)));
         assertEquals("Atividade nao encontrada",
                 verificaExcecao(() -> controller.removeResultado("A99", 3)));
         assertEquals("numeroResultado nao pode ser nulo ou negativo.",
@@ -177,6 +182,8 @@ class ControllerAtividadeTest {
     void listaResultadosInvalido() {
         assertEquals("Campo codigoAtividade nao pode ser nulo ou vazio.",
                 verificaExcecao(() -> controller.listaResultados("")));
+        assertEquals("Campo codigoAtividade nao pode ser nulo ou vazio.",
+                Verificador.verificaExcecao(() -> controller.listaResultados("")));
         assertEquals("Atividade nao encontrada",
                 verificaExcecao(() -> controller.listaResultados("A55")));
     }
@@ -192,6 +199,8 @@ class ControllerAtividadeTest {
     void getDuracaoInvalido() {
         assertEquals("Campo codigoAtividade nao pode ser nulo ou vazio.",
                 verificaExcecao(() -> controller.getDuracao("")));
+        assertEquals("Campo codigoAtividade nao pode ser nulo ou vazio.",
+                Verificador.verificaExcecao(() -> controller.getDuracao("")));
         assertEquals("Atividade nao encontrada",
                 verificaExcecao(() -> controller.listaResultados("A55")));
     }
@@ -200,11 +209,6 @@ class ControllerAtividadeTest {
     void getDuracao() {
         executaAtividade();
         assertEquals(3, controller.getDuracao("A1"));
-    }
-
-    @Test
-    void definedefineProximaAtividade(){
-
     }
 
     @Test
@@ -219,6 +223,14 @@ class ControllerAtividadeTest {
         assertEquals(1, controller.contaProximos("A2"));
         assertEquals(2, controller.contaProximos("A3"));
         assertEquals(0, controller.contaProximos("A1"));
+    }
+
+    @Test
+    void contaProximosInvalido(){
+        assertEquals("Atividade nao pode ser nulo ou vazio.",
+                verificaExcecao(() -> controller.contaProximos("")));
+        assertEquals("Atividade nao pode ser nulo ou vazio.",
+                Verificador.verificaExcecao(() -> controller.contaProximos(null)));
     }
 
     @Test
@@ -249,5 +261,17 @@ class ControllerAtividadeTest {
         assertEquals("A1", controller.pegaProximo("A2", 1));
         assertEquals("A2", controller.pegaProximo("A3", 1));
 
+    }
+
+    @Test
+    void pegaProximoInvalido(){
+        assertEquals("Atividade nao pode ser nulo ou vazio.",
+                verificaExcecao(() -> controller.pegaProximo("",1)));
+        assertEquals("Atividade nao pode ser nulo ou vazio.",
+                Verificador.verificaExcecao(() -> controller.pegaProximo(null,1)));
+        assertEquals("EnesimaAtividade nao pode ser negativa ou zero.",
+                verificaExcecao(() -> controller.pegaProximo("A2",-1)));
+        assertEquals("EnesimaAtividade nao pode ser negativa ou zero.",
+                verificaExcecao(() -> controller.pegaProximo("A2",0)));
     }
 }
