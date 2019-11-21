@@ -348,6 +348,16 @@ public class ControllerPesquisa {
         return found;
     }
 
+    /**
+     * Associa a atividade passada como parâmetro a uma certa pesquisa
+     * Retorna um valor booleano verdadeiro caso a associação seja bem sucedida
+     * ou falso caso a pesquisa já contenha aquela atividade
+     *
+     * @param codigoPesquisa Código da pesquisa a qual a atividade será associada
+     * @param codigoAtividade Código da atividade sendo associada
+     * @param atividade Atividade sendo associada a uma pesquisa
+     * @return Um valor booleano que indica se a associação foi bem sucedida
+     */
     public boolean associaAtividade(String codigoPesquisa, String codigoAtividade, Atividade atividade) {
         Verificador.verificaVazioNulo(codigoPesquisa, "codigoPesquisa");
         Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
@@ -360,6 +370,15 @@ public class ControllerPesquisa {
         return this.pesquisas.get(codigoPesquisa).associaAtividade(codigoAtividade, atividade);
     }
 
+    /**
+     * Desassocia uma atividade que esteja associada a uma pesquisa
+     * Retorna um valor booleano verdadeiro caso a desassociação seja bem sucedida
+     * ou falso caso a atividade não esteja associada àquela pesquisa
+     *
+     * @param codigoPesquisa Código da pesquisa da qual a atividade será desassociada
+     * @param codigoAtividade Código da atividade sendo desassociada da pesquisa
+     * @return Um valor booleano que indica se a desassociação foi bem sucedida
+     */
     public boolean desassociaAtividade(String codigoPesquisa, String codigoAtividade) {
         Verificador.verificaVazioNulo(codigoPesquisa, "codigoPesquisa");
         Verificador.verificaVazioNulo(codigoAtividade, "codigoAtividade");
@@ -372,6 +391,13 @@ public class ControllerPesquisa {
         return this.pesquisas.get(codigoPesquisa).desassociaAtividade(codigoAtividade);
     }
 
+    /**
+     * Verifica se uma atividade está associada a alguma das pesquisas cadastradas
+     * Retorna um valor booleano verdadeiro caso a atividade esteja associada a aguma pesquisa e falso caso não esteja
+     *
+     * @param codigoAtividade Código da atividade sendo verificada
+     * @return Um valor booleano que indica se a atividade está associada a alguma pesquisa
+     */
     public boolean associacao(String codigoAtividade) {
         return this.pesquisas.values().stream().anyMatch(pesquisa -> pesquisa.hasAtividade(codigoAtividade));
     }

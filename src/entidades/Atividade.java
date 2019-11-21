@@ -84,6 +84,12 @@ public class Atividade implements Serializable {
         this.itens.add(new Item(nomeItem));
     }
 
+    /**
+     * Executa um dos itens da atividade, mudando seu estado para realizado
+     *
+     * @param item Índice do item a ser executado
+     * @param duracao Duração da execução do item
+     */
     public void executaAtividade(int item, int duracao) {
         if(item > this.itens.size()){
             throw new IllegalArgumentException("Item nao encontrado.");

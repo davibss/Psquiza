@@ -168,6 +168,12 @@ public class ControllerAtividade {
         return found;
     }
 
+    /**
+     * Retorna a atividade que possui o código passado como parâmetro
+     *
+     * @param codigo Código da atividade a ser retornada
+     * @return A atividade com o código informado
+     */
     public Atividade getAtividade(String codigo) {
         if(!this.atividades.containsKey(codigo)) {
             throw new IllegalArgumentException("Atividade nao encontrada");
@@ -175,6 +181,13 @@ public class ControllerAtividade {
         return this.atividades.get(codigo);
     }
 
+    /**
+     * Executa um item da atividade com o código passado como parâmetro
+     *
+     * @param codigoAtividade Código da atividade que possui o item sendo executado
+     * @param item Item a ser executado
+     * @param duracao Duração da execução do item
+     */
     public void executaAtividade(String codigoAtividade, int item, int duracao) {
         if(item <= 0) {
             throw new IllegalArgumentException("Item nao pode ser nulo ou negativo.");
